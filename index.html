@@ -1596,6 +1596,7 @@ async function fetchReportData(type) {
       const last=pi[0];
       return {id:p.id,data_luare_evidenta:p.data_luare_evidenta,nume:p.nume,prenume:p.prenume,data_nasterii:p.data_nasterii,cnp:p.cnp||'—',telefon:p.telefon||'—',este_major:p.este_major?'Major':'Minor',nationalitate:p.nationalitate||'Română',alergii:(alergiiMap[p.id]||[]).join(', ')||'fără',ultima_data:last?.data_completarii,nr_vizite:pi.length,diagnostic:last?.diagnostic||'—',medic_trimitere:last?.medic_t?.nome||'—',terapeut:last?.terapeut?`${last.terapeut.prenume} ${last.terapeut.nume}`:'—',istoric_medical:last?.istoric_medical||'—',luna_nastere:p.data_nasterii?['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'][new Date(p.data_nasterii).getMonth()]:'—'};
     });
+  }
     if (type==='terapeut') {
     let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume,cnp),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).order('data_completarii');
     const tId=gel('rf-terapeut')?.value; if(tId) q=q.eq('terapeut_id',tId);
