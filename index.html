@@ -29,30 +29,34 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);font-si
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
 /* LOGIN */
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#071F2A 0%,#0A3D52 50%,#12607F 100%);position:relative;overflow:hidden;}
-#login-screen::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 20%,rgba(240,160,75,0.12) 0%,transparent 60%);}
-.login-card{background:var(--card);border-radius:20px;padding:48px 44px;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.35);position:relative;z-index:1;}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#071F2A 0%,#0A3D52 50%,#12607F 100%);}
+.login-card{background:var(--card);border-radius:20px;padding:48px 44px;width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.35);}
 .login-logo{text-align:center;margin-bottom:36px;}
-.login-logo-icon{width:68px;height:68px;background:var(--sidebar-bg);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;box-shadow:0 8px 24px rgba(10,61,82,0.3);}
-.login-logo h1{font-family:var(--font-serif);font-size:26px;color:var(--sidebar-bg);line-height:1.2;}
+.login-logo-icon{width:68px;height:68px;background:var(--sidebar-bg);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;}
+.login-logo h1{font-family:var(--font-serif);font-size:26px;color:var(--sidebar-bg);}
 .login-logo p{color:var(--text-muted);font-size:12px;margin-top:5px;}
-.login-sep{height:1px;background:var(--border-light);margin:28px 0;}
 .login-footer{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;}
 
 /* FORMS */
 .form-group{margin-bottom:14px;}
 .form-group label{display:block;font-weight:500;font-size:12.5px;color:var(--text);margin-bottom:5px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:13.5px;color:var(--text);background:var(--card);transition:border-color .18s,box-shadow .18s;outline:none;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:13.5px;color:var(--text);background:var(--card);transition:border-color .18s;outline:none;}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(27,122,159,0.12);}
 .form-group input:disabled,.form-group select:disabled,.form-group textarea:disabled{background:#F7F4F0;color:var(--text-muted);cursor:not-allowed;}
 .form-group textarea{resize:vertical;min-height:80px;}
 .form-hint{font-size:11px;color:var(--text-muted);margin-top:4px;}
 .required::after{content:' *';color:var(--danger);}
+/* VALIDATION */
+.field-error input,.field-error select,.field-error textarea{border-color:var(--danger)!important;background:#FFF8F7!important;}
+.field-error-msg{font-size:11px;color:var(--danger);margin-top:4px;display:none;}
+.field-error .field-error-msg{display:block;}
+.cnp-ok{border-color:var(--success)!important;}
+.cnp-err{border-color:var(--danger)!important;}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius);font-family:var(--font-sans);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .18s;text-decoration:none;white-space:nowrap;user-select:none;}
 .btn-primary{background:var(--primary);color:#fff;}
-.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:var(--shadow);}
+.btn-primary:hover{background:var(--primary-dark);}
 .btn-danger{background:var(--danger);color:#fff;}
 .btn-danger:hover{background:#b93e2e;}
 .btn-success{background:var(--success);color:#fff;}
@@ -63,18 +67,17 @@ body{font-family:var(--font-sans);background:var(--bg);color:var(--text);font-si
 .btn-sm{padding:5px 11px;font-size:12px;}
 .btn-lg{padding:11px 24px;font-size:15px;}
 .btn-full{width:100%;justify-content:center;}
-.btn:disabled{opacity:.55;cursor:not-allowed;transform:none!important;box-shadow:none!important;}
+.btn:disabled{opacity:.55;cursor:not-allowed;}
 
 /* APP SHELL */
 #app{display:flex;min-height:100vh;}
-
-/* SIDEBAR */
 #sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;overflow-y:auto;}
 .sidebar-header{padding:22px 18px 18px;border-bottom:1px solid rgba(255,255,255,0.08);}
 .sidebar-logo{display:flex;align-items:center;gap:10px;}
-.sidebar-logo-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;}
+.sidebar-logo-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;overflow:hidden;}
+.sidebar-logo-icon img{width:100%;height:100%;object-fit:cover;}
 .sidebar-logo-text h2{font-family:var(--font-serif);color:#fff;font-size:14.5px;line-height:1.25;}
-.sidebar-logo-text p{color:rgba(255,255,255,0.45);font-size:10px;margin-top:1px;}
+.sidebar-logo-text p{color:rgba(255,255,255,0.45);font-size:10px;}
 .sidebar-user{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:10px;}
 .sidebar-user-avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex-shrink:0;font-weight:600;}
 .sidebar-user-name{color:#fff;font-size:12.5px;font-weight:500;}
@@ -85,27 +88,23 @@ nav.sidebar-nav{flex:1;padding:10px 0;}
 .nav-item.active{background:rgba(27,122,159,0.35);color:#fff;border-left-color:var(--accent);font-weight:500;}
 .nav-icon{width:18px;text-align:center;font-size:15px;flex-shrink:0;}
 .sidebar-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,0.08);}
-
-/* MAIN */
 #main-content{margin-left:var(--sidebar-w);flex:1;padding:24px;min-height:100vh;}
 .view-section{display:none;}
 .view-section.active{display:block;}
 .page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:22px;}
 .page-title{font-family:var(--font-serif);font-size:24px;color:var(--text);}
 .page-subtitle{color:var(--text-muted);font-size:13px;margin-top:3px;}
-
-/* CARDS */
 .card{background:var(--card);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow);}
 .card-title{font-weight:600;font-size:14px;margin-bottom:14px;}
 
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:22px;}
-.stat-card{background:var(--card);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);border-left:4px solid var(--primary);display:flex;flex-direction:column;gap:6px;}
+.stat-card{background:var(--card);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow);border-left:4px solid var(--primary);}
 .stat-card.accent{border-left-color:var(--accent);}
 .stat-card.success{border-left-color:var(--success);}
 .stat-card.warning{border-left-color:var(--warning);}
-.stat-value{font-family:var(--font-serif);font-size:32px;color:var(--text);line-height:1;}
-.stat-label{font-size:11.5px;color:var(--text-muted);font-weight:500;letter-spacing:0.2px;text-transform:uppercase;}
+.stat-value{font-family:var(--font-serif);font-size:32px;color:var(--text);line-height:1;display:block;}
+.stat-label{font-size:11.5px;color:var(--text-muted);font-weight:500;letter-spacing:0.2px;text-transform:uppercase;display:block;margin-top:4px;}
 .quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
 .quick-btn{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-lg);padding:18px;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;transition:all .18s;color:var(--text);}
 .quick-btn:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px);}
@@ -114,7 +113,7 @@ nav.sidebar-nav{flex:1;padding:10px 0;}
 
 /* SEARCH */
 .search-box{display:flex;gap:10px;margin-bottom:18px;background:var(--card);padding:14px;border-radius:var(--radius-lg);box-shadow:var(--shadow);}
-.search-box select,.search-box input{border:1.5px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-family:var(--font-sans);font-size:13.5px;color:var(--text);background:var(--card);outline:none;transition:border-color .15s;}
+.search-box select,.search-box input{border:1.5px solid var(--border);border-radius:var(--radius);padding:8px 12px;font-family:var(--font-sans);font-size:13.5px;color:var(--text);background:var(--card);outline:none;}
 .search-box select:focus,.search-box input:focus{border-color:var(--primary);}
 .search-box select{min-width:170px;}
 .search-box input{flex:1;}
@@ -122,9 +121,15 @@ nav.sidebar-nav{flex:1;padding:10px 0;}
 /* TABLE */
 .table-wrap{overflow-x:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow);}
 table{width:100%;border-collapse:collapse;background:var(--card);}
-thead th{background:#F7F4F0;padding:10px 13px;text-align:left;font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px;border-bottom:1.5px solid var(--border-light);}
+thead th{background:#F7F4F0;padding:10px 13px;text-align:left;font-size:11.5px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px;border-bottom:1.5px solid var(--border-light);white-space:nowrap;}
+thead th.sortable{cursor:pointer;user-select:none;}
+thead th.sortable:hover{color:var(--primary);}
+thead th.sort-asc::after{content:' ↑';}
+thead th.sort-desc::after{content:' ↓';}
 tbody td{padding:10px 13px;border-bottom:1px solid var(--border-light);font-size:13px;}
 tbody tr:hover{background:#FBF9F7;}
+tbody tr:nth-child(even){background:#FDFCFA;}
+tbody tr:nth-child(even):hover{background:#F7F4F0;}
 .badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;}
 .badge-blue{background:var(--primary-light);color:var(--primary);}
 .badge-green{background:var(--success-light);color:var(--success);}
@@ -133,15 +138,14 @@ tbody tr:hover{background:#FBF9F7;}
 .badge-gray{background:#F0EDE9;color:var(--text-muted);}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(10,20,30,0.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(4px);animation:fadeIn .2s ease;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-.modal{background:var(--card);border-radius:var(--radius-lg);width:100%;max-width:780px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:slideUp .22s ease;}
-@keyframes slideUp{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,20,30,0.55);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;backdrop-filter:blur(4px);}
+.modal{background:var(--card);border-radius:var(--radius-lg);width:100%;max-width:780px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);}
 .modal.modal-sm{max-width:440px;}
 .modal.modal-lg{max-width:960px;}
+.modal.modal-xl{max-width:98vw;width:98vw;max-height:96vh;}
 .modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1;}
 .modal-title{font-family:var(--font-serif);font-size:20px;}
-.modal-close{width:30px;height:30px;border:none;background:var(--border-light);border-radius:6px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:all .15s;}
+.modal-close{width:30px;height:30px;border:none;background:var(--border-light);border-radius:6px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);}
 .modal-close:hover{background:var(--border);color:var(--text);}
 .modal-body{padding:22px 24px;}
 .modal-footer{padding:14px 24px 18px;border-top:1px solid var(--border-light);display:flex;justify-content:flex-end;gap:10px;}
@@ -152,8 +156,8 @@ tbody tr:hover{background:#FBF9F7;}
 .section-label{font-size:11px;font-weight:600;color:var(--primary);letter-spacing:0.6px;text-transform:uppercase;margin:18px 0 12px;padding-bottom:6px;border-bottom:1.5px solid var(--primary-light);}
 
 /* TAG INPUT */
-.tag-input-wrap{border:1.5px solid var(--border);border-radius:var(--radius);padding:6px 8px;min-height:40px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--card);cursor:text;transition:border-color .18s;}
-.tag-input-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(27,122,159,0.12);}
+.tag-input-wrap{border:1.5px solid var(--border);border-radius:var(--radius);padding:6px 8px;min-height:40px;display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--card);cursor:text;}
+.tag-input-wrap:focus-within{border-color:var(--primary);}
 .tag{display:inline-flex;align-items:center;gap:5px;background:var(--primary-light);color:var(--primary);padding:2px 8px;border-radius:20px;font-size:12px;font-weight:500;}
 .tag-remove{background:none;border:none;cursor:pointer;color:var(--primary);font-size:14px;line-height:1;padding:0;}
 .tag-remove:hover{color:var(--danger);}
@@ -162,15 +166,15 @@ tbody tr:hover{background:#FBF9F7;}
 /* AUTOCOMPLETE */
 .autocomplete-wrap{position:relative;}
 .autocomplete-list{position:absolute;top:100%;left:0;right:0;z-index:50;background:var(--card);border:1.5px solid var(--primary);border-top:none;border-radius:0 0 var(--radius) var(--radius);max-height:200px;overflow-y:auto;box-shadow:var(--shadow-md);}
-.autocomplete-item{padding:9px 13px;cursor:pointer;font-size:13px;transition:background .12s;}
+.autocomplete-item{padding:9px 13px;cursor:pointer;font-size:13px;}
 .autocomplete-item:hover{background:var(--primary-light);color:var(--primary);}
 
-/* PATIENT HISTORY */
+/* PATIENT BLOCK */
 .patient-block{background:var(--primary-light);border:1px solid rgba(27,122,159,0.15);border-radius:var(--radius-lg);padding:16px 18px;margin-bottom:18px;}
-.patient-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.patient-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
 .patient-block-name{font-family:var(--font-serif);font-size:18px;color:var(--sidebar-bg);}
 .patient-block-actions{display:flex;gap:7px;flex-wrap:wrap;}
-.history-entry{background:var(--card);border:1px solid var(--border-light);border-radius:var(--radius);padding:12px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;transition:box-shadow .15s;}
+.history-entry{background:var(--card);border:1px solid var(--border-light);border-radius:var(--radius);padding:12px 16px;margin-bottom:8px;display:flex;align-items:flex-start;gap:14px;}
 .history-entry:hover{box-shadow:var(--shadow-md);}
 .history-entry-date{font-size:11px;font-weight:600;color:var(--text-muted);min-width:80px;padding-top:2px;white-space:nowrap;}
 .history-entry-content{flex:1;}
@@ -178,11 +182,24 @@ tbody tr:hover{background:#FBF9F7;}
 
 /* TOAST */
 .toast-wrap{position:fixed;top:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:8px;}
-.toast{background:var(--card);border-left:4px solid var(--primary);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow-md);max-width:340px;animation:slideIn .2s ease;font-size:13px;}
+.toast{background:var(--card);border-left:4px solid var(--primary);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow-md);max-width:340px;font-size:13px;}
 .toast.success{border-left-color:var(--success);}
 .toast.error{border-left-color:var(--danger);}
 .toast.warning{border-left-color:var(--warning);}
-@keyframes slideIn{from{transform:translateX(20px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+/* REPORT VIEWER */
+.rv-table-wrap{overflow:auto;max-height:calc(96vh - 130px);}
+.rv-table{width:max-content;min-width:100%;border-collapse:collapse;background:var(--card);}
+.rv-table thead{position:sticky;top:0;z-index:5;}
+.rv-table thead th{background:#0A3D52;color:#fff;padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:0.3px;text-transform:uppercase;white-space:nowrap;cursor:pointer;user-select:none;border-right:1px solid rgba(255,255,255,0.1);}
+.rv-table thead th:hover{background:#1B7A9F;}
+.rv-table thead th.sort-asc::after{content:' ↑';}
+.rv-table thead th.sort-desc::after{content:' ↓';}
+.rv-table tbody td{padding:9px 14px;border-bottom:1px solid var(--border-light);font-size:12.5px;white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis;border-right:1px solid var(--border-light);}
+.rv-table tbody td.wrap{white-space:normal;max-width:320px;}
+.rv-table tbody tr:nth-child(even) td{background:#F7F4F0;}
+.rv-table tbody tr:hover td{background:#EEF7FA;}
+.rv-table .td-actions{white-space:nowrap;padding:6px 10px;}
 
 /* USERS */
 .users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
@@ -196,14 +213,13 @@ tbody tr:hover{background:#FBF9F7;}
 .user-card-actions{display:flex;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border-light);}
 
 /* SETTINGS */
-.settings-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border-light);padding-bottom:0;}
-.settings-tab{padding:9px 18px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;}
+.settings-tabs{display:flex;gap:4px;margin-bottom:20px;border-bottom:2px solid var(--border-light);}
+.settings-tab{padding:9px 18px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;margin-bottom:-2px;}
 .settings-tab.active{color:var(--primary);border-bottom-color:var(--primary);}
 
 /* LOG */
-.log-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-light);font-size:13px;}
+.log-row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border-light);font-size:13px;}
 .log-time{color:var(--text-muted);font-size:11.5px;min-width:130px;}
-.log-user{font-weight:500;color:var(--primary);}
 
 /* REPORTS */
 .report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
@@ -213,7 +229,7 @@ tbody tr:hover{background:#FBF9F7;}
 .report-card-title{font-weight:600;margin-bottom:5px;}
 .report-card-desc{font-size:12px;color:var(--text-muted);}
 
-/* LOADING */
+/* MISC */
 .loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--text-muted);}
 .spinner{width:24px;height:24px;border:2.5px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;margin-right:10px;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -221,6 +237,24 @@ tbody tr:hover{background:#FBF9F7;}
 .empty-state-icon{font-size:48px;margin-bottom:14px;}
 .empty-state-text{font-size:15px;margin-bottom:6px;color:var(--text);}
 .minor-panel{background:var(--warning-light);border:1px solid rgba(201,125,32,0.2);border-radius:var(--radius);padding:14px;margin-top:10px;}
+.cnp-info-bar{background:var(--primary-light);border:1px solid rgba(27,122,159,0.2);border-radius:var(--radius);padding:8px 12px;font-size:12px;color:var(--primary);margin-top:6px;display:none;}
+.pw-strength{height:4px;border-radius:2px;margin-top:6px;transition:all .3s;}
+.pw-strength.weak{background:var(--danger);width:33%;}
+.pw-strength.medium{background:var(--warning);width:66%;}
+.pw-strength.strong{background:var(--success);width:100%;}
+
+/* PDF FIELD SELECTOR */
+.pdf-fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.pdf-field-cb{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:13px;}
+.pdf-field-cb:hover{border-color:var(--primary);background:var(--primary-light);}
+.pdf-field-cb input{width:15px;height:15px;cursor:pointer;}
+
+/* PRINT STYLES */
+@media print{
+  body{background:#fff;}
+  .no-print{display:none!important;}
+  .print-page{page-break-after:always;}
+}
 </style>
 </head>
 <body>
@@ -230,7 +264,7 @@ tbody tr:hover{background:#FBF9F7;}
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
-      <div class="login-logo-icon">🏥</div>
+      <div class="login-logo-icon" id="login-logo-icon">🏥</div>
       <h1>Kineto ProActiv</h1>
       <p>Registru Electronic Pacienți</p>
     </div>
@@ -243,8 +277,7 @@ tbody tr:hover{background:#FBF9F7;}
       <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
     </div>
     <button class="btn btn-primary btn-full btn-lg" onclick="handleLogin()" id="login-btn">Autentificare</button>
-    <div class="login-sep" style="height:1px;background:var(--border-light);margin:24px 0;"></div>
-    <div class="login-footer">🔒 Conexiune securizată HTTPS · Date stocate în UE (Frankfurt)</div>
+    <div class="login-footer" style="margin-top:20px;">🔒 Conexiune securizată · Date stocate UE (Frankfurt)</div>
   </div>
 </div>
 
@@ -253,7 +286,7 @@ tbody tr:hover{background:#FBF9F7;}
   <div id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
-        <div class="sidebar-logo-icon">🏥</div>
+        <div class="sidebar-logo-icon" id="sidebar-logo-icon">🏥</div>
         <div class="sidebar-logo-text">
           <h2 id="sidebar-firma-name">Kineto ProActiv</h2>
           <p>Registru Pacienți</p>
@@ -284,12 +317,7 @@ tbody tr:hover{background:#FBF9F7;}
 
     <!-- DASHBOARD -->
     <div class="view-section active" id="view-dashboard">
-      <div class="page-header">
-        <div>
-          <h1 class="page-title">Dashboard</h1>
-          <p class="page-subtitle">Bine ați revenit, <span id="dash-welcome-name">—</span></p>
-        </div>
-      </div>
+      <div class="page-header"><div><h1 class="page-title">Dashboard</h1><p class="page-subtitle">Bine ați revenit, <span id="dash-welcome-name">—</span></p></div></div>
       <div class="stats-grid">
         <div class="stat-card"><span class="stat-value" id="stat-total">—</span><span class="stat-label">Total Pacienți</span></div>
         <div class="stat-card accent"><span class="stat-value" id="stat-inregistrari">—</span><span class="stat-label">Total Înregistrări</span></div>
@@ -307,10 +335,7 @@ tbody tr:hover{background:#FBF9F7;}
 
     <!-- PACIENTI -->
     <div class="view-section" id="view-pacienti">
-      <div class="page-header">
-        <div><h1 class="page-title">Pacienți</h1><p class="page-subtitle">Caută și gestionează pacienții</p></div>
-        <button class="btn btn-primary" onclick="showView('pacient-nou')">➕ Pacient Nou</button>
-      </div>
+      <div class="page-header"><div><h1 class="page-title">Pacienți</h1><p class="page-subtitle">Caută și gestionează pacienții</p></div><button class="btn btn-primary" onclick="showView('pacient-nou')">➕ Pacient Nou</button></div>
       <div class="search-box">
         <select id="search-type" onchange="updateSearchPlaceholder()">
           <option value="nume">Nume / Prenume</option>
@@ -322,54 +347,54 @@ tbody tr:hover{background:#FBF9F7;}
         <button class="btn btn-primary" onclick="searchPacienti()">🔍 Caută</button>
         <button class="btn btn-outline" onclick="clearSearch()">✕</button>
       </div>
-      <div id="search-results-area">
-        <div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Introduceți criterii de căutare</div></div>
-      </div>
+      <div id="search-results-area"><div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Introduceți criterii de căutare</div></div></div>
     </div>
 
-    <!-- PACIENT NOU -->
+    <!-- PACIENT NOU / ACTUALIZARE -->
     <div class="view-section" id="view-pacient-nou">
-      <div class="page-header">
-        <div><h1 class="page-title" id="form-view-title">Pacient Nou</h1><p class="page-subtitle" id="form-view-subtitle">Completați câmpurile de mai jos</p></div>
-      </div>
+      <div class="page-header"><div><h1 class="page-title" id="form-view-title">Pacient Nou</h1><p class="page-subtitle" id="form-view-subtitle">Completați câmpurile marcate cu *</p></div></div>
       <div class="card">
-        <div id="form-id-display" class="hidden" style="margin-bottom:16px;">
+        <div id="form-id-display" class="hidden" style="margin-bottom:16px;padding:12px;background:var(--primary-light);border-radius:var(--radius);">
           <span style="font-size:13px;color:var(--text-muted);">ID# Pacient: </span>
           <span style="font-family:var(--font-serif);font-size:22px;color:var(--primary);" id="form-id-value">—</span>
         </div>
 
         <div class="section-label">📅 Date Administrative</div>
         <div class="form-grid">
-          <div class="form-group">
+          <div class="form-group" id="fg-data-luare">
             <label class="required">Data Luare în Evidență</label>
             <input type="date" id="f-data-luare">
+            <div class="field-error-msg">Câmp obligatoriu</div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="fg-data-completare">
             <label class="required">Data Completării</label>
             <input type="date" id="f-data-completare">
+            <div class="field-error-msg">Nu poate fi înainte de data luării în evidență</div>
           </div>
         </div>
 
         <div class="section-label">👤 Date Personale</div>
         <div class="form-grid">
-          <div class="form-group">
+          <div class="form-group" id="fg-nume">
             <label class="required">Nume (ca în act)</label>
-            <input type="text" id="f-nume" placeholder="POPESCU">
+            <input type="text" id="f-nume" placeholder="POPESCU" oninput="this.value=this.value.toUpperCase()">
+            <div class="field-error-msg">Câmp obligatoriu</div>
           </div>
           <div class="form-group">
-            <label>Nume anterior (după căsătorie)</label>
+            <label>Nume anterior / după căsătorie</label>
             <input type="text" id="f-nume-anterior" placeholder="Numele înainte de căsătorie">
           </div>
-          <div class="form-group col-span-2">
+          <div class="form-group col-span-2" id="fg-prenume">
             <label class="required">Prenume</label>
             <input type="text" id="f-prenume" placeholder="Ion Alexandru">
+            <div class="field-error-msg">Câmp obligatoriu</div>
           </div>
         </div>
 
         <div class="form-group">
           <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
             <input type="checkbox" id="f-este-major" checked onchange="toggleMinorPanel()" style="width:16px;height:16px;">
-            <span>Pacient Major (debifați dacă este minor)</span>
+            <span>Pacient Major <span style="font-size:11px;color:var(--text-muted);">(debifați dacă este minor)</span></span>
           </label>
         </div>
         <div id="minor-panel" class="minor-panel hidden">
@@ -377,14 +402,8 @@ tbody tr:hover{background:#FBF9F7;}
           <div class="form-grid">
             <div class="form-group"><label class="required">Reprezentant — Nume</label><input type="text" id="f-rep-nume"></div>
             <div class="form-group"><label class="required">Reprezentant — Prenume</label><input type="text" id="f-rep-prenume"></div>
-            <div class="form-group">
-              <label class="required">Calitate</label>
-              <select id="f-rep-calitate">
-                <option value="">— Selectați —</option>
-                <option value="parinte">Părinte</option>
-                <option value="asistent_maternal">Asistent Maternal</option>
-                <option value="curator">Curator</option>
-              </select>
+            <div class="form-group"><label class="required">Calitate</label>
+              <select id="f-rep-calitate"><option value="">— Selectați —</option><option value="parinte">Părinte</option><option value="asistent_maternal">Asistent Maternal</option><option value="curator">Curator</option></select>
             </div>
             <div class="form-group"><label>Telefon Reprezentant</label><input type="tel" id="f-rep-telefon" placeholder="+40 700 000 000"></div>
           </div>
@@ -400,9 +419,10 @@ tbody tr:hover{background:#FBF9F7;}
             <input type="text" id="f-nationalitate" class="hidden" placeholder="Naționalitatea" style="margin-top:8px;">
           </div>
           <div class="form-group">
-            <label>CNP</label>
-            <input type="text" id="f-cnp" placeholder="1234567890123" maxlength="13" oninput="cnpChanged()">
-            <div class="form-hint">13 cifre — obligatoriu pentru terapie/profilaxie</div>
+            <label>CNP <span style="font-size:10px;color:var(--text-muted);">(obligatoriu pentru terapie/profilaxie)</span></label>
+            <input type="text" id="f-cnp" placeholder="1234567890123" maxlength="13" oninput="onCNPInput(this.value)">
+            <div id="cnp-info-bar" class="cnp-info-bar"></div>
+            <div class="field-error-msg" id="cnp-error-msg">CNP invalid — trebuie să aibă exact 13 cifre</div>
           </div>
           <div class="form-group"><label>Data Nașterii</label><input type="date" id="f-data-nastere"></div>
           <div class="form-group"><label>Telefon</label><input type="tel" id="f-telefon" placeholder="+40 700 000 000"></div>
@@ -410,7 +430,7 @@ tbody tr:hover{background:#FBF9F7;}
 
         <div class="section-label">🩺 Date Medicale</div>
         <div class="form-grid">
-          <div class="form-group col-span-2">
+          <div class="form-group col-span-2" id="fg-motiv">
             <label class="required">Motiv Prezentare</label>
             <select id="f-motiv" onchange="motivChanged()">
               <option value="">— Selectați —</option>
@@ -421,31 +441,34 @@ tbody tr:hover{background:#FBF9F7;}
               <option value="masaj">Masaj</option>
               <option value="consultanta">Consultanță</option>
             </select>
+            <div class="field-error-msg">Câmp obligatoriu</div>
           </div>
           <div class="form-group col-span-2">
             <label id="label-diagnostic">Diagnostic Medical</label>
             <input type="text" id="f-diagnostic" placeholder="Max. 500 caractere" maxlength="500">
+            <div class="field-error-msg" id="diagnostic-error-msg">Obligatoriu pentru terapie</div>
           </div>
           <div class="form-group col-span-2">
             <label id="label-medic-diag">Medicul care a pus diagnosticul</label>
             <div class="autocomplete-wrap">
-              <input type="text" id="f-medic-diagnostic" placeholder="Dr. Ionescu Maria — Neurologie" oninput="autocompleteInput(this,'medici')" onblur="setTimeout(()=>document.getElementById('ac-medici').classList.add('hidden'),200)">
+              <input type="text" id="f-medic-diagnostic" placeholder="Dr. Ionescu Maria — Neurologie" oninput="acInput(this,'ac-medici')" onblur="setTimeout(()=>hideAC('ac-medici'),200)">
               <div class="autocomplete-list hidden" id="ac-medici"></div>
             </div>
+            <div class="field-error-msg" id="medic-diag-error-msg">Obligatoriu pentru terapie</div>
           </div>
           <div class="form-group col-span-2">
             <label id="label-medic-trimitere">Medicul care a emis trimiterea</label>
             <div class="autocomplete-wrap">
-              <input type="text" id="f-medic-trimitere" placeholder="Identic cu medicul de diagnostic sau alt medic" oninput="autocompleteInput(this,'medici-trimitere')" onblur="setTimeout(()=>document.getElementById('ac-medici-trimitere').classList.add('hidden'),200)">
-              <div class="autocomplete-list hidden" id="ac-medici-trimitere"></div>
+              <input type="text" id="f-medic-trimitere" placeholder="Identic cu medicul de diagnostic sau alt medic" oninput="acInput(this,'ac-medici-tr')" onblur="setTimeout(()=>hideAC('ac-medici-tr'),200)" onfocus="if(!this.value&&document.getElementById('f-medic-diagnostic').value)this.value=document.getElementById('f-medic-diagnostic').value">
+              <div class="autocomplete-list hidden" id="ac-medici-tr"></div>
             </div>
-            <div class="form-hint">Se completează automat din câmpul anterior</div>
+            <div class="field-error-msg" id="medic-trim-error-msg">Obligatoriu pentru terapie</div>
           </div>
           <div class="form-group col-span-2">
             <label>Alergii</label>
             <div class="tag-input-wrap" onclick="document.getElementById('alergie-input').focus()">
               <div id="alergii-tags"></div>
-              <input type="text" id="alergie-input" class="tag-text-input" placeholder="Scrieți o alergie și apăsați Enter..." onkeydown="addAlergie(event)" oninput="autocompleteAlergie()">
+              <input type="text" id="alergie-input" class="tag-text-input" placeholder='Scrieți o alergie și apăsați Enter...' onkeydown="addAlergie(event)" oninput="acAlergie()">
             </div>
             <div class="autocomplete-list hidden" id="ac-alergii" style="position:relative;top:0;"></div>
           </div>
@@ -454,12 +477,13 @@ tbody tr:hover{background:#FBF9F7;}
             <textarea id="f-istoric" rows="4" maxlength="1000" placeholder="Descrieți pe scurt istoricul medical..."></textarea>
             <div class="form-hint"><span id="istoric-count">0</span>/1000 caractere</div>
           </div>
-          <div class="form-group col-span-2">
+          <div class="form-group col-span-2" id="fg-terapeut">
             <label class="required">Terapeut Curant</label>
-            <select id="f-terapeut"><option value="">— Selectați terapeutul —</option></select>
+            <select id="f-terapeut" onchange="terapeutChanged()"><option value="">— Selectați terapeutul —</option></select>
+            <div class="field-error-msg">Câmp obligatoriu</div>
           </div>
           <div class="form-group col-span-2 hidden" id="motiv-transfer-group">
-            <label>Motiv Transfer Terapeut</label>
+            <label>Motiv Transfer Terapeut <span style="color:var(--text-muted);font-size:11px;">(max. 100 caractere)</span></label>
             <input type="text" id="f-motiv-transfer" maxlength="100" placeholder="Motivul schimbării terapeutului...">
           </div>
         </div>
@@ -473,21 +497,19 @@ tbody tr:hover{background:#FBF9F7;}
 
     <!-- RAPOARTE -->
     <div class="view-section" id="view-rapoarte">
-      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Generați și exportați rapoarte PDF</p></div></div>
+      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Vizualizați și exportați rapoarte</p></div></div>
       <div class="report-grid">
-        <div class="report-card" onclick="openReport('activitate')"><div class="report-card-icon">📅</div><div class="report-card-title">Raport Lunar de Activitate</div><div class="report-card-desc">Toate înregistrările dintr-o lună</div></div>
-        <div class="report-card" onclick="openReport('registru')"><div class="report-card-icon">📚</div><div class="report-card-title">Registrul Unic Pacienți</div><div class="report-card-desc">Lista completă a pacienților</div></div>
-        <div class="report-card" onclick="openReport('terapeut')"><div class="report-card-icon">👨‍⚕️</div><div class="report-card-title">Raport Terapeut</div><div class="report-card-desc">Activitatea unui terapeut</div></div>
-        <div class="report-card" onclick="openReport('nastere')"><div class="report-card-icon">🎂</div><div class="report-card-title">Raport Data Nașterii</div><div class="report-card-desc">Pacienți organizați pe luni</div></div>
+        <div class="report-card" onclick="openReportFilter('activitate')"><div class="report-card-icon">📅</div><div class="report-card-title">Raport Lunar de Activitate</div><div class="report-card-desc">Toate înregistrările dintr-o lună</div></div>
+        <div class="report-card" onclick="openReportFilter('registru')"><div class="report-card-icon">📚</div><div class="report-card-title">Registrul Unic Pacienți</div><div class="report-card-desc">Lista completă a pacienților</div></div>
+        <div class="report-card" onclick="openReportFilter('terapeut')"><div class="report-card-icon">👨‍⚕️</div><div class="report-card-title">Raport Terapeut</div><div class="report-card-desc">Activitatea unui terapeut</div></div>
+        <div class="report-card" onclick="openReportFilter('nastere')"><div class="report-card-icon">🎂</div><div class="report-card-title">Raport Data Nașterii</div><div class="report-card-desc">Pacienți organizați pe luni</div></div>
+        <div class="report-card" onclick="openReportFilter('medici')"><div class="report-card-icon">🏥</div><div class="report-card-title">Raport Medici Recomandare</div><div class="report-card-desc">Pacienți per medic trimițător</div></div>
       </div>
     </div>
 
     <!-- UTILIZATORI -->
     <div class="view-section" id="view-utilizatori">
-      <div class="page-header">
-        <div><h1 class="page-title">Utilizatori</h1><p class="page-subtitle">Gestionați conturile de acces</p></div>
-        <button class="btn btn-primary" onclick="openUserModal()">➕ Utilizator Nou</button>
-      </div>
+      <div class="page-header"><div><h1 class="page-title">Utilizatori</h1><p class="page-subtitle">Gestionați conturile de acces</p></div><button class="btn btn-primary" onclick="openUserModal()">➕ Utilizator Nou</button></div>
       <div class="users-grid" id="users-grid"><div class="loading"><div class="spinner"></div> Se încarcă...</div></div>
     </div>
 
@@ -495,17 +517,17 @@ tbody tr:hover{background:#FBF9F7;}
     <div class="view-section" id="view-setari">
       <div class="page-header"><div><h1 class="page-title">Setări</h1></div></div>
       <div class="settings-tabs">
-        <div class="settings-tab active" onclick="showSettingsTab('parola',event)">🔑 Parolă</div>
-        <div class="settings-tab" onclick="showSettingsTab('firma',event)">🏢 Firmă</div>
-        <div class="settings-tab" onclick="showSettingsTab('backup',event)" id="tab-backup">💾 Backup</div>
-        <div class="settings-tab" onclick="showSettingsTab('log',event)" id="tab-log">📝 Log</div>
-        <div class="settings-tab" onclick="showSettingsTab('despre',event)">ℹ️ Despre</div>
+        <div class="settings-tab active" onclick="showSettingsTab('parola',this)">🔑 Parolă</div>
+        <div class="settings-tab" onclick="showSettingsTab('firma',this)">🏢 Firmă</div>
+        <div class="settings-tab" onclick="showSettingsTab('backup',this)" id="tab-backup">💾 Backup</div>
+        <div class="settings-tab" onclick="showSettingsTab('log',this)" id="tab-log">📝 Log</div>
+        <div class="settings-tab" onclick="showSettingsTab('despre',this)">ℹ️ Despre</div>
       </div>
 
       <div id="settings-parola" class="card">
         <div class="card-title">Schimbare Parolă</div>
         <div style="max-width:400px;">
-          <div class="form-group"><label>Parola Nouă</label><input type="password" id="s-parola-noua" placeholder="Minim 8 caractere"></div>
+          <div class="form-group"><label>Parola Nouă <span style="font-size:11px;color:var(--text-muted);">(min. 10 car., literă mare, cifră, simbol)</span></label><input type="password" id="s-parola-noua" placeholder="Minim 10 caractere" oninput="checkPasswordStrength(this.value)"><div class="pw-strength hidden" id="pw-strength-bar"></div><div id="pw-strength-text" style="font-size:11px;margin-top:4px;"></div></div>
           <div class="form-group"><label>Confirmă Parola Nouă</label><input type="password" id="s-parola-confirma" placeholder="Repetați parola nouă"></div>
           <button class="btn btn-primary" onclick="schimbaParola()">💾 Actualizează Parola</button>
         </div>
@@ -514,12 +536,18 @@ tbody tr:hover{background:#FBF9F7;}
       <div id="settings-firma" class="card hidden">
         <div class="card-title">Date Firmă</div>
         <div style="max-width:600px;">
+          <div class="form-group"><label>Logo Cabinet <span style="font-size:11px;color:var(--text-muted);">(PNG/JPG, max 200KB)</span></label>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+              <div id="logo-preview" style="width:64px;height:64px;border:2px dashed var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;">🏥</div>
+              <div><input type="file" id="logo-input" accept="image/png,image/jpeg,image/jpg" style="display:none" onchange="handleLogoUpload(this)"><button class="btn btn-outline btn-sm" onclick="document.getElementById('logo-input').click()">📁 Alege Logo</button><button class="btn btn-ghost btn-sm" onclick="removeLogo()">✕ Șterge</button></div>
+            </div>
+          </div>
           <div class="form-grid">
-            <div class="form-group"><label>Denumire</label><input type="text" id="s-denumire" maxlength="30"></div>
-            <div class="form-group"><label>CUI</label><input type="text" id="s-cui" maxlength="8"></div>
+            <div class="form-group"><label>Denumire <span style="font-size:11px;">(max 30 car.)</span></label><input type="text" id="s-denumire" maxlength="30"></div>
+            <div class="form-group"><label>CUI</label><input type="text" id="s-cui" maxlength="10"></div>
             <div class="form-group"><label>Nr. Registrul Comerțului</label><input type="text" id="s-reg-com"></div>
             <div class="form-group"><label>Cont Bancar</label><input type="text" id="s-iban"></div>
-            <div class="form-group col-span-2"><label>Adresă</label><input type="text" id="s-adresa"></div>
+            <div class="form-group col-span-2"><label>Adresă Punct de Lucru</label><input type="text" id="s-adresa"></div>
           </div>
           <button class="btn btn-primary" onclick="salveazaFirma()">💾 Salvează</button>
         </div>
@@ -527,15 +555,27 @@ tbody tr:hover{background:#FBF9F7;}
 
       <div id="settings-backup" class="card hidden">
         <div class="card-title">Backup & Restaurare</div>
-        <div style="display:flex;flex-direction:column;gap:14px;max-width:500px;">
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:540px;">
           <div class="card" style="border:1.5px solid var(--primary-light);">
-            <div style="font-weight:600;margin-bottom:8px;">📥 Export Backup</div>
-            <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă Arhivă</button>
+            <div style="font-weight:600;margin-bottom:6px;">📥 Export Backup</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Descărcați o arhivă JSON cu toate datele. Recomandare: săptămânal.</div>
+            <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă Arhivă Backup</button>
+          </div>
+          <div class="card" style="border:1.5px solid var(--success-light);">
+            <div style="font-weight:600;margin-bottom:6px;">📤 Import / Restaurare</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Importați date dintr-un backup. Duplicatele (același CNP) sunt fuzionate automat.</div>
+            <input type="file" id="import-backup-file" accept=".json" style="display:none" onchange="importBackup(this)">
+            <button class="btn btn-success" onclick="document.getElementById('import-backup-file').click()">📂 Selectează Fișier Backup (.json)</button>
+            <div id="import-progress" style="display:none;margin-top:12px;">
+              <div style="font-size:13px;font-weight:500;margin-bottom:6px;">⏳ Import în desfășurare...</div>
+              <div style="background:var(--border-light);border-radius:20px;height:8px;overflow:hidden;"><div id="import-progress-bar" style="height:100%;background:var(--success);border-radius:20px;width:0%;transition:width .3s;"></div></div>
+              <div id="import-status" style="font-size:12px;color:var(--text-muted);margin-top:6px;"></div>
+            </div>
           </div>
           <div class="card" style="border:1.5px solid var(--danger-light);">
             <div style="font-weight:600;margin-bottom:6px;color:var(--danger);">🗑️ Resetare Bază de Date</div>
             <div style="font-size:13px;color:var(--text-muted);margin-bottom:10px;">Șterge TOATE înregistrările. Log-ul este păstrat. Ireversibil!</div>
-            <button class="btn btn-danger" onclick="resetDatabase()">⚠️ Resetează</button>
+            <button class="btn btn-danger" onclick="resetDatabase()">⚠️ Resetează Baza de Date</button>
           </div>
         </div>
       </div>
@@ -551,27 +591,28 @@ tbody tr:hover{background:#FBF9F7;}
       <div id="settings-despre" class="card hidden">
         <div class="card-title">Despre</div>
         <div style="max-width:500px;font-size:14px;line-height:1.7;">
-          <div style="font-family:var(--font-serif);font-size:22px;margin-bottom:8px;">Kineto ProActiv v1.0</div>
-          <div style="padding:14px;background:var(--primary-light);border-radius:var(--radius);">
-            <div><strong>Backend:</strong> Supabase (PostgreSQL)</div>
+          <div style="font-family:var(--font-serif);font-size:22px;margin-bottom:8px;">Kineto ProActiv v2.0</div>
+          <div style="padding:14px;background:var(--primary-light);border-radius:var(--radius);margin-bottom:16px;">
+            <div><strong>Backend:</strong> Supabase (PostgreSQL, Frankfurt EU)</div>
             <div><strong>Hosting:</strong> Vercel</div>
-            <div><strong>Date stocate în:</strong> Frankfurt, UE (GDPR Compliant)</div>
+            <div><strong>GDPR:</strong> Date stocate în UE, log complet activitate</div>
           </div>
-          <div style="margin-top:16px;font-size:13px;color:var(--text-muted);">
+          <div style="font-size:13px;color:var(--text-muted);">
             <strong>Obligații GDPR:</strong><br>
-            1. Înregistrați firma la ANSPDCP (dataprotection.ro)<br>
-            2. Semnați DPA cu Supabase (Settings → Legal)<br>
-            3. Actualizați fișele de consimțământ ale pacienților<br>
-            4. Păstrați log-ul de activitate minim 5 ani
+            ☐ Înregistrare ANSPDCP — dataprotection.ro<br>
+            ☐ Semnare DPA cu Supabase (Settings → Legal)<br>
+            ☐ Actualizare fișe consimțământ pacienți<br>
+            ☐ Backup săptămânal (Setări → Backup)
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ===== MODALS ===== -->
+
+<!-- PACIENT ISTORIC -->
 <div class="modal-overlay hidden" id="modal-pacient">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -582,241 +623,648 @@ tbody tr:hover{background:#FBF9F7;}
   </div>
 </div>
 
+<!-- EDIT INREGISTRARE -->
+<div class="modal-overlay hidden" id="modal-edit-inreg">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Modifică Înregistrare</div>
+        <div style="font-size:12px;color:var(--text-muted);" id="edit-inreg-pacient-name"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-edit-inreg')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-inreg-id">
+      <input type="hidden" id="edit-inreg-pacient-id">
+      <div class="form-grid">
+        <div class="form-group"><label class="required">Data Completării</label><input type="date" id="ei-data-completare"></div>
+        <div class="form-group"><label class="required">Motiv Prezentare</label>
+          <select id="ei-motiv">
+            <option value="evaluare">Evaluare</option><option value="reevaluare">Reevaluare</option>
+            <option value="terapie">Terapie</option><option value="profilaxie">Profilaxie</option>
+            <option value="masaj">Masaj</option><option value="consultanta">Consultanță</option>
+          </select>
+        </div>
+        <div class="form-group col-span-2"><label>Diagnostic Medical</label><input type="text" id="ei-diagnostic" maxlength="500"></div>
+        <div class="form-group col-span-2"><label>Medicul care a pus diagnosticul</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="ei-medic-diag" oninput="acInput(this,'ac-ei-medic-diag')" onblur="setTimeout(()=>hideAC('ac-ei-medic-diag'),200)">
+            <div class="autocomplete-list hidden" id="ac-ei-medic-diag"></div>
+          </div>
+        </div>
+        <div class="form-group col-span-2"><label>Medicul care a emis trimiterea</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="ei-medic-trim" oninput="acInput(this,'ac-ei-medic-trim')" onblur="setTimeout(()=>hideAC('ac-ei-medic-trim'),200)">
+            <div class="autocomplete-list hidden" id="ac-ei-medic-trim"></div>
+          </div>
+        </div>
+        <div class="form-group col-span-2"><label>Alergii</label>
+          <div class="tag-input-wrap" onclick="document.getElementById('ei-alergie-input').focus()">
+            <div id="ei-alergii-tags"></div>
+            <input type="text" id="ei-alergie-input" class="tag-text-input" placeholder="Scrieți o alergie și apăsați Enter..." onkeydown="addAlergieEI(event)">
+          </div>
+        </div>
+        <div class="form-group col-span-2"><label>Scurt Istoric Medical</label><textarea id="ei-istoric" rows="4" maxlength="1000"></textarea></div>
+        <div class="form-group col-span-2"><label class="required">Terapeut Curant</label><select id="ei-terapeut"><option value="">— Selectați —</option></select></div>
+        <div class="form-group col-span-2 hidden" id="ei-motiv-transfer-group"><label>Motiv Transfer</label><input type="text" id="ei-motiv-transfer" maxlength="100"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('modal-edit-inreg')">Anulează</button>
+      <button class="btn btn-primary" onclick="salveazaModificareInregistrare()">💾 Salvează Modificările</button>
+    </div>
+  </div>
+</div>
+
+<!-- USER MODAL -->
 <div class="modal-overlay hidden" id="modal-user">
   <div class="modal modal-sm">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-user-title">Utilizator Nou</div>
-      <button class="modal-close" onclick="closeModal('modal-user')">✕</button>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="modal-user-title">Utilizator Nou</div><button class="modal-close" onclick="closeModal('modal-user')">✕</button></div>
     <div class="modal-body">
       <div class="form-group"><label class="required">Email</label><input type="email" id="u-email"></div>
       <div class="form-grid">
-        <div class="form-group"><label class="required">Nume</label><input type="text" id="u-nume"></div>
+        <div class="form-group"><label class="required">Nume</label><input type="text" id="u-nome"></div>
         <div class="form-group"><label class="required">Prenume</label><input type="text" id="u-prenume"></div>
       </div>
-      <div class="form-group"><label>Rol</label>
-        <select id="u-rol" onchange="rolChanged()">
-          <option value="terapeut">Terapeut</option>
-          <option value="secretariat">Secretariat</option>
-          <option value="admin">Administrator</option>
-        </select>
-      </div>
+      <div class="form-group"><label>Rol</label><select id="u-rol" onchange="rolChanged()"><option value="terapeut">Terapeut</option><option value="secretariat">Secretariat</option><option value="admin">Administrator</option></select></div>
       <div id="u-terapeut-fields">
-        <div class="form-group"><label>Tip Colaborare</label>
-          <select id="u-tip-colaborare"><option value="angajat">Angajat</option><option value="colaborator">Colaborator</option></select>
-        </div>
-        <div class="form-group"><label>Specialitate</label>
-          <select id="u-specialitate"><option value="">— Selectați —</option></select>
-        </div>
+        <div class="form-group"><label>Tip Colaborare</label><select id="u-tip-colaborare"><option value="angajat">Angajat</option><option value="colaborator">Colaborator</option></select></div>
+        <div class="form-group"><label>Specialitate</label><select id="u-specialitate"><option value="">— Selectați —</option></select></div>
       </div>
-      <div class="form-group" style="margin-top:12px;padding:12px;background:var(--primary-light);border-radius:var(--radius);font-size:13px;color:var(--primary);">
-        ℹ️ Creați utilizatorul din <strong>Supabase → Authentication → Users</strong>, apoi folosiți butonul Modifică de mai jos pentru a seta rolul și specialitatea.
-      </div>
+      <div style="background:var(--primary-light);border-radius:var(--radius);padding:12px;font-size:13px;color:var(--primary);margin-top:10px;">ℹ️ Creați contul din <strong>Supabase → Authentication → Users</strong>, apoi modificați rolul și specialitatea aici.</div>
     </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-user')">Anulează</button>
-      <button class="btn btn-primary" onclick="salveazaUtilizator()">💾 Salvează</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-user')">Anulează</button><button class="btn btn-primary" onclick="salveazaUtilizator()">💾 Salvează</button></div>
   </div>
 </div>
 
+<!-- CONFIRM -->
 <div class="modal-overlay hidden" id="modal-confirm">
   <div class="modal modal-sm">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-confirm-title">Confirmare</div>
-      <button class="modal-close" onclick="closeModal('modal-confirm')">✕</button>
-    </div>
-    <div class="modal-body">
-      <p id="modal-confirm-text" style="font-size:14px;line-height:1.6;"></p>
-      <div id="modal-confirm-extra" style="margin-top:14px;"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-confirm')">Anulează</button>
-      <button class="btn btn-danger" id="modal-confirm-btn" onclick="if(confirmCallback)confirmCallback()">Confirmă</button>
-    </div>
+    <div class="modal-header"><div class="modal-title" id="modal-confirm-title">Confirmare</div><button class="modal-close" onclick="closeModal('modal-confirm')">✕</button></div>
+    <div class="modal-body"><p id="modal-confirm-text" style="font-size:14px;line-height:1.6;"></p><div id="modal-confirm-extra" style="margin-top:14px;"></div></div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-confirm')">Anulează</button><button class="btn btn-danger" id="modal-confirm-btn" onclick="if(confirmCallback)confirmCallback()">Confirmă</button></div>
   </div>
 </div>
 
-<div class="modal-overlay hidden" id="modal-raport">
+<!-- REPORT FILTER -->
+<div class="modal-overlay hidden" id="modal-raport-filter">
+  <div class="modal modal-sm">
+    <div class="modal-header"><div class="modal-title" id="modal-raport-filter-title">Filtre Raport</div><button class="modal-close" onclick="closeModal('modal-raport-filter')">✕</button></div>
+    <div class="modal-body" id="modal-raport-filter-body"></div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-raport-filter')">Anulează</button><button class="btn btn-primary" onclick="loadAndShowReport()">📊 Vizualizează</button></div>
+  </div>
+</div>
+
+<!-- REPORT VIEWER -->
+<div class="modal-overlay hidden" id="modal-report-viewer">
+  <div class="modal modal-xl" style="display:flex;flex-direction:column;max-height:96vh;">
+    <div class="modal-header" style="flex-shrink:0;">
+      <div>
+        <div class="modal-title" id="rv-title">Raport</div>
+        <div style="font-size:12px;color:var(--text-muted);" id="rv-subtitle"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <div id="rv-action-btns"></div>
+        <button class="btn btn-primary btn-sm" onclick="openPDFOptions()">📄 Export PDF</button>
+        <button class="btn btn-outline btn-sm" onclick="printReportHTML()">🖨️ Printează</button>
+        <button class="modal-close" onclick="closeModal('modal-report-viewer')">✕</button>
+      </div>
+    </div>
+    <div class="rv-table-wrap" style="flex:1;">
+      <table class="rv-table" id="rv-table">
+        <thead id="rv-thead"></thead>
+        <tbody id="rv-tbody"></tbody>
+      </table>
+    </div>
+    <div style="padding:10px 24px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-muted);flex-shrink:0;" id="rv-footer">Total: 0 înregistrări</div>
+  </div>
+</div>
+
+<!-- PDF OPTIONS -->
+<div class="modal-overlay hidden" id="modal-pdf-options">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="modal-raport-title">Generare Raport</div>
-      <button class="modal-close" onclick="closeModal('modal-raport')">✕</button>
+    <div class="modal-header"><div class="modal-title">Opțiuni Export PDF</div><button class="modal-close" onclick="closeModal('modal-pdf-options')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Format PDF</label>
+        <select id="pdf-format">
+          <option value="table">Tabel standard (landscape A4)</option>
+          <option value="variantA">Registru Tipărit — Varianta A (față-verso)</option>
+          <option value="variantC">Registru Tipărit — Varianta C (per pacient)</option>
+        </select>
+      </div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Câmpuri de inclus:</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px;">
+        <button class="btn btn-outline btn-sm" onclick="selectAllPDFFields(true)">Selectează toate</button>
+        <button class="btn btn-outline btn-sm" onclick="selectAllPDFFields(false)">Deselectează toate</button>
+      </div>
+      <div class="pdf-fields-grid" id="pdf-fields-grid"></div>
     </div>
-    <div class="modal-body" id="modal-raport-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-outline" onclick="closeModal('modal-raport')">Anulează</button>
-      <button class="btn btn-primary" onclick="genereazaRaport()">📄 Generează PDF</button>
-    </div>
+    <div class="modal-footer"><button class="btn btn-outline" onclick="closeModal('modal-pdf-options')">Anulează</button><button class="btn btn-primary" onclick="executeExportPDF()">📄 Generează PDF</button></div>
   </div>
 </div>
 
 <script>
 // ============================================================
-// CONFIGURARE — ÎNLOCUIȚI CU DATELE DVS. DIN SUPABASE
+// CONFIGURARE — ÎNLOCUIȚI CU DATELE DVS.
 // ============================================================
-const SUPABASE_URL = 'https://asjbzsjtietjmjaqwobz.supabase.co';
+const SUPABASE_URL = 'asjbzsjtietjmjaqwobz.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_3h5pL6u2EZA72GRxfClAmw_I72J4SRs';
 // ============================================================
 
 const { createClient } = window.supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// State
 let currentUser = null, currentProfile = null;
 let editingPacientId = null, formMode = 'nou';
-let alergiiSelectate = [], confirmCallback = null, currentReportType = null;
+let alergiiSelectate = [], eiAlergiiSelectate = [], confirmCallback = null;
 let mediciCache = [], terapeutiCache = [], specialitatiCache = [];
+let prevTerapeutId = null;
+// Report viewer state
+let rvData = [], rvColumns = [], rvSortCol = null, rvSortDir = 'asc';
+let rvType = '', rvTitle = '', rvFilters = {};
+let selectedPDFFields = new Set();
 
+// ============================================================
+// INIT & AUTH
+// ============================================================
 async function init() {
   const { data: { session } } = await sb.auth.getSession();
   if (session) await onLogin(session.user);
-  sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session) await onLogin(session.user);
-    if (event === 'SIGNED_OUT') showLoginScreen();
+  sb.auth.onAuthStateChange(async (e, session) => {
+    if (e === 'SIGNED_IN' && session) await onLogin(session.user);
+    if (e === 'SIGNED_OUT') showLoginScreen();
   });
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('f-data-luare').value = today;
-  document.getElementById('f-data-luare').max = today;
-  document.getElementById('f-data-completare').value = today;
-  document.getElementById('f-data-completare').max = today;
-  document.getElementById('f-istoric').addEventListener('input', function(){ document.getElementById('istoric-count').textContent = this.value.length; });
-  document.getElementById('f-medic-diagnostic').addEventListener('blur', function(){
-    setTimeout(() => {
-      if (!document.getElementById('f-medic-trimitere').value) document.getElementById('f-medic-trimitere').value = this.value;
-    }, 200);
-  });
+  const today = todayStr();
+  setVal('f-data-luare', today); setAttr('f-data-luare', 'max', today);
+  setVal('f-data-completare', today); setAttr('f-data-completare', 'max', today);
+  gel('f-istoric').addEventListener('input', function(){ gel('istoric-count').textContent = this.value.length; });
+  gel('ei-terapeut').innerHTML = gel('f-terapeut').innerHTML;
 }
 
 async function onLogin(user) {
   currentUser = user;
-  const { data: profile } = await sb.from('profiles').select('*,specialitati(denumire)').eq('id', user.id).single();
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
   if (!profile) { showToast('Profil negăsit. Contactați administratorul.','error'); return; }
   currentProfile = profile;
-  document.getElementById('login-screen').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
-  setupUI();
-  await loadCommonData();
-  showView('dashboard');
-  await loadDashboardStats();
-  await logActivity('login', 'Autentificare');
+  gel('login-screen').classList.add('hidden');
+  gel('app').classList.remove('hidden');
+  setupUI(); await loadCommonData(); showView('dashboard');
+  await loadDashboardStats(); await logActivity('login', 'Autentificare');
 }
 
 function setupUI() {
   const p = currentProfile;
   const initials = ((p.prenume||'')[0]||'') + ((p.nume||'')[0]||'');
-  document.getElementById('user-avatar').textContent = initials.toUpperCase() || '?';
-  document.getElementById('user-display-name').textContent = `${p.prenume} ${p.nume}`;
-  document.getElementById('user-display-role').textContent = roleLabel(p.rol);
-  document.getElementById('dash-welcome-name').textContent = p.prenume || 'utilizator';
+  gel('user-avatar').textContent = initials.toUpperCase() || '?';
+  gel('user-display-name').textContent = `${p.prenume} ${p.nume}`;
+  gel('user-display-role').textContent = roleLabel(p.rol);
+  gel('dash-welcome-name').textContent = p.prenume || 'utilizator';
   if (p.rol === 'admin') {
-    document.getElementById('nav-utilizatori').classList.remove('hidden');
-    document.getElementById('tab-backup').classList.remove('hidden');
-    document.getElementById('tab-log').classList.remove('hidden');
+    gel('nav-utilizatori').classList.remove('hidden');
+    gel('tab-backup').classList.remove('hidden');
+    gel('tab-log').classList.remove('hidden');
   }
 }
-
-function roleLabel(r) { return {admin:'Administrator',terapeut:'Terapeut',secretariat:'Secretariat'}[r]||r; }
 
 async function loadCommonData() {
   const [{ data: sp }, { data: tr }, { data: md }] = await Promise.all([
     sb.from('specialitati').select('*').order('denumire'),
-    sb.from('profiles').select('*,specialitati(denumire)').eq('activ',true).order('nume'),
-    sb.from('medici').select('*').eq('activ',true).order('nume_complet_specialitate'),
+    sb.from('profiles').select('*').eq('activ', true).order('nume'),
+    sb.from('medici').select('*').eq('activ', true).order('nume_complet_specialitate'),
   ]);
   specialitatiCache = sp || [];
   terapeutiCache = tr || [];
   mediciCache = md || [];
-  const sel = document.getElementById('f-terapeut');
-  sel.innerHTML = '<option value="">— Selectați terapeutul —</option>';
-  terapeutiCache.forEach(t => {
-    const sp2 = t.specialitati ? ` (${t.specialitati.denumire})` : '';
-    sel.innerHTML += `<option value="${t.id}">${t.prenume} ${t.nume}${sp2}</option>`;
-  });
-  if (currentProfile && currentProfile.rol === 'terapeut') sel.value = currentProfile.id;
-  const uSp = document.getElementById('u-specialitate');
-  uSp.innerHTML = '<option value="">— Selectați —</option>';
-  specialitatiCache.forEach(s => uSp.innerHTML += `<option value="${s.id}">${s.denumire}</option>`);
+  // Populate terapeut dropdowns
+  const opts = '<option value="">— Selectați terapeutul —</option>' +
+    terapeutiCache.map(t => `<option value="${t.id}">${t.prenume} ${t.nume}${t.specialitate_id?' ('+getSpecialitate(t.specialitate_id)+')':''}</option>`).join('');
+  gel('f-terapeut').innerHTML = opts;
+  gel('ei-terapeut').innerHTML = opts;
+  if (currentProfile?.rol === 'terapeut') { gel('f-terapeut').value = currentProfile.id; gel('ei-terapeut').value = currentProfile.id; }
+  // Specialitati in user modal
+  gel('u-specialitate').innerHTML = '<option value="">— Selectați —</option>' + specialitatiCache.map(s => `<option value="${s.id}">${s.denumire}</option>`).join('');
+  // Load firma name + logo
+  const { data: firma } = await sb.from('setari_firma').select('*').maybeSingle();
+  if (firma) {
+    if (firma.denumire) { gel('sidebar-firma-name').textContent = firma.denumire; }
+    if (firma.logo_base64) { setLogo(firma.logo_base64); }
+  }
+}
+
+function getSpecialitate(id) {
+  const s = specialitatiCache.find(x => x.id == id);
+  return s ? s.denumire : '';
 }
 
 async function handleLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-password').value;
+  const email = gel('login-email').value.trim();
+  const pass = gel('login-password').value;
   if (!email || !pass) { showToast('Completați emailul și parola.','error'); return; }
-  const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.textContent = 'Se autentifică...';
+  const btn = gel('login-btn'); btn.disabled = true; btn.textContent = 'Se autentifică...';
   const { error } = await sb.auth.signInWithPassword({ email, password: pass });
   if (error) { showToast('Email sau parolă incorectă.','error'); btn.disabled = false; btn.textContent = 'Autentificare'; }
 }
 
 async function handleLogout() { await logActivity('logout','Deconectare'); await sb.auth.signOut(); }
+function showLoginScreen() { currentUser = null; currentProfile = null; gel('app').classList.add('hidden'); gel('login-screen').classList.remove('hidden'); gel('login-password').value = ''; }
 
-function showLoginScreen() {
-  currentUser = null; currentProfile = null;
-  document.getElementById('app').classList.add('hidden');
-  document.getElementById('login-screen').classList.remove('hidden');
-  document.getElementById('login-password').value = '';
-}
-
+// ============================================================
+// NAVIGATION
+// ============================================================
 function showView(view) {
   document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const el = document.getElementById(`view-${view}`);
-  const nav = document.getElementById(`nav-${view}`);
+  const el = gel(`view-${view}`); const nav = gel(`nav-${view}`);
   if (el) el.classList.add('active');
   if (nav) nav.classList.add('active');
   if (view === 'utilizatori') loadUtilizatori();
   if (view === 'pacient-nou' && formMode === 'nou') resetForm();
 }
 
-async function loadDashboardStats() {
-  try {
-    const now = new Date();
-    const anStart = `${now.getFullYear()}-01-01`;
-    const lunStart = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
-    const [r1,r2,r3,r4] = await Promise.all([
-      sb.from('pacienti').select('*',{count:'exact',head:true}).eq('activ',true),
-      sb.from('inregistrari').select('*',{count:'exact',head:true}),
-      sb.from('inregistrari').select('*',{count:'exact',head:true}).gte('data_completarii',anStart),
-      sb.from('inregistrari').select('*',{count:'exact',head:true}).gte('data_completarii',lunStart),
-    ]);
-    document.getElementById('stat-total').textContent = r1.count||0;
-    document.getElementById('stat-inregistrari').textContent = r2.count||0;
-    document.getElementById('stat-an').textContent = r3.count||0;
-    document.getElementById('stat-luna').textContent = r4.count||0;
-  } catch(e) { console.error(e); }
+// ============================================================
+// CNP PARSER
+// ============================================================
+function parseCNP(cnp) {
+  if (!cnp || !/^\d{13}$/.test(cnp)) return null;
+  const s = parseInt(cnp[0]);
+  const an2 = cnp.substring(1,3), luna = cnp.substring(3,5), zi = cnp.substring(5,7);
+  let century;
+  if (s===1||s===2) century='19';
+  else if (s===3||s===4) century='18';
+  else if (s===5||s===6) century='20';
+  else if (s===7||s===8) century='19';
+  else if (s===9) century='19';
+  else return null;
+  const dataNastere = `${century}${an2}-${luna}-${zi}`;
+  const d = new Date(dataNastere);
+  if (isNaN(d)) return null;
+  const sex = [1,3,5,7].includes(s) ? 'M' : 'F';
+  const esteMinor = s===5||s===6;
+  return { dataNastere, sex, esteMinor, valid: true };
 }
 
+function onCNPInput(cnp) {
+  const fg = gel('fg-cnp') || gel('f-cnp').closest('.form-group');
+  const input = gel('f-cnp');
+  const infoBar = gel('cnp-info-bar');
+  const errMsg = gel('cnp-error-msg');
+  // Remove validation classes
+  input.classList.remove('cnp-ok','cnp-err');
+  infoBar.style.display = 'none';
+  if (!cnp) return;
+  if (!/^\d+$/.test(cnp)) { input.classList.add('cnp-err'); return; }
+  if (cnp.length !== 13) {
+    if (cnp.length > 0) { input.classList.add('cnp-err'); errMsg.textContent = `CNP incomplet — ${cnp.length}/13 cifre`; }
+    return;
+  }
+  const parsed = parseCNP(cnp);
+  if (!parsed) { input.classList.add('cnp-err'); errMsg.textContent = 'CNP invalid'; return; }
+  input.classList.add('cnp-ok');
+  // Auto-fill data nastere
+  if (!gel('f-data-nastere').value) gel('f-data-nastere').value = parsed.dataNastere;
+  // Auto-fill sex + minor
+  if (formMode === 'nou') {
+    if (parsed.esteMinor) {
+      gel('f-este-major').checked = false;
+      gel('minor-panel').classList.remove('hidden');
+    } else {
+      gel('f-este-major').checked = true;
+      gel('minor-panel').classList.add('hidden');
+    }
+  }
+  // Verify against manual date
+  const manualDate = gel('f-data-nastere').value;
+  if (manualDate && manualDate !== parsed.dataNastere) {
+    infoBar.style.display = 'block';
+    infoBar.style.background = '#FEF7EC'; infoBar.style.color = '#C97D20'; infoBar.style.borderColor = '#F0A04B';
+    infoBar.textContent = `⚠️ Atenție: Data nașterii din CNP (${formatDate(parsed.dataNastere)}) diferă de cea introdusă manual.`;
+  } else {
+    infoBar.style.display = 'block';
+    infoBar.textContent = `✓ CNP valid · Sex: ${parsed.sex==='M'?'Masculin':'Feminin'} · ${parsed.esteMinor?'Minor':'Major'} · Naștere: ${formatDate(parsed.dataNastere)}`;
+  }
+}
+
+// ============================================================
+// FORM HANDLING
+// ============================================================
+function toggleMinorPanel() { gel('minor-panel').classList.toggle('hidden', gel('f-este-major').checked); }
+function toggleNationalitate() {
+  const isR = gel('f-este-roman').checked;
+  gel('f-nationalitate').classList.toggle('hidden', isR);
+  gel('f-cnp').maxLength = isR ? 13 : 50;
+}
+function motivChanged() {
+  const req = gel('f-motiv').value === 'terapie';
+  ['label-diagnostic','label-medic-diag','label-medic-trimitere'].forEach(id => {
+    const el = gel(id);
+    el.innerHTML = el.textContent.replace(' *','') + (req ? ' <span style="color:var(--danger)">*</span>' : '');
+  });
+}
+function terapeutChanged() {
+  const newVal = gel('f-terapeut').value;
+  gel('motiv-transfer-group').classList.toggle('hidden', !prevTerapeutId || newVal === prevTerapeutId || !newVal);
+}
+
+function resetForm(mode='nou') {
+  formMode = mode; editingPacientId = null; alergiiSelectate = []; renderAlergiiTags(); prevTerapeutId = null;
+  const today = todayStr();
+  gel('form-view-title').textContent = 'Pacient Nou';
+  gel('form-view-subtitle').textContent = 'Completați câmpurile marcate cu *';
+  gel('form-id-display').classList.add('hidden');
+  ['f-data-luare','f-data-completare'].forEach(id => { gel(id).value = today; gel(id).disabled = false; });
+  ['f-nome','f-prenume','f-cnp','f-telefon','f-diagnostic','f-medic-diagnostic','f-medic-trimitere','f-istoric','f-motiv-transfer','f-rep-nume','f-rep-prenume','f-rep-telefon','f-nationalitate','f-nome-anterior'].forEach(id => { const el=gel(id); if(el){el.value='';el.disabled=false;el.classList.remove('cnp-ok','cnp-err');} });
+  gel('f-nome') && (gel('f-nome').value=''); gel('f-prenume').value=''; gel('f-nome-anterior') && (gel('f-nome-anterior').value='');
+  gel('f-este-major').checked=true; gel('f-este-roman').checked=true;
+  gel('f-rep-calitate').value=''; gel('f-motiv').value=''; gel('f-data-nastere').value='';
+  gel('minor-panel').classList.add('hidden'); gel('f-nationalitate').classList.add('hidden');
+  gel('motiv-transfer-group').classList.add('hidden');
+  gel('cnp-info-bar').style.display='none';
+  gel('f-terapeut').value = currentProfile?.rol==='terapeut' ? currentProfile.id : '';
+  gel('istoric-count').textContent='0';
+  clearValidation();
+}
+
+// VALIDATION
+function clearValidation() {
+  document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+}
+function setFieldError(fgId, show) {
+  const el = gel(fgId); if (el) el.classList.toggle('field-error', show);
+}
+function validatePacientForm() {
+  clearValidation(); let valid = true; let firstError = null;
+  const checkRequired = (fgId, fieldId) => { if (!gel(fieldId).value.trim()) { setFieldError(fgId, true); valid = false; if (!firstError) firstError = fieldId; } };
+  checkRequired('fg-data-luare','f-data-luare');
+  checkRequired('fg-data-completare','f-data-completare');
+  if (formMode !== 'actualizare') { checkRequired('fg-nume','f-nume'); checkRequired('fg-prenume','f-prenume'); }
+  checkRequired('fg-motiv','f-motiv');
+  checkRequired('fg-terapeut','f-terapeut');
+  // CNP validation
+  const cnp = gel('f-cnp').value.trim();
+  const isRoman = gel('f-este-roman').checked;
+  if (cnp && isRoman && cnp.length !== 13) {
+    gel('f-cnp').closest('.form-group').classList.add('field-error');
+    gel('cnp-error-msg').textContent = 'CNP invalid — trebuie să aibă exact 13 cifre';
+    valid = false; if (!firstError) firstError = 'f-cnp';
+  }
+  // Terapie requires medic fields
+  if (gel('f-motiv').value === 'terapie') {
+    if (!gel('f-medic-diagnostic').value.trim()) {
+      gel('f-medic-diagnostic').closest('.form-group').classList.add('field-error');
+      valid = false; if (!firstError) firstError = 'f-medic-diagnostic';
+    }
+    if (!gel('f-medic-trimitere').value.trim()) {
+      gel('f-medic-trimitere').closest('.form-group').classList.add('field-error');
+      valid = false; if (!firstError) firstError = 'f-medic-trimitere';
+    }
+  }
+  // Date check
+  const dl = gel('f-data-luare').value, dc = gel('f-data-completare').value;
+  if (dl && dc && dc < dl) {
+    setFieldError('fg-data-completare', true);
+    gel('fg-data-completare').querySelector('.field-error-msg').textContent = 'Nu poate fi înainte de data luării în evidență';
+    valid = false;
+  }
+  if (firstError) { setTimeout(() => { const el = gel(firstError); if (el) el.focus(); }, 100); showToast('Completați câmpurile marcate cu roșu','error'); }
+  return valid;
+}
+
+// ============================================================
+// PATIENT CRUD
+// ============================================================
+async function salveazaPacient() {
+  if (!validatePacientForm()) return;
+  if (formMode === 'modifica-date') { await salveazaModificareDatePersonale(); return; }
+  if (formMode === 'actualizare') { await salveazaActualizare(); return; }
+  const cnp = gel('f-cnp').value.trim();
+  if (cnp) {
+    const { data: ex } = await sb.from('pacienti').select('id,nume,prenume').eq('cnp', cnp).eq('activ', true).maybeSingle();
+    if (ex) { showConfirm(`Există deja pacient cu acest CNP: <strong>${ex.prenume} ${ex.nume}</strong> (ID# ${ex.id}).<br>Doriți să actualizați datele?`, () => { closeModal('modal-confirm'); deschideActualizare(ex.id); },'Actualizare',false); return; }
+  }
+  try {
+    const { data: pacient, error: ep } = await sb.from('pacienti').insert({
+      data_luare_evidenta: gel('f-data-luare').value || todayStr(),
+      nume: gel('f-nume').value.trim().toUpperCase(),
+      prenume: gel('f-prenume').value.trim(),
+      nume_anterior: gel('f-nome-anterior')?.value.trim()||null,
+      este_major: gel('f-este-major').checked,
+      este_roman: gel('f-este-roman').checked,
+      nationalitate: gel('f-nationalitate').value.trim()||null,
+      cnp: cnp||null, data_nasterii: gel('f-data-nastere').value||null,
+      telefon: gel('f-telefon').value.trim()||null,
+      reprezentant_legal_nume: gel('f-rep-nume').value.trim()||null,
+      reprezentant_legal_prenume: gel('f-rep-prenume').value.trim()||null,
+      reprezentant_legal_calitate: gel('f-rep-calitate').value||null,
+      telefon_reprezentant: gel('f-rep-telefon').value.trim()||null,
+      creat_de: currentUser.id,
+    }).select().single();
+    if (ep) throw ep;
+    await salveazaInregistrare(pacient.id, gel('f-data-completare').value || todayStr());
+    await salveazaAlergii(pacient.id, alergiiSelectate);
+    showToast(`Pacient nou ID# ${pacient.id} salvat!`,'success');
+    await logActivity('pacient_nou',`ID# ${pacient.id} - ${gel('f-prenume').value} ${gel('f-nume').value}`);
+    resetForm(); showView('pacienti');
+    gel('search-input').value = pacient.id; gel('search-type').value = 'id'; searchPacienti();
+  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
+}
+
+async function salveazaActualizare() {
+  const dateCompletare = gel('f-data-completare').value || todayStr();
+  try {
+    await sb.from('pacienti').update({telefon: gel('f-telefon').value.trim()||null}).eq('id', editingPacientId);
+    await salveazaInregistrare(editingPacientId, dateCompletare);
+    await salveazaAlergii(editingPacientId, alergiiSelectate);
+    showToast('Actualizare salvată!','success');
+    await logActivity('actualizare',`Pacient ID# ${editingPacientId}`);
+    formMode='nou'; editingPacientId=null; showView('pacienti');
+    setTimeout(() => { gel('search-input').value = editingPacientId||''; searchPacienti(); }, 100);
+  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
+}
+
+async function salveazaModificareDatePersonale() {
+  const cnp = gel('f-cnp').value.trim();
+  if (cnp) {
+    const { data: ex } = await sb.from('pacienti').select('id').eq('cnp',cnp).eq('activ',true).neq('id',editingPacientId).maybeSingle();
+    if (ex) { showToast('CNP-ul există la alt pacient!','error'); return; }
+  }
+  try {
+    await sb.from('pacienti').update({
+      data_luare_evidenta: gel('f-data-luare').value,
+      nume: gel('f-nume').value.trim().toUpperCase(),
+      prenume: gel('f-prenume').value.trim(),
+      cnp: cnp||null, data_nasterii: gel('f-data-nastere').value||null,
+      telefon: gel('f-telefon').value.trim()||null,
+      este_major: gel('f-este-major').checked, este_roman: gel('f-este-roman').checked,
+    }).eq('id', editingPacientId);
+    showToast('Date personale actualizate!','success');
+    await logActivity('modifica_date',`Pacient ID# ${editingPacientId}`);
+    resetForm(); showView('pacienti');
+  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
+}
+
+async function salveazaInregistrare(pacientId, dateCompletare) {
+  const medicDiagId = await getOrCreateMedic(gel('f-medic-diagnostic').value.trim());
+  const medicTrimVal = gel('f-medic-trimitere').value.trim() || gel('f-medic-diagnostic').value.trim();
+  const medicTrimId = await getOrCreateMedic(medicTrimVal);
+  await sb.from('inregistrari').insert({
+    pacient_id: pacientId, data_completarii: dateCompletare,
+    motiv_prezentare: gel('f-motiv').value,
+    diagnostic: gel('f-diagnostic').value.trim()||null,
+    medic_diagnostic_id: medicDiagId, medic_trimitere_id: medicTrimId,
+    istoric_medical: gel('f-istoric').value.trim()||null,
+    terapeut_id: gel('f-terapeut').value||null,
+    motiv_transfer_terapeut: gel('f-motiv-transfer').value.trim()||null,
+    creat_de: currentUser.id,
+  });
+}
+
+async function getOrCreateMedic(text) {
+  if (!text) return null;
+  const ex = mediciCache.find(m => m.nume_complet_specialitate.toLowerCase() === text.toLowerCase());
+  if (ex) return ex.id;
+  const { data } = await sb.from('medici').insert({nume_complet_specialitate: text, activ: true}).select().single();
+  if (data) { mediciCache.push(data); return data.id; }
+  return null;
+}
+
+async function salveazaAlergii(pacientId, alergii) {
+  await sb.from('pacient_alergii').delete().eq('pacient_id', pacientId);
+  for (const al of alergii) {
+    let alId = al.id;
+    if (!alId) { const { data } = await sb.from('alergii_catalog').insert({denumire: al.denumire}).select().single(); alId = data?.id; }
+    if (alId) await sb.from('pacient_alergii').insert({pacient_id: pacientId, alergie_id: alId});
+  }
+}
+
+// DESCHIDE FORME
+async function deschideActualizare(pacientId) {
+  const { data: p } = await sb.from('pacienti').select('*').eq('id', pacientId).single();
+  if (!p) return;
+  formMode='actualizare'; editingPacientId=pacientId;
+  gel('form-view-title').textContent = `Actualizare: ${p.prenume} ${p.nume}`;
+  gel('form-view-subtitle').textContent = `ID# ${p.id} · Evidență: ${formatDate(p.data_luare_evidenta)}`;
+  gel('form-id-display').classList.remove('hidden'); gel('form-id-value').textContent = p.id;
+  gel('f-data-completare').value = todayStr(); gel('f-data-luare').value = p.data_luare_evidenta; gel('f-data-luare').disabled = true;
+  gel('f-nome') && setDisabled('f-nome', p.nome, true);
+  setDisabled('f-prenume', p.prenume, true); setDisabled('f-cnp', p.cnp||'', true);
+  setDisabled('f-data-nastere', p.data_nasterii||'', true);
+  gel('f-telefon').value = p.telefon||''; gel('f-este-major').checked = p.este_major; gel('f-este-roman').checked = p.este_roman;
+  gel('f-este-major').disabled = true; gel('f-este-roman').disabled = true;
+  ['f-diagnostic','f-medic-diagnostic','f-medic-trimitere','f-istoric'].forEach(id => gel(id).value='');
+  const { data: last } = await sb.from('inregistrari').select('*').eq('pacient_id',pacientId).order('data_completarii',{ascending:false}).limit(1);
+  if (last?.[0]) { gel('f-motiv').value = last[0].motiv_prezentare||''; prevTerapeutId = last[0].terapeut_id; gel('f-terapeut').value = last[0].terapeut_id||''; }
+  const { data: pa } = await sb.from('pacient_alergii').select('alergii_catalog(*)').eq('pacient_id',pacientId);
+  alergiiSelectate = (pa||[]).map(r=>r.alergii_catalog).filter(Boolean); renderAlergiiTags();
+  alergiiSelectate = []; // Start fresh for actualizare
+  showView('pacient-nou');
+}
+
+async function deschideModificareDate(pacientId) {
+  const { data: p } = await sb.from('pacienti').select('*').eq('id', pacientId).single();
+  if (!p) return;
+  formMode='modifica-date'; editingPacientId=pacientId;
+  gel('form-view-title').textContent = `Date Personale: ${p.prenume} ${p.nume}`;
+  gel('form-view-subtitle').textContent = `Modificările se aplică tuturor înregistrărilor ID# ${p.id}`;
+  gel('form-id-display').classList.remove('hidden'); gel('form-id-value').textContent = p.id;
+  gel('f-data-luare').value = p.data_luare_evidenta; gel('f-data-completare').value = todayStr(); gel('f-data-completare').disabled = true;
+  gel('f-nome') && (gel('f-nome').value = p.nome||''); gel('f-prenume').value = p.prenume;
+  gel('f-cnp').value = p.cnp||''; gel('f-data-nastere').value = p.data_nasterii||'';
+  gel('f-telefon').value = p.telefon||''; gel('f-este-major').checked = p.este_major; gel('f-este-roman').checked = p.este_roman;
+  showView('pacient-nou');
+}
+
+// ============================================================
+// MODIFY INREGISTRARE
+// ============================================================
+async function modificaInregistrare(inregId, pacientId) {
+  const { data: ir } = await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(id,nume_complet_specialitate),medic_trimitere:medici!inregistrari_medic_trimitere_id_fkey(id,nume_complet_specialitate)`).eq('id', inregId).single();
+  const { data: p } = await sb.from('pacienti').select('id,nume,prenume').eq('id', pacientId).single();
+  if (!ir) { showToast('Înregistrare negăsită','error'); return; }
+  gel('edit-inreg-id').value = inregId;
+  gel('edit-inreg-pacient-id').value = pacientId;
+  gel('edit-inreg-pacient-name').textContent = p ? `${p.prenume} ${p.nume} · ID# ${p.id}` : '';
+  gel('ei-data-completare').value = ir.data_completarii;
+  gel('ei-motiv').value = ir.motiv_prezentare || '';
+  gel('ei-diagnostic').value = ir.diagnostic || '';
+  gel('ei-medic-diag').value = ir.medic_diagnostic?.nume_complet_specialitate || '';
+  gel('ei-medic-trim').value = ir.medic_trimitere?.nume_complet_specialitate || '';
+  gel('ei-istoric').value = ir.istoric_medical || '';
+  gel('ei-terapeut').value = ir.terapeut_id || '';
+  gel('ei-motiv-transfer').value = ir.motiv_transfer_terapeut || '';
+  // Load alergii
+  const { data: pa } = await sb.from('pacient_alergii').select('alergii_catalog(*)').eq('pacient_id', pacientId);
+  eiAlergiiSelectate = (pa||[]).map(r=>r.alergii_catalog).filter(Boolean);
+  renderEIAlergiiTags();
+  gel('modal-edit-inreg').classList.remove('hidden');
+}
+
+async function salveazaModificareInregistrare() {
+  const inregId = parseInt(gel('edit-inreg-id').value);
+  const pacientId = parseInt(gel('edit-inreg-pacient-id').value);
+  const medicDiagId = await getOrCreateMedic(gel('ei-medic-diag').value.trim());
+  const medicTrimId = await getOrCreateMedic(gel('ei-medic-trim').value.trim());
+  try {
+    const oldTerapeut = gel('ei-terapeut').dataset.oldValue;
+    const newTerapeut = gel('ei-terapeut').value;
+    await sb.from('inregistrari').update({
+      data_completarii: gel('ei-data-completare').value,
+      motiv_prezentare: gel('ei-motiv').value,
+      diagnostic: gel('ei-diagnostic').value.trim()||null,
+      medic_diagnostic_id: medicDiagId, medic_trimitere_id: medicTrimId,
+      istoric_medical: gel('ei-istoric').value.trim()||null,
+      terapeut_id: newTerapeut||null,
+      motiv_transfer_terapeut: gel('ei-motiv-transfer').value.trim()||null,
+    }).eq('id', inregId);
+    await salveazaAlergii(pacientId, eiAlergiiSelectate);
+    showToast('Înregistrare modificată!','success');
+    await logActivity('modifica_inregistrare',`Înregistrare ID# ${inregId} - Pacient ID# ${pacientId}`);
+    closeModal('modal-edit-inreg');
+    // Refresh search results
+    searchPacienti();
+  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
+}
+
+function addAlergieEI(event) {
+  if (event.key==='Enter') {
+    event.preventDefault();
+    const val = gel('ei-alergie-input').value.trim();
+    if (val && !eiAlergiiSelectate.find(a=>a.denumire.toLowerCase()===val.toLowerCase())) { eiAlergiiSelectate.push({denumire:val}); renderEIAlergiiTags(); }
+    gel('ei-alergie-input').value='';
+  }
+}
+function renderEIAlergiiTags() { gel('ei-alergii-tags').innerHTML = eiAlergiiSelectate.map((a,i)=>`<span class="tag">${a.denumire}<button class="tag-remove" onclick="eiAlergiiSelectate.splice(${i},1);renderEIAlergiiTags()">×</button></span>`).join(''); }
+
+// ============================================================
+// SEARCH & DISPLAY
+// ============================================================
 function updateSearchPlaceholder() {
-  const ph = {nume:'Introduceți numele...',id:'Introduceți ID#...',cnp:'Introduceți CNP-ul...',telefon:'Introduceți telefonul...'};
-  document.getElementById('search-input').placeholder = ph[document.getElementById('search-type').value]||'...';
+  const ph={nume:'Introduceți numele...',id:'Introduceți ID#...',cnp:'Introduceți CNP-ul...',telefon:'Introduceți telefonul...'};
+  gel('search-input').placeholder = ph[gel('search-type').value]||'...';
 }
 
 async function searchPacienti() {
-  const type = document.getElementById('search-type').value;
-  const val = document.getElementById('search-input').value.trim();
-  const area = document.getElementById('search-results-area');
+  const type = gel('search-type').value, val = gel('search-input').value.trim();
+  const area = gel('search-results-area');
   if (!val) { area.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Introduceți criterii</div></div>`; return; }
   area.innerHTML = `<div class="loading"><div class="spinner"></div> Se caută...</div>`;
   try {
-    let query = sb.from('pacienti').select(`*,inregistrari(id,data_completarii,motiv_prezentare,diagnostic,terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume))`).eq('activ',true);
+    let query = sb.from('pacienti').select('*,inregistrari(id,data_completarii,motiv_prezentare,diagnostic,terapeut_id)').eq('activ',true);
     if (type==='nume') query = query.or(`nume.ilike.%${val}%,prenume.ilike.%${val}%`);
-    else if (type==='id') query = query.eq('id',parseInt(val)||0);
-    else if (type==='cnp') query = query.eq('cnp',val);
+    else if (type==='id') query = query.eq('id', parseInt(val)||0);
+    else if (type==='cnp') query = query.eq('cnp', val);
     else if (type==='telefon') query = query.ilike('telefon',`%${val}%`);
     if (currentProfile.rol==='terapeut') {
       const { data: pacIds } = await sb.from('inregistrari').select('pacient_id').eq('terapeut_id',currentProfile.id);
       const ids = (pacIds||[]).map(r=>r.pacient_id);
-      if (ids.length===0) { area.innerHTML = `<div class="empty-state"><div class="empty-state-icon">😕</div><div class="empty-state-text">Nu aveți pacienți</div></div>`; return; }
+      if (!ids.length) { area.innerHTML=emptyState('😕','Nu aveți pacienți alocați'); return; }
       query = query.in('id',ids);
     }
     const { data: pacienti, error } = await query.order('id');
     if (error) throw error;
-    if (!pacienti||pacienti.length===0) {
-      area.innerHTML = `<div class="empty-state"><div class="empty-state-icon">😕</div><div class="empty-state-text">Niciun pacient găsit</div><div class="empty-state-sub">Doriți să <a href="#" onclick="showView('pacient-nou');return false;" style="color:var(--primary);">înregistrați un pacient nou</a>?</div></div>`;
-      return;
-    }
+    if (!pacienti?.length) { area.innerHTML=`<div class="empty-state"><div class="empty-state-icon">😕</div><div class="empty-state-text">Niciun pacient găsit</div><p style="margin-top:8px;"><a href="#" onclick="showView('pacient-nou');return false;" style="color:var(--primary);">Înregistrați pacient nou →</a></p></div>`; return; }
     renderSearchResults(pacienti, area);
-  } catch(e) { area.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-text">Eroare: ${e.message}</div></div>`; }
+  } catch(e) { area.innerHTML=`<div class="empty-state"><div class="empty-state-icon">⚠️</div><div class="empty-state-text">Eroare: ${e.message}</div></div>`; }
 }
 
 function renderSearchResults(pacienti, area) {
@@ -828,8 +1276,8 @@ function renderSearchResults(pacienti, area) {
     html += `<div class="patient-block">
       <div class="patient-block-header">
         <div>
-          <div class="patient-block-name">${p.nume} ${p.prenume}${p.nume_anterior?` <span style="color:var(--text-muted);font-size:14px;">(fost ${p.nume_anterior})</span>`:''}</div>
-          <div style="font-size:12.5px;color:var(--text-muted);margin-top:3px;">ID# <strong>${p.id}</strong>${p.cnp?` · CNP: ${p.cnp}`:''} · Evidență: ${formatDate(p.data_luare_evidenta)}${!p.este_major?' · <span class="badge badge-orange">Minor</span>':''}${p.telefon?` · 📞 ${p.telefon}`:''}</div>
+          <div class="patient-block-name">${p.nume} ${p.prenume}${p.nume_anterior?` <span style="color:var(--text-muted);font-size:14px;">(${p.nume_anterior})</span>`:''}</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">ID# <strong>${p.id}</strong>${p.cnp?` · CNP: ${p.cnp}`:''} · Evidență: ${formatDate(p.data_luare_evidenta)}${!p.este_major?' · <span class="badge badge-orange">Minor</span>':''}${p.telefon?` · 📞 ${p.telefon}`:''}</div>
         </div>
         <div class="patient-block-actions">
           <button class="btn btn-primary btn-sm" onclick="deschideActualizare(${p.id})">📝 Actualizare</button>
@@ -838,540 +1286,637 @@ function renderSearchResults(pacienti, area) {
           ${isAdmin?`<button class="btn btn-danger btn-sm" onclick="stergePacient(${p.id})">🗑️</button>`:''}
         </div>
       </div>`;
-    if (last7.length===0) { html += `<div style="color:var(--text-muted);font-size:13px;padding:6px 0;">Nicio înregistrare medicală.</div>`; }
-    else { last7.forEach(ir => {
-      const t = ir.terapeut ? `${ir.terapeut.prenume} ${ir.terapeut.nume}` : '—';
-      html += `<div class="history-entry"><div class="history-entry-date">${formatDate(ir.data_completarii)}</div><div class="history-entry-content"><span class="badge ${motivBadge(ir.motiv_prezentare)}" style="margin-bottom:4px;">${ir.motiv_prezentare}</span>${ir.diagnostic?`<div style="font-size:13px;">🩺 ${ir.diagnostic}</div>`:''}<div style="font-size:12px;color:var(--text-muted);">👨‍⚕️ ${t}</div></div>${isAdmin?`<div><button class="btn btn-ghost btn-sm" onclick="modificaInregistrare(${ir.id},${p.id})">✏️</button></div>`:''}</div>`;
-    }); }
+    if (!last7.length) { html += `<div style="color:var(--text-muted);font-size:13px;padding:6px 0;">Nicio înregistrare medicală.</div>`; }
+    else { last7.forEach(ir => { html += renderHistoryRow(ir, p.id, isAdmin); }); }
     if (inreg.length>7) html += `<div style="text-align:center;padding:4px;"><button class="btn btn-ghost btn-sm" onclick="deschideIstoricPacient(${p.id})">↕️ Toate ${inreg.length} înregistrările</button></div>`;
     html += '</div>';
   });
   area.innerHTML = html;
 }
 
-function motivBadge(m) { return {terapie:'badge-blue',evaluare:'badge-green',reevaluare:'badge-orange',profilaxie:'badge-gray',masaj:'badge-orange',consultanta:'badge-gray'}[m]||'badge-gray'; }
-function clearSearch() { document.getElementById('search-input').value=''; document.getElementById('search-results-area').innerHTML=`<div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Introduceți criterii de căutare</div></div>`; }
-
-function toggleMinorPanel() { document.getElementById('minor-panel').classList.toggle('hidden',document.getElementById('f-este-major').checked); }
-function toggleNationalitate() {
-  const isR = document.getElementById('f-este-roman').checked;
-  document.getElementById('f-nationalitate').classList.toggle('hidden',isR);
-  document.getElementById('f-cnp').maxLength = isR ? 13 : 50;
+function renderHistoryRow(ir, pacientId, isAdmin) {
+  const tName = terapeutiCache.find(t=>t.id===ir.terapeut_id);
+  const t = tName ? `${tName.prenume} ${tName.nume}` : '—';
+  return `<div class="history-entry">
+    <div class="history-entry-date">${formatDate(ir.data_completarii)}</div>
+    <div class="history-entry-content">
+      <span class="badge ${motivBadge(ir.motiv_prezentare)}" style="margin-bottom:4px;">${ir.motiv_prezentare||'—'}</span>
+      ${ir.diagnostic?`<div style="font-size:13px;">🩺 ${ir.diagnostic}</div>`:''}
+      <div style="font-size:12px;color:var(--text-muted);">👨‍⚕️ ${t}</div>
+    </div>
+    ${isAdmin?`<div class="history-entry-actions"><button class="btn btn-ghost btn-sm" onclick="modificaInregistrare(${ir.id},${pacientId})" title="Modifică înregistrare">✏️</button></div>`:''}
+  </div>`;
 }
 
-function cnpChanged() {
-  const cnp = document.getElementById('f-cnp').value;
-  if (cnp.length===13 && /^\d{13}$/.test(cnp)) {
-    const y2=cnp.substring(1,3), m=cnp.substring(3,5), d=cnp.substring(5,7), s=cnp[0];
-    let c = s==='1'||s==='2'?'19':s==='5'||s==='6'?'20':s==='3'||s==='4'?'18':'19';
-    const dn = `${c}${y2}-${m}-${d}`;
-    if (!isNaN(new Date(dn))) document.getElementById('f-data-nastere').value = dn;
-  }
-}
-
-function motivChanged() {
-  const req = document.getElementById('f-motiv').value==='terapie';
-  document.getElementById('label-diagnostic').innerHTML = req ? 'Diagnostic Medical <span style="color:var(--danger)">*</span>' : 'Diagnostic Medical';
-  document.getElementById('label-medic-diag').innerHTML = req ? 'Medicul care a pus diagnosticul <span style="color:var(--danger)">*</span>' : 'Medicul care a pus diagnosticul';
-  document.getElementById('label-medic-trimitere').innerHTML = req ? 'Medicul care a emis trimiterea <span style="color:var(--danger)">*</span>' : 'Medicul care a emis trimiterea';
-}
-
-function resetForm(mode='nou') {
-  formMode = mode; editingPacientId = null; alergiiSelectate = []; renderAlergiiTags();
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('form-view-title').textContent = 'Pacient Nou';
-  document.getElementById('form-view-subtitle').textContent = 'Completați câmpurile de mai jos';
-  document.getElementById('form-id-display').classList.add('hidden');
-  ['f-data-luare','f-data-completare'].forEach(id => { document.getElementById(id).value = today; document.getElementById(id).disabled = false; });
-  document.getElementById('f-data-nastere').value = '';
-  ['f-nome','f-prenume','f-cnp','f-telefon','f-diagnostic','f-medic-diagnostic','f-medic-trimitere','f-istoric','f-motiv-transfer','f-rep-nume','f-rep-prenume','f-rep-telefon','f-nume','f-prenume','f-nome-anterior'].forEach(id => { const el = document.getElementById(id); if(el){el.value='';el.disabled=false;} });
-  document.getElementById('f-nume').value=''; document.getElementById('f-prenume').value='';
-  document.getElementById('f-nome-anterior') && (document.getElementById('f-nome-anterior').value='');
-  document.getElementById('f-este-major').checked=true; document.getElementById('f-este-major').disabled=false;
-  document.getElementById('f-este-roman').checked=true; document.getElementById('f-este-roman').disabled=false;
-  document.getElementById('f-rep-calitate').value=''; document.getElementById('f-motiv').value='';
-  document.getElementById('minor-panel').classList.add('hidden');
-  document.getElementById('f-nationalitate').classList.add('hidden');
-  document.getElementById('motiv-transfer-group').classList.add('hidden');
-  document.getElementById('f-terapeut').value = currentProfile?.rol==='terapeut' ? currentProfile.id : '';
-  document.getElementById('istoric-count').textContent='0';
-}
-
-async function deschideActualizare(pacientId) {
-  const { data: p } = await sb.from('pacienti').select('*').eq('id',pacientId).single();
-  if (!p) return;
-  formMode='actualizare'; editingPacientId=pacientId;
-  document.getElementById('form-view-title').textContent = `Actualizare: ${p.prenume} ${p.nume}`;
-  document.getElementById('form-view-subtitle').textContent = `ID# ${p.id} · Evidență: ${formatDate(p.data_luare_evidenta)}`;
-  document.getElementById('form-id-display').classList.remove('hidden');
-  document.getElementById('form-id-value').textContent = p.id;
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('f-data-completare').value = today;
-  document.getElementById('f-data-luare').value = p.data_luare_evidenta;
-  document.getElementById('f-data-luare').disabled = true;
-  document.getElementById('f-nume').value = p.nume; document.getElementById('f-nume').disabled = true;
-  document.getElementById('f-prenume').value = p.prenume; document.getElementById('f-prenume').disabled = true;
-  document.getElementById('f-cnp').value = p.cnp||''; document.getElementById('f-cnp').disabled = true;
-  document.getElementById('f-data-nastere').value = p.data_nasterii||''; document.getElementById('f-data-nastere').disabled = true;
-  document.getElementById('f-telefon').value = p.telefon||'';
-  document.getElementById('f-este-major').checked = p.este_major; document.getElementById('f-este-major').disabled = true;
-  document.getElementById('f-este-roman').checked = p.este_roman; document.getElementById('f-este-roman').disabled = true;
-  ['f-diagnostic','f-medic-diagnostic','f-medic-trimitere','f-istoric'].forEach(id => document.getElementById(id).value='');
-  const { data: lastInreg } = await sb.from('inregistrari').select('*').eq('pacient_id',pacientId).order('data_completarii',{ascending:false}).limit(1);
-  if (lastInreg && lastInreg[0]) { document.getElementById('f-motiv').value = lastInreg[0].motiv_prezentare||''; document.getElementById('f-terapeut').value = lastInreg[0].terapeut_id||''; }
-  const { data: pa } = await sb.from('pacient_alergii').select('alergii_catalog(*)').eq('pacient_id',pacientId);
-  alergiiSelectate = (pa||[]).map(r=>r.alergii_catalog).filter(Boolean);
-  renderAlergiiTags();
-  showView('pacient-nou');
-}
-
-async function deschideModificareDate(pacientId) {
-  const { data: p } = await sb.from('pacienti').select('*').eq('id',pacientId).single();
-  if (!p) return;
-  formMode='modifica-date'; editingPacientId=pacientId;
-  document.getElementById('form-view-title').textContent = `Date Personale: ${p.prenume} ${p.nume}`;
-  document.getElementById('form-view-subtitle').textContent = `ID# ${p.id} · Modificările se aplică tuturor înregistrărilor`;
-  document.getElementById('form-id-display').classList.remove('hidden');
-  document.getElementById('form-id-value').textContent = p.id;
-  document.getElementById('f-data-luare').value = p.data_luare_evidenta; document.getElementById('f-data-luare').disabled = false;
-  document.getElementById('f-data-completare').value = new Date().toISOString().split('T')[0]; document.getElementById('f-data-completare').disabled = true;
-  document.getElementById('f-nume').value = p.nume; document.getElementById('f-prenume').value = p.prenume;
-  document.getElementById('f-cnp').value = p.cnp||''; document.getElementById('f-data-nastere').value = p.data_nasterii||'';
-  document.getElementById('f-telefon').value = p.telefon||'';
-  document.getElementById('f-este-major').checked = p.este_major; document.getElementById('f-este-roman').checked = p.este_roman;
-  ['f-nome','f-prenume','f-cnp','f-data-nastere'].forEach(id => { const el=document.getElementById(id); if(el) el.disabled=false; });
-  showView('pacient-nou');
-}
-
-async function salveazaPacient() {
-  if (formMode==='modifica-date') { await salveazaModificareDatePersonale(); return; }
-  if (formMode==='actualizare') { await salveazaActualizare(); return; }
-  const dateLuare = document.getElementById('f-data-luare').value || new Date().toISOString().split('T')[0];
-  const dateCompletare = document.getElementById('f-data-completare').value || dateLuare;
-  const nume = document.getElementById('f-nume').value.trim().toUpperCase();
-  const prenume = document.getElementById('f-prenume').value.trim();
-  const cnp = document.getElementById('f-cnp').value.trim();
-  const motiv = document.getElementById('f-motiv').value;
-  const terapeut = document.getElementById('f-terapeut').value;
-  if (!nume||!prenume) { showToast('Numele și prenumele sunt obligatorii.','error'); return; }
-  if (!motiv) { showToast('Motivul prezentării este obligatoriu.','error'); return; }
-  if (!terapeut) { showToast('Terapeutul curant este obligatoriu.','error'); return; }
-  if (motiv==='terapie') {
-    if (!document.getElementById('f-medic-diagnostic').value) { showToast('Medicul de diagnostic este obligatoriu pentru terapie.','error'); return; }
-    if (!document.getElementById('f-medic-trimitere').value) { showToast('Medicul care a emis trimiterea este obligatoriu pentru terapie.','error'); return; }
-  }
-  if (cnp) {
-    const { data: ex } = await sb.from('pacienti').select('id,nume,prenume').eq('cnp',cnp).eq('activ',true);
-    if (ex&&ex.length>0) {
-      showConfirm(`Există deja pacient cu acest CNP: <strong>${ex[0].prenume} ${ex[0].nume}</strong> (ID# ${ex[0].id}).<br>Doriți să actualizați datele?`,
-        () => { closeModal('modal-confirm'); deschideActualizare(ex[0].id); },'Actualizare',false);
-      return;
-    }
-  }
-  try {
-    const { data: pacient, error: ep } = await sb.from('pacienti').insert({
-      data_luare_evidenta:dateLuare, nume, prenume,
-      este_major:document.getElementById('f-este-major').checked,
-      este_roman:document.getElementById('f-este-roman').checked,
-      nationalitate:document.getElementById('f-nationalitate').value.trim()||null,
-      cnp:cnp||null, data_nasterii:document.getElementById('f-data-nastere').value||null,
-      telefon:document.getElementById('f-telefon').value.trim()||null,
-      reprezentant_legal_nume:document.getElementById('f-rep-nume').value.trim()||null,
-      reprezentant_legal_prenume:document.getElementById('f-rep-prenume').value.trim()||null,
-      reprezentant_legal_calitate:document.getElementById('f-rep-calitate').value||null,
-      telefon_reprezentant:document.getElementById('f-rep-telefon').value.trim()||null,
-      creat_de:currentUser.id,
-    }).select().single();
-    if (ep) throw ep;
-    await salveazaInregistrare(pacient.id, dateCompletare);
-    await salveazaAlergii(pacient.id);
-    showToast(`Pacient nou ID# ${pacient.id} salvat!`,'success');
-    await logActivity('pacient_nou',`Pacient nou ID# ${pacient.id} - ${prenume} ${nume}`);
-    resetForm(); showView('pacienti');
-    document.getElementById('search-input').value=pacient.id;
-    document.getElementById('search-type').value='id';
-    searchPacienti();
-  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
-}
-
-async function salveazaActualizare() {
-  const dateCompletare = document.getElementById('f-data-completare').value || new Date().toISOString().split('T')[0];
-  const motiv = document.getElementById('f-motiv').value;
-  const terapeut = document.getElementById('f-terapeut').value;
-  if (!motiv) { showToast('Motivul este obligatoriu.','error'); return; }
-  if (!terapeut) { showToast('Terapeutul este obligatoriu.','error'); return; }
-  try {
-    await sb.from('pacienti').update({telefon:document.getElementById('f-telefon').value.trim()||null}).eq('id',editingPacientId);
-    await salveazaInregistrare(editingPacientId, dateCompletare);
-    await salveazaAlergii(editingPacientId);
-    showToast('Actualizare salvată!','success');
-    await logActivity('actualizare',`Pacient ID# ${editingPacientId}`);
-    formMode='nou'; editingPacientId=null; showView('pacienti');
-    document.getElementById('search-input').value = editingPacientId||'';
-  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
-}
-
-async function salveazaModificareDatePersonale() {
-  const cnp = document.getElementById('f-cnp').value.trim();
-  if (cnp) {
-    const { data: ex } = await sb.from('pacienti').select('id').eq('cnp',cnp).eq('activ',true).neq('id',editingPacientId);
-    if (ex&&ex.length>0) { showToast('CNP-ul există la alt pacient!','error'); return; }
-  }
-  try {
-    await sb.from('pacienti').update({
-      data_luare_evidenta:document.getElementById('f-data-luare').value,
-      nume:document.getElementById('f-nume').value.trim().toUpperCase(),
-      prenume:document.getElementById('f-prenume').value.trim(),
-      cnp:cnp||null, data_nasterii:document.getElementById('f-data-nastere').value||null,
-      telefon:document.getElementById('f-telefon').value.trim()||null,
-      este_major:document.getElementById('f-este-major').checked,
-      este_roman:document.getElementById('f-este-roman').checked,
-    }).eq('id',editingPacientId);
-    showToast('Date personale actualizate!','success');
-    await logActivity('modifica_date',`Pacient ID# ${editingPacientId}`);
-    resetForm(); showView('pacienti');
-  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
-}
-
-async function salveazaInregistrare(pacientId, dateCompletare) {
-  const medicDiagId = await getOrCreateMedic(document.getElementById('f-medic-diagnostic').value.trim());
-  const medicTrimVal = document.getElementById('f-medic-trimitere').value.trim() || document.getElementById('f-medic-diagnostic').value.trim();
-  const medicTrimId = await getOrCreateMedic(medicTrimVal);
-  await sb.from('inregistrari').insert({
-    pacient_id:pacientId, data_completarii:dateCompletare,
-    motiv_prezentare:document.getElementById('f-motiv').value,
-    diagnostic:document.getElementById('f-diagnostic').value.trim()||null,
-    medic_diagnostic_id:medicDiagId, medic_trimitere_id:medicTrimId,
-    istoric_medical:document.getElementById('f-istoric').value.trim()||null,
-    terapeut_id:document.getElementById('f-terapeut').value||null,
-    motiv_transfer_terapeut:document.getElementById('f-motiv-transfer').value.trim()||null,
-    creat_de:currentUser.id,
-  });
-}
-
-async function getOrCreateMedic(text) {
-  if (!text) return null;
-  const ex = mediciCache.find(m=>m.nume_complet_specialitate.toLowerCase()===text.toLowerCase());
-  if (ex) return ex.id;
-  const { data } = await sb.from('medici').insert({nume_complet_specialitate:text}).select().single();
-  if (data) { mediciCache.push(data); return data.id; }
-  return null;
-}
-
-async function salveazaAlergii(pacientId) {
-  await sb.from('pacient_alergii').delete().eq('pacient_id',pacientId);
-  for (const al of alergiiSelectate) {
-    let alId = al.id;
-    if (!alId) {
-      const { data } = await sb.from('alergii_catalog').insert({denumire:al.denumire}).select().single();
-      alId = data?.id;
-    }
-    if (alId) await sb.from('pacient_alergii').insert({pacient_id:pacientId,alergie_id:alId});
-  }
-}
-
-function addAlergie(event) {
-  if (event.key==='Enter'||event.key===',') {
-    event.preventDefault();
-    const val = document.getElementById('alergie-input').value.trim();
-    if (val&&!alergiiSelectate.find(a=>a.denumire.toLowerCase()===val.toLowerCase())) { alergiiSelectate.push({denumire:val}); renderAlergiiTags(); }
-    document.getElementById('alergie-input').value='';
-    document.getElementById('ac-alergii').classList.add('hidden');
-  }
-}
-function removeAlergie(i) { alergiiSelectate.splice(i,1); renderAlergiiTags(); }
-function renderAlergiiTags() {
-  document.getElementById('alergii-tags').innerHTML = alergiiSelectate.map((a,i)=>
-    `<span class="tag">${a.denumire}<button class="tag-remove" onclick="removeAlergie(${i})">×</button></span>`).join('');
-}
-async function autocompleteAlergie() {
-  const val = document.getElementById('alergie-input').value.trim();
-  const list = document.getElementById('ac-alergii');
-  if (val.length<1) { list.classList.add('hidden'); return; }
-  const { data } = await sb.from('alergii_catalog').select('*').ilike('denumire',`%${val}%`).limit(8);
-  if (!data||!data.length) { list.classList.add('hidden'); return; }
-  list.innerHTML = data.map(a=>`<div class="autocomplete-item" onclick="selectAlergie('${a.denumire.replace(/'/g,"\\'")}',${a.id})">${a.denumire}</div>`).join('');
-  list.classList.remove('hidden');
-}
-function selectAlergie(den,id) {
-  if (!alergiiSelectate.find(a=>a.denumire.toLowerCase()===den.toLowerCase())) { alergiiSelectate.push({id,denumire:den}); renderAlergiiTags(); }
-  document.getElementById('alergie-input').value=''; document.getElementById('ac-alergii').classList.add('hidden');
-}
-
-async function autocompleteInput(input, type) {
-  const val = input.value.trim();
-  const listId = type==='medici'?'ac-medici':'ac-medici-trimitere';
-  const list = document.getElementById(listId);
-  if (val.length<2) { list.classList.add('hidden'); return; }
-  const { data } = await sb.from('medici').select('*').ilike('nume_complet_specialitate',`%${val}%`).limit(10);
-  if (!data||!data.length) { list.classList.add('hidden'); return; }
-  list.innerHTML = data.map(m=>`<div class="autocomplete-item" onclick="selectMedic('${m.nume_complet_specialitate.replace(/'/g,"\\'")}','${type}')">${m.nume_complet_specialitate}</div>`).join('');
-  list.classList.remove('hidden');
-}
-function selectMedic(text,type) {
-  if (type==='medici') {
-    document.getElementById('f-medic-diagnostic').value=text; document.getElementById('ac-medici').classList.add('hidden');
-    if (!document.getElementById('f-medic-trimitere').value) document.getElementById('f-medic-trimitere').value=text;
-  } else { document.getElementById('f-medic-trimitere').value=text; document.getElementById('ac-medici-trimitere').classList.add('hidden'); }
-}
+function clearSearch() { gel('search-input').value=''; gel('search-results-area').innerHTML=`<div class="empty-state"><div class="empty-state-icon">🔍</div><div class="empty-state-text">Introduceți criterii de căutare</div></div>`; }
 
 async function deschideIstoricPacient(pacientId) {
-  document.getElementById('modal-pacient').classList.remove('hidden');
-  document.getElementById('modal-pacient-body').innerHTML='<div class="loading"><div class="spinner"></div> Se încarcă...</div>';
+  gel('modal-pacient').classList.remove('hidden');
+  gel('modal-pacient-body').innerHTML=`<div class="loading"><div class="spinner"></div> Se încarcă...</div>`;
   const { data: p } = await sb.from('pacienti').select('*').eq('id',pacientId).single();
-  const { data: inreg } = await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(nume_complet_specialitate),medic_trimitere:medici!inregistrari_medic_trimitere_id_fkey(nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).eq('pacient_id',pacientId).order('data_completarii',{ascending:true});
-  document.getElementById('modal-pacient-title').textContent = `Istoric — ${p.prenume} ${p.nume} (ID# ${p.id})`;
+  const { data: inreg } = await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).eq('pacient_id',pacientId).order('data_completarii',{ascending:true});
+  gel('modal-pacient-title').textContent = `Istoric — ${p.prenume} ${p.nume} (ID# ${p.id})`;
   const isAdmin = currentProfile.rol==='admin';
   let html = `<div style="display:flex;justify-content:flex-end;margin-bottom:14px;"><button class="btn btn-primary btn-sm" onclick="exportIstoricPDF(${pacientId})">📄 Export PDF</button></div>`;
   (inreg||[]).forEach(ir => {
     const t = ir.terapeut ? `${ir.terapeut.prenume} ${ir.terapeut.nume}` : '—';
-    html += `<div class="history-entry"><div class="history-entry-date" style="min-width:90px;">${formatDate(ir.data_completarii)}</div><div class="history-entry-content"><span class="badge ${motivBadge(ir.motiv_prezentare)}" style="margin-bottom:5px;">${ir.motiv_prezentare}</span>${ir.diagnostic?`<div><strong>Diagnostic:</strong> ${ir.diagnostic}</div>`:''} ${ir.medic_diagnostic?`<div style="font-size:12px;color:var(--text-muted);">Medic: ${ir.medic_diagnostic.nume_complet_specialitate}</div>`:''} ${ir.istoric_medical?`<div style="font-size:12.5px;color:var(--text-muted);margin-top:4px;"><em>${ir.istoric_medical}</em></div>`:''} <div style="font-size:12px;margin-top:5px;">👨‍⚕️ ${t}</div></div>${isAdmin?`<div><button class="btn btn-ghost btn-sm">✏️</button></div>`:''}</div>`;
+    html += `<div class="history-entry">
+      <div class="history-entry-date" style="min-width:90px;">${formatDate(ir.data_completarii)}</div>
+      <div class="history-entry-content">
+        <span class="badge ${motivBadge(ir.motiv_prezentare)}" style="margin-bottom:5px;">${ir.motiv_prezentare||'—'}</span>
+        ${ir.diagnostic?`<div><strong>Diagnostic:</strong> ${ir.diagnostic}</div>`:''}
+        ${ir.medic_diagnostic?`<div style="font-size:12px;color:var(--text-muted);">Medic: ${ir.medic_diagnostic.nume_complet_specialitate}</div>`:''}
+        ${ir.istoric_medical?`<div style="font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic;">${ir.istoric_medical}</div>`:''}
+        <div style="font-size:12px;margin-top:5px;">👨‍⚕️ ${t}</div>
+      </div>
+      ${isAdmin?`<div class="history-entry-actions"><button class="btn btn-ghost btn-sm" onclick="modificaInregistrare(${ir.id},${pacientId})">✏️</button></div>`:''}
+    </div>`;
   });
-  if (!inreg||!inreg.length) html += '<div class="empty-state"><div class="empty-state-icon">📋</div><div class="empty-state-text">Nicio înregistrare</div></div>';
-  document.getElementById('modal-pacient-body').innerHTML = html;
+  if (!inreg?.length) html += emptyState('📋','Nicio înregistrare');
+  gel('modal-pacient-body').innerHTML = html;
 }
 
 function stergePacient(pacientId) {
-  document.getElementById('modal-confirm-extra').innerHTML = `<label style="font-size:13px;font-weight:500;">Motivul ștergerii:</label><select id="motiv-stergere" style="width:100%;margin-top:5px;padding:8px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);"><option value="gdpr">Cerere pacient conform GDPR</option><option value="eronat">Date introduse eronat</option><option value="duplicat">Pacient introdus de mai multe ori</option></select>`;
+  gel('modal-confirm-extra').innerHTML = `<label style="font-size:13px;font-weight:500;">Motivul ștergerii:</label><select id="motiv-stergere" style="width:100%;margin-top:5px;padding:8px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);"><option value="gdpr">Cerere pacient conform GDPR</option><option value="eronat">Date introduse eronat</option><option value="duplicat">Pacient introdus de mai multe ori</option></select>`;
   showConfirm(`Ștergere pacient ID# <strong>${pacientId}</strong>. Ireversibil!`, async () => {
-    const motiv = document.getElementById('motiv-stergere').value;
+    const motiv = gel('motiv-stergere')?.value || 'nespecificat';
     await sb.from('pacienti').update({activ:false}).eq('id',pacientId);
     await logActivity('stergere_pacient',`Pacient ID# ${pacientId}. Motiv: ${motiv}`);
     closeModal('modal-confirm'); showToast(`Pacient ID# ${pacientId} șters.`,'success'); clearSearch();
   },'Șterge',true);
 }
 
-async function loadUtilizatori() {
-  if (currentProfile.rol!=='admin') return;
-  const grid = document.getElementById('users-grid');
-  grid.innerHTML='<div class="loading"><div class="spinner"></div> Se încarcă...</div>';
-  const { data: users } = await sb.from('profiles').select('*,specialitati(denumire)').eq('activ',true).order('rol').order('nume');
-  if (!users||!users.length) { grid.innerHTML='<div class="empty-state"><div class="empty-state-icon">👤</div><div class="empty-state-text">Niciun utilizator</div></div>'; return; }
-  grid.innerHTML = users.map(u => {
-    const sp = u.specialitati?` · ${u.specialitati.denumire}`:'';
-    return `<div class="user-card ${u.rol}"><div class="user-card-header"><div class="user-avatar">${((u.prenume||'')[0]||'')+((u.nume||'')[0]||'')}</div><div><div class="user-name">${u.prenume} ${u.nume}</div><span class="badge ${u.rol==='admin'?'badge-orange':u.rol==='secretariat'?'badge-green':'badge-blue'}">${roleLabel(u.rol)}</span></div></div><div class="user-detail">✉️ ${u.email}</div>${u.tip_colaborare?`<div class="user-detail">🤝 ${u.tip_colaborare}${sp}</div>`:''}<div class="user-detail">📅 ${formatDate(u.creat_la)}</div><div class="user-card-actions"><button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">✏️ Modifică</button>${u.id!==currentProfile.id?`<button class="btn btn-danger btn-sm" onclick="stergeUser('${u.id}','${u.prenume} ${u.nume}')">🗑️</button>`:''}</div></div>`;
-  }).join('');
+// ============================================================
+// AUTOCOMPLETE
+// ============================================================
+async function acInput(input, listId) {
+  const val = input.value.trim(); const list = gel(listId);
+  if (val.length < 2) { list.classList.add('hidden'); return; }
+  const { data } = await sb.from('medici').select('*').ilike('nume_complet_specialitate',`%${val}%`).limit(10);
+  if (!data?.length) { list.classList.add('hidden'); return; }
+  list.innerHTML = data.map(m=>`<div class="autocomplete-item" onmousedown="selectMedic('${escQ(m.nume_complet_specialitate)}','${listId}','${input.id}')">${m.nume_complet_specialitate}</div>`).join('');
+  list.classList.remove('hidden');
 }
+function selectMedic(text, listId, inputId) { gel(inputId).value=text; gel(listId).classList.add('hidden'); if(inputId==='f-medic-diagnostic'&&!gel('f-medic-trimitere').value) gel('f-medic-trimitere').value=text; }
+function hideAC(id) { const el=gel(id); if(el) el.classList.add('hidden'); }
 
-function openUserModal(userId=null) {
-  document.getElementById('modal-user-title').textContent = userId?'Modifică Utilizator':'Utilizator Nou';
-  ['u-email','u-nome','u-prenume'].forEach(id=>{const el=document.getElementById(id);if(el){el.value='';el.disabled=false;}});
-  document.getElementById('u-email').value=''; document.getElementById('u-email').disabled=false;
-  document.getElementById('u-rol').value='terapeut'; document.getElementById('u-tip-colaborare').value='angajat'; document.getElementById('u-specialitate').value='';
-  document.getElementById('modal-user').dataset.userId=userId||'';
-  document.getElementById('modal-user').classList.remove('hidden');
+async function acAlergie() {
+  const val = gel('alergie-input').value.trim(); const list = gel('ac-alergii');
+  if (val.length<1) { list.classList.add('hidden'); return; }
+  const { data } = await sb.from('alergii_catalog').select('*').ilike('denumire',`%${val}%`).limit(8);
+  if (!data?.length) { list.classList.add('hidden'); return; }
+  list.innerHTML = data.map(a=>`<div class="autocomplete-item" onmousedown="selectAlergie('${escQ(a.denumire)}',${a.id})">${a.denumire}</div>`).join('');
+  list.classList.remove('hidden');
 }
+function selectAlergie(den,id) { if(!alergiiSelectate.find(a=>a.denumire.toLowerCase()===den.toLowerCase())){alergiiSelectate.push({id,denumire:den});renderAlergiiTags();} gel('alergie-input').value=''; gel('ac-alergii').classList.add('hidden'); }
+function addAlergie(event) { if(event.key==='Enter'){event.preventDefault();const val=gel('alergie-input').value.trim();if(val&&!alergiiSelectate.find(a=>a.denumire.toLowerCase()===val.toLowerCase())){alergiiSelectate.push({denumire:val});renderAlergiiTags();}gel('alergie-input').value='';gel('ac-alergii').classList.add('hidden');} }
+function removeAlergie(i) { alergiiSelectate.splice(i,1); renderAlergiiTags(); }
+function renderAlergiiTags() { gel('alergii-tags').innerHTML = alergiiSelectate.map((a,i)=>`<span class="tag">${a.denumire}<button class="tag-remove" onclick="removeAlergie(${i})">×</button></span>`).join(''); }
 
-async function editUser(userId) {
-  const { data: u } = await sb.from('profiles').select('*').eq('id',userId).single();
-  if (!u) return;
-  openUserModal(userId);
-  document.getElementById('u-email').value=u.email; document.getElementById('u-email').disabled=true;
-  document.getElementById('u-nom').value=u.nome||''; document.getElementById('u-prenume').value=u.prenume||'';
-  document.getElementById('u-rol').value=u.rol; document.getElementById('u-tip-colaborare').value=u.tip_colaborare||'angajat';
-  document.getElementById('u-specialitate').value=u.specialitate_id||'';
-  document.getElementById('modal-user').dataset.userId=userId;
-}
-
-function rolChanged() { document.getElementById('u-terapeut-fields').style.display=document.getElementById('u-rol').value==='terapeut'?'':'none'; }
-
-async function salveazaUtilizator() {
-  const userId = document.getElementById('modal-user').dataset.userId;
-  const rol = document.getElementById('u-rol').value;
-  const sp = document.getElementById('u-specialitate').value;
-  if (rol==='terapeut'&&!sp) { showToast('Specialitatea este obligatorie pentru terapeuți.','error'); return; }
+// ============================================================
+// DASHBOARD STATS
+// ============================================================
+async function loadDashboardStats() {
   try {
-    await sb.from('profiles').update({
-      rol, tip_colaborare:rol==='terapeut'?document.getElementById('u-tip-colaborare').value:null,
-      specialitate_id:rol==='terapeut'&&sp?parseInt(sp):null,
-    }).eq('id',userId);
-    showToast('Utilizator actualizat.','success');
-    await logActivity('update_user',`Utilizator ID ${userId}`);
-    closeModal('modal-user'); loadUtilizatori(); loadCommonData();
-  } catch(e) { showToast(`Eroare: ${e.message}`,'error'); }
+    const now = new Date(); const anS=`${now.getFullYear()}-01-01`; const lunaS=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+    const [r1,r2,r3,r4] = await Promise.all([
+      sb.from('pacienti').select('*',{count:'exact',head:true}).eq('activ',true),
+      sb.from('inregistrari').select('*',{count:'exact',head:true}),
+      sb.from('inregistrari').select('*',{count:'exact',head:true}).gte('data_completarii',anS),
+      sb.from('inregistrari').select('*',{count:'exact',head:true}).gte('data_completarii',lunaS),
+    ]);
+    gel('stat-total').textContent=r1.count||0; gel('stat-inregistrari').textContent=r2.count||0;
+    gel('stat-an').textContent=r3.count||0; gel('stat-luna').textContent=r4.count||0;
+  } catch(e) { console.error(e); }
 }
 
-function stergeUser(userId, name) {
-  showConfirm(`Ștergeți utilizatorul <strong>${name}</strong>? Datele rămân în sistem.`, async () => {
-    await sb.from('profiles').update({activ:false}).eq('id',userId);
-    await logActivity('stergere_user',`${name}`);
-    closeModal('modal-confirm'); showToast(`${name} șters.`,'success'); loadUtilizatori(); loadCommonData();
+// ============================================================
+// REPORT SYSTEM
+// ============================================================
+const REPORT_COLUMNS = {
+  activitate: [
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:110},
+    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:true,width:200,wrap:true},
+    {key:'medic_diagnostic',label:'Medic Diagnostic',sortable:true,bold:false,width:160},
+    {key:'medic_trimitere',label:'Medic Trimitere',sortable:true,bold:false,width:160},
+    {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
+  ],
+  registru: [
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_luare_evidenta',label:'Evidență',sortable:true,bold:false,width:100,isDate:true},
+    {key:'nume',label:'Nume',sortable:true,bold:true,width:130},
+    {key:'prenume',label:'Prenume',sortable:true,bold:true,width:130},
+    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:110,isDate:true},
+    {key:'cnp',label:'CNP',sortable:false,bold:false,width:130},
+    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:120},
+    {key:'este_major',label:'Major/Minor',sortable:true,bold:false,width:100},
+    {key:'nationalitate',label:'Naționalitate',sortable:true,bold:false,width:110},
+    {key:'ultima_data',label:'Ultima Vizită',sortable:true,bold:false,width:110,isDate:true},
+    {key:'nr_vizite',label:'Nr. Vizite',sortable:true,bold:false,width:80},
+  ],
+  terapeut: [
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:110},
+    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:true,width:200,wrap:true},
+    {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
+  ],
+  nastere: [
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:110,isDate:true},
+    {key:'luna_nastere',label:'Luna',sortable:true,bold:false,width:90},
+    {key:'nume',label:'Nume',sortable:true,bold:true,width:130},
+    {key:'prenume',label:'Prenume',sortable:true,bold:true,width:130},
+    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:120},
+    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:false,width:200},
+  ],
+  medici: [
+    {key:'medic_trimitere',label:'Medic Trimițător',sortable:true,bold:true,width:200},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'motiv',label:'Motiv',sortable:false,bold:false,width:110},
+    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:false,width:200,wrap:true},
+  ],
+};
+
+const REPORT_TITLES = {activitate:'Raport Lunar de Activitate',registru:'Registrul Unic Pacienți',terapeut:'Raport Terapeut',nastere:'Raport Data Nașterii',medici:'Raport Medici Recomandare'};
+
+function openReportFilter(type) {
+  rvType = type; rvTitle = REPORT_TITLES[type]||'Raport';
+  gel('modal-raport-filter-title').textContent = rvTitle;
+  const year = new Date().getFullYear();
+  let html = '';
+  if (type==='activitate') {
+    html=`<div class="form-grid"><div class="form-group"><label>Luna</label><select id="rf-luna">${['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'].map((l,i)=>`<option value="${i+1}"${i===new Date().getMonth()?' selected':''}>${l}</option>`).join('')}</select></div><div class="form-group"><label>Anul</label><input type="number" id="rf-an" value="${year}" min="2000" max="2100"></div><div class="form-group col-span-2"><label>Terapeut</label><select id="rf-terapeut"><option value="">Toți terapeuții</option>${terapeutiCache.map(t=>`<option value="${t.id}">${t.prenume} ${t.nume}</option>`).join('')}</select></div></div>`;
+  } else if (type==='nastere') {
+    html=`<div class="form-group"><label>Luna nașterii</label><select id="rf-luna-nastere"><option value="">Toate lunile</option>${['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'].map((l,i)=>`<option value="${i+1}">${l}</option>`).join('')}</select></div>`;
+  } else if (type==='terapeut') {
+    html=`<div class="form-grid"><div class="form-group col-span-2"><label>Terapeut</label><select id="rf-terapeut"><option value="">Toți terapeuții</option>${terapeutiCache.map(t=>`<option value="${t.id}">${t.prenume} ${t.nume}</option>`).join('')}</select></div><div class="form-group"><label>De la data</label><input type="date" id="rf-data-start"></div><div class="form-group"><label>Până la data</label><input type="date" id="rf-data-end" value="${todayStr()}"></div></div>`;
+  } else {
+    html=`<div class="form-grid"><div class="form-group"><label>De la data</label><input type="date" id="rf-data-start"></div><div class="form-group"><label>Până la data</label><input type="date" id="rf-data-end" value="${todayStr()}"></div></div>`;
+  }
+  gel('modal-raport-filter-body').innerHTML = html;
+  gel('modal-raport-filter').classList.remove('hidden');
+}
+
+async function loadAndShowReport() {
+  closeModal('modal-raport-filter');
+  showToast('Se încarcă raportul...','');
+  try {
+    rvData = await fetchReportData(rvType);
+    rvColumns = REPORT_COLUMNS[rvType] || [];
+    rvSortCol = null; rvSortDir = 'asc';
+    gel('rv-title').textContent = rvTitle;
+    gel('rv-subtitle').textContent = `${rvData.length} înregistrări`;
+    gel('rv-footer').textContent = `Total: ${rvData.length} înregistrări`;
+    // Action buttons
+    let actionBtns = '';
+    if (rvType==='activitate'||rvType==='terapeut') actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacienti')">+ Înregistrare Nouă</button>`;
+    actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacient-nou')">+ Pacient Nou</button>`;
+    gel('rv-action-btns').innerHTML = actionBtns;
+    renderRVTable();
+    gel('modal-report-viewer').classList.remove('hidden');
+  } catch(e) { showToast(`Eroare încărcare: ${e.message}`,'error'); console.error(e); }
+}
+
+async function fetchReportData(type) {
+  const lunaEl=gel('rf-luna'), anEl=gel('rf-an'), terapeutEl=gel('rf-terapeut'), dsEl=gel('rf-data-start'), deEl=gel('rf-data-end');
+  if (type==='activitate') {
+    const luna=lunaEl?.value, an=anEl?.value||new Date().getFullYear();
+    const ds=`${an}-${String(luna).padStart(2,'0')}-01`;
+    const de=new Date(an,luna,0).toISOString().split('T')[0];
+    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),medic_d:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).gte('data_completarii',ds).lte('data_completarii',de).order('data_completarii');
+    const tId=gel('rf-terapeut')?.value; if(tId) q=q.eq('terapeut_id',tId);
+    const {data}=await q;
+    return (data||[]).map(r=>({id:r.pacient?.id,pacient_id:r.pacient?.id,inreg_id:r.id,nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic,medic_diagnostic:r.medic_d?.nome,medic_trimitere:r.medic_t?.nome,terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
+  }
+  if (type==='registru') {
+    const {data:pac}=await sb.from('pacienti').select('*').eq('activ',true).order('id');
+    const {data:inreg}=await sb.from('inregistrari').select('pacient_id,data_completarii,diagnostic').order('data_completarii',{ascending:false});
+    return (pac||[]).map(p=>{
+      const pi=(inreg||[]).filter(i=>i.pacient_id===p.id);
+      return {id:p.id,data_luare_evidenta:p.data_luare_evidenta,nume:p.nume,prenume:p.prenume,data_nasterii:p.data_nasterii,cnp:p.cnp,telefon:p.telefon,este_major:p.este_major?'Major':'Minor',nationalitate:p.nationalitate||'Română',ultima_data:pi[0]?.data_completarii,nr_vizite:pi.length,diagnostic:pi[0]?.diagnostic,luna_nastere:p.data_nasterii?['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'][new Date(p.data_nasterii).getMonth()]:'—'};
+    });
+  }
+  if (type==='terapeut') {
+    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).order('data_completarii');
+    const tId=gel('rf-terapeut')?.value; if(tId) q=q.eq('terapeut_id',tId);
+    const ds=dsEl?.value; const de=deEl?.value; if(ds) q=q.gte('data_completarii',ds); if(de) q=q.lte('data_completarii',de);
+    const {data}=await q;
+    return (data||[]).map(r=>({id:r.pacient?.id,inreg_id:r.id,pacient_id:r.pacient?.id,nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic,terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
+  }
+  if (type==='nastere') {
+    const {data:pac}=await sb.from('pacienti').select('*').eq('activ',true).not('data_nasterii','is',null).order('data_nasterii');
+    const {data:inreg}=await sb.from('inregistrari').select('pacient_id,diagnostic').order('data_completarii',{ascending:false});
+    let rows=(pac||[]).map(p=>{const pi=(inreg||[]).filter(i=>i.pacient_id===p.id);return{id:p.id,data_nasterii:p.data_nasterii,luna_nastere:p.data_nasterii?['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'][new Date(p.data_nasterii).getMonth()]:'—',nume:p.nume,prenume:p.prenume,telefon:p.telefon,diagnostic:pi[0]?.diagnostic};});
+    const lunaF=gel('rf-luna-nastere')?.value; if(lunaF) rows=rows.filter(r=>r.data_nasterii&&(new Date(r.data_nasterii).getMonth()+1)==lunaF);
+    return rows;
+  }
+  if (type==='medici') {
+    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate)`).not('medic_trimitere_id','is',null).order('data_completarii');
+    const ds=dsEl?.value; const de=deEl?.value; if(ds) q=q.gte('data_completarii',ds); if(de) q=q.lte('data_completarii',de);
+    const {data}=await q;
+    return (data||[]).map(r=>({id:r.pacient?.id,inreg_id:r.id,pacient_id:r.pacient?.id,medic_trimitere:r.medic_t?.nome||'—',nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic}));
+  }
+  return [];
+}
+
+function renderRVTable() {
+  const isAdmin = currentProfile.rol==='admin';
+  // THEAD
+  gel('rv-thead').innerHTML = '<tr>' + rvColumns.map((c,i)=>`<th class="${c.sortable?'':''}${rvSortCol===i?' sort-'+rvSortDir:''}" onclick="${c.sortable?`sortRV(${i})`:''}void(0)">${c.label}</th>`).join('') + (isAdmin?'<th style="min-width:80px;">Acțiuni</th>':'') + '</tr>';
+  // TBODY
+  const data = [...rvData];
+  if (rvSortCol !== null) {
+    const col = rvColumns[rvSortCol];
+    data.sort((a,b)=>{
+      let va=a[col.key]||'', vb=b[col.key]||'';
+      if (col.isDate) { va=new Date(va); vb=new Date(vb); }
+      else { va=String(va).toLowerCase(); vb=String(vb).toLowerCase(); }
+      const r = va<vb?-1:va>vb?1:0; return rvSortDir==='asc'?r:-r;
+    });
+  }
+  gel('rv-tbody').innerHTML = data.map((row,ri) =>
+    '<tr>' + rvColumns.map(c=>{
+      let val = row[c.key]; if(val===null||val===undefined) val='—';
+      if(c.isDate && val!=='—') val=formatDate(val);
+      return `<td class="${c.wrap?'wrap':''}" style="${c.bold?'font-weight:600;':''}" title="${escHTML(String(val))}">${escHTML(String(val))}</td>`;
+    }).join('') +
+    (isAdmin?`<td class="td-actions"><button class="btn btn-ghost btn-sm" onclick="modificaInregistrareRV(${JSON.stringify(row).replace(/"/g,'&quot;')})" title="Modifică">✏️</button><button class="btn btn-ghost btn-sm" onclick="stergeInregistrareRV(${row.inreg_id||row.id},${ri})" title="Șterge">🗑️</button></td>`:'') +
+    '</tr>'
+  ).join('');
+  gel('rv-footer').textContent = `Total: ${data.length} înregistrări`;
+}
+
+function sortRV(colIdx) {
+  if (rvSortCol===colIdx) { rvSortDir = rvSortDir==='asc'?'desc':'asc'; }
+  else { rvSortCol=colIdx; rvSortDir='asc'; }
+  // Update header classes
+  gel('rv-thead').querySelectorAll('th').forEach((th,i)=>{ th.classList.remove('sort-asc','sort-desc'); if(i===colIdx) th.classList.add('sort-'+rvSortDir); });
+  renderRVTable();
+}
+
+async function modificaInregistrareRV(row) {
+  if (row.inreg_id) { await modificaInregistrare(row.inreg_id, row.pacient_id||row.id); }
+  else if (row.id) { await deschideModificareDate(row.id); }
+}
+
+function stergeInregistrareRV(inregId, rowIdx) {
+  if (!inregId) return;
+  showConfirm(`Ștergeți această înregistrare?`, async () => {
+    await sb.from('inregistrari').delete().eq('id', inregId);
+    await logActivity('stergere_inregistrare',`Înregistrare ID# ${inregId}`);
+    rvData.splice(rowIdx,1); renderRVTable();
+    closeModal('modal-confirm'); showToast('Înregistrare ștearsă.','success');
   },'Șterge',true);
 }
 
-function showSettingsTab(tab, event) {
-  document.querySelectorAll('[id^="settings-"]').forEach(el=>el.classList.add('hidden'));
-  document.querySelectorAll('.settings-tab').forEach(el=>el.classList.remove('active'));
-  document.getElementById(`settings-${tab}`).classList.remove('hidden');
-  if (event && event.target) event.target.classList.add('active');
-  if (tab==='firma') loadFirma();
-  if (tab==='log') loadLog();
+// ============================================================
+// PDF EXPORT
+// ============================================================
+function openPDFOptions() {
+  const cols = REPORT_COLUMNS[rvType]||[];
+  selectedPDFFields = new Set(cols.map(c=>c.key));
+  gel('pdf-fields-grid').innerHTML = cols.map(c=>`<label class="pdf-field-cb"><input type="checkbox" value="${c.key}" ${selectedPDFFields.has(c.key)?'checked':''} onchange="togglePDFField('${c.key}',this.checked)"> ${c.label}</label>`).join('');
+  gel('modal-pdf-options').classList.remove('hidden');
+}
+function togglePDFField(key,checked) { if(checked) selectedPDFFields.add(key); else selectedPDFFields.delete(key); }
+function selectAllPDFFields(sel) { gel('pdf-fields-grid').querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.checked=sel; togglePDFField(cb.value,sel);}); }
+
+async function executeExportPDF() {
+  const format = gel('pdf-format').value;
+  closeModal('modal-pdf-options');
+  if (format==='variantA'||format==='variantC') { printReportHTML(format); return; }
+  // Standard table PDF
+  const { jsPDF } = window.jspdf;
+  const { data: firma } = await sb.from('setari_firma').select('*').maybeSingle();
+  const cols = (REPORT_COLUMNS[rvType]||[]).filter(c=>selectedPDFFields.has(c.key));
+  const doc = new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const pw = doc.internal.pageSize.getWidth();
+  // Cover / header
+  doc.setFontSize(13); doc.setFont('helvetica','bold');
+  doc.text(firma?.denumire||'Kineto ProActiv', 14, 14);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  if(firma?.adresa) doc.text(firma.adresa, 14, 20);
+  doc.setFontSize(12); doc.setFont('helvetica','bold');
+  doc.text(rvTitle, pw/2, 30, {align:'center'});
+  doc.setFontSize(8); doc.setFont('helvetica','normal');
+  doc.text(`Generat: ${formatDate(todayStr())} · Total: ${rvData.length}`, pw-14, 14, {align:'right'});
+  const rows = rvData.map(row=>cols.map(c=>{
+    let v=row[c.key]??'—'; if(c.isDate&&v!=='—') v=formatDate(v);
+    return pdfSafe(String(v));
+  }));
+  doc.autoTable({startY:36,head:[cols.map(c=>c.label)],body:rows,styles:{fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14},columnStyles:Object.fromEntries(cols.map((c,i)=>[i,{cellWidth:c.width?Math.min(c.width/4,60):'auto'}]))});
+  const pc=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pc;i++){doc.setPage(i);doc.setFontSize(7);doc.text(`Pagina ${i}/${pc}`,pw/2,doc.internal.pageSize.getHeight()-5,{align:'center'});}
+  const fname = `${rvTitle.replace(/\s+/g,'_')}_${todayStr()}.pdf`;
+  doc.save(fname);
+  showToast('PDF generat!','success');
+  await logActivity('export_pdf',`${rvTitle} (${rvData.length} înreg.)`);
+}
+
+function printReportHTML(variant) {
+  const cols = (REPORT_COLUMNS[rvType]||[]).filter(c=>selectedPDFFields.has(c.key));
+  const firma = { name: gel('sidebar-firma-name').textContent };
+  let html = `<!DOCTYPE html><html lang="ro"><head><meta charset="UTF-8"><title>${rvTitle}</title><style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:Arial,sans-serif;font-size:9pt;color:#111;}
+    .cover{page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px;}
+    .cover h1{font-size:28pt;margin:20px 0;color:#0A3D52;}
+    .cover .firm-name{font-size:20pt;font-weight:bold;color:#0A3D52;}
+    .cover .details{font-size:10pt;color:#666;margin:8px 0;}
+    table{width:100%;border-collapse:collapse;font-size:8pt;}
+    th{background:#0A3D52;color:#fff;padding:6px 8px;text-align:left;font-size:7pt;text-transform:uppercase;}
+    td{padding:5px 8px;border-bottom:1px solid #DDD;}
+    tr:nth-child(even) td{background:#F5F0EB;}
+    .bold{font-weight:bold;}
+    .small{font-size:7.5pt;}
+    @page{size:A4 landscape;margin:12mm;}
+    @media print{.cover{page-break-after:always;}}
+  </style></head><body>`;
+  // Cover page
+  html += `<div class="cover"><div class="firm-name">${escHTML(firma.name)}</div><h1>${escHTML(rvTitle)}</h1><div class="details">Data generării: ${formatDate(todayStr())}</div><div class="details">Total înregistrări: ${rvData.length}</div></div>`;
+  // Data table
+  html += `<table><thead><tr>${cols.map(c=>`<th>${escHTML(c.label)}</th>`).join('')}</tr></thead><tbody>`;
+  rvData.forEach(row=>{
+    html += '<tr>' + cols.map(c=>{
+      let v=row[c.key]??'—'; if(c.isDate&&v!=='—') v=formatDate(v);
+      return `<td class="${c.bold?'bold':''}${c.width&&c.width<120?' small':''}">${escHTML(String(v))}</td>`;
+    }).join('') + '</tr>';
+  });
+  html += '</tbody></table></body></html>';
+  const w = window.open('','_blank'); w.document.write(html); w.document.close();
+  setTimeout(()=>{ w.focus(); w.print(); }, 800);
+}
+
+function printReportHTML_default() { printReportHTML('table'); }
+
+async function exportIstoricPDF(pacientId) {
+  const { jsPDF } = window.jspdf;
+  const { data: p } = await sb.from('pacienti').select('*').eq('id',pacientId).single();
+  const { data: inreg } = await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).eq('pacient_id',pacientId).order('data_completarii');
+  const { data: firma } = await sb.from('setari_firma').select('*').maybeSingle();
+  const doc = new jsPDF({unit:'mm',format:'a4'}); const pw=doc.internal.pageSize.getWidth();
+  doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.text(pdfSafe(firma?.denumire||'Kineto ProActiv'),14,14);
+  doc.setFontSize(10); doc.text('FISA PACIENT — ISTORIC MEDICAL',pw/2,24,{align:'center'});
+  doc.setFontSize(8); doc.setFont('helvetica','normal');
+  doc.text(`ID# ${p.id}  ·  ${pdfSafe(p.prenume)} ${pdfSafe(p.nume)}  ·  CNP: ${p.cnp||'—'}  ·  Evidenta: ${formatDate(p.data_luare_evidenta)}`,pw/2,30,{align:'center'});
+  const rows=(inreg||[]).map(ir=>[formatDate(ir.data_completarii),pdfSafe(ir.motiv_prezentare||''),pdfSafe(ir.diagnostic||'—'),pdfSafe(ir.medic_diagnostic?.nome||'—'),pdfSafe(ir.terapeut?`${ir.terapeut.prenume} ${ir.terapeut.nume}`:'—'),pdfSafe((ir.istoric_medical||'').substring(0,80))]);
+  doc.autoTable({startY:36,head:[['Data','Motiv','Diagnostic','Medic','Terapeut','Istoric']],body:rows,styles:{fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14}});
+  doc.save(`Istoric_${pdfSafe(p.nume)}_${pdfSafe(p.prenume)}_ID${p.id}.pdf`);
+  showToast('Istoric exportat!','success');
+}
+
+// PDF safe chars (Romanian diacritics best-effort)
+function pdfSafe(s){if(!s)return'';return s.replace(/ș/g,'s').replace(/Ș/g,'S').replace(/ț/g,'t').replace(/Ț/g,'T').replace(/ă/g,'a').replace(/Ă/g,'A').replace(/â/g,'a').replace(/Â/g,'A').replace(/î/g,'i').replace(/Î/g,'I');}
+
+// ============================================================
+// USERS
+// ============================================================
+async function loadUtilizatori() {
+  if (currentProfile.rol!=='admin') return;
+  const grid=gel('users-grid'); grid.innerHTML=`<div class="loading"><div class="spinner"></div> Se încarcă...</div>`;
+  const {data:users}=await sb.from('profiles').select('*').eq('activ',true).order('rol').order('nume');
+  if (!users?.length) { grid.innerHTML=emptyState('👤','Niciun utilizator'); return; }
+  grid.innerHTML=users.map(u=>`<div class="user-card ${u.rol}"><div class="user-card-header"><div class="user-avatar">${((u.prenume||'')[0]||'')+((u.nume||'')[0]||'')}</div><div><div class="user-name">${u.prenume} ${u.nume}</div><span class="badge ${u.rol==='admin'?'badge-orange':u.rol==='secretariat'?'badge-green':'badge-blue'}">${roleLabel(u.rol)}</span></div></div><div class="user-detail">✉️ ${u.email||'—'}</div>${u.tip_colaborare?`<div class="user-detail">🤝 ${u.tip_colaborare}</div>`:''}<div class="user-detail">📅 ${formatDate(u.creat_la)}</div><div class="user-card-actions"><button class="btn btn-outline btn-sm" onclick="editUser('${u.id}')">✏️ Modifică</button>${u.id!==currentProfile.id?`<button class="btn btn-danger btn-sm" onclick="stergeUser('${u.id}','${escQ(u.prenume+' '+u.nome)}')">🗑️</button>`:''}</div></div>`).join('');
+}
+
+function openUserModal(userId=null) {
+  gel('modal-user-title').textContent=userId?'Modifică Utilizator':'Utilizator Nou';
+  gel('u-email').value=''; gel('u-email').disabled=false;
+  gel('u-nome').value=''; gel('u-prenume').value='';
+  gel('u-rol').value='terapeut'; gel('u-tip-colaborare').value='angajat'; gel('u-specialitate').value='';
+  gel('modal-user').dataset.userId=userId||''; gel('modal-user').classList.remove('hidden');
+}
+
+async function editUser(userId) {
+  const {data:u}=await sb.from('profiles').select('*').eq('id',userId).single(); if(!u)return;
+  openUserModal(userId);
+  gel('u-email').value=u.email||''; gel('u-email').disabled=true;
+  gel('u-nome').value=u.nome||''; gel('u-prenume').value=u.prenume||'';
+  gel('u-rol').value=u.rol; gel('u-tip-colaborare').value=u.tip_colaborare||'angajat';
+  gel('u-specialitate').value=u.specialitate_id||''; gel('modal-user').dataset.userId=userId;
+}
+
+function rolChanged() { gel('u-terapeut-fields').style.display=gel('u-rol').value==='terapeut'?'':'none'; }
+
+async function salveazaUtilizator() {
+  const userId=gel('modal-user').dataset.userId; const rol=gel('u-rol').value; const sp=gel('u-specialitate').value;
+  if(rol==='terapeut'&&!sp){showToast('Specialitatea este obligatorie.','error');return;}
+  try {
+    await sb.from('profiles').update({rol,tip_colaborare:rol==='terapeut'?gel('u-tip-colaborare').value:null,specialitate_id:rol==='terapeut'&&sp?parseInt(sp):null}).eq('id',userId);
+    showToast('Utilizator actualizat.','success'); await logActivity('update_user',`ID ${userId}`);
+    closeModal('modal-user'); loadUtilizatori(); loadCommonData();
+  } catch(e){showToast(`Eroare: ${e.message}`,'error');}
+}
+
+function stergeUser(userId,name) {
+  showConfirm(`Ștergeți <strong>${name}</strong>? Datele introduse rămân.`, async()=>{
+    await sb.from('profiles').update({activ:false}).eq('id',userId);
+    await logActivity('stergere_user',name); closeModal('modal-confirm'); showToast(`${name} șters.`,'success'); loadUtilizatori(); loadCommonData();
+  },'Șterge',true);
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function showSettingsTab(tab, el) {
+  document.querySelectorAll('[id^="settings-"]').forEach(e=>e.classList.add('hidden'));
+  document.querySelectorAll('.settings-tab').forEach(e=>e.classList.remove('active'));
+  gel(`settings-${tab}`).classList.remove('hidden'); if(el) el.classList.add('active');
+  if(tab==='firma') loadFirma(); if(tab==='log') loadLog();
 }
 
 async function loadFirma() {
-  const { data } = await sb.from('setari_firma').select('*').single();
-  if (!data) return;
-  document.getElementById('s-denumire').value=data.denumire||'';
-  document.getElementById('s-cui').value=data.cui||'';
-  document.getElementById('s-reg-com').value=data.nr_reg_com||'';
-  document.getElementById('s-iban').value=data.cont_bancar||'';
-  document.getElementById('s-adresa').value=data.adresa||'';
-  if (data.denumire) document.getElementById('sidebar-firma-name').textContent=data.denumire;
+  const {data}=await sb.from('setari_firma').select('*').maybeSingle(); if(!data)return;
+  gel('s-denumire').value=data.denumire||''; gel('s-cui').value=data.cui||'';
+  gel('s-reg-com').value=data.nr_reg_com||''; gel('s-iban').value=data.cont_bancar||'';
+  gel('s-adresa').value=data.adresa||'';
+  if(data.logo_base64) setLogo(data.logo_base64);
+  if(data.denumire) gel('sidebar-firma-name').textContent=data.denumire;
 }
 
 async function salveazaFirma() {
-  const den = document.getElementById('s-denumire').value.trim();
-  await sb.from('setari_firma').upsert({id:1,denumire:den,cui:document.getElementById('s-cui').value.trim(),nr_reg_com:document.getElementById('s-reg-com').value.trim(),cont_bancar:document.getElementById('s-iban').value.trim(),adresa:document.getElementById('s-adresa').value.trim()});
-  if (den) document.getElementById('sidebar-firma-name').textContent=den;
+  const den=gel('s-denumire').value.trim();
+  await sb.from('setari_firma').upsert({id:1,denumire:den,cui:gel('s-cui').value.trim(),nr_reg_com:gel('s-reg-com').value.trim(),cont_bancar:gel('s-iban').value.trim(),adresa:gel('s-adresa').value.trim()},{onConflict:'id'});
+  if(den){gel('sidebar-firma-name').textContent=den;}
   showToast('Date firmă salvate!','success');
 }
 
+// LOGO
+function handleLogoUpload(input) {
+  const file=input.files[0]; if(!file)return;
+  if(file.size>200*1024){showToast('Logo prea mare! Max 200KB.','error');return;}
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    const b64=e.target.result;
+    setLogo(b64);
+    await sb.from('setari_firma').upsert({id:1,logo_base64:b64},{onConflict:'id'});
+    showToast('Logo salvat!','success');
+  };
+  reader.readAsDataURL(file);
+}
+async function removeLogo() {
+  gel('logo-preview').innerHTML='🏥'; gel('sidebar-logo-icon').innerHTML='🏥'; gel('login-logo-icon').innerHTML='🏥';
+  await sb.from('setari_firma').upsert({id:1,logo_base64:null},{onConflict:'id'});
+  showToast('Logo șters.','success');
+}
+function setLogo(b64) {
+  const imgTag=`<img src="${b64}" style="width:100%;height:100%;object-fit:cover;">`;
+  gel('logo-preview').innerHTML=imgTag; gel('sidebar-logo-icon').innerHTML=imgTag; gel('login-logo-icon').innerHTML=imgTag;
+}
+
+// PASSWORD
+function checkPasswordStrength(pwd) {
+  const bar=gel('pw-strength-bar'), txt=gel('pw-strength-text');
+  bar.classList.remove('hidden','weak','medium','strong');
+  if(!pwd){bar.classList.add('hidden');txt.textContent='';return;}
+  const hasUpper=/[A-Z]/.test(pwd), hasNum=/[0-9]/.test(pwd), hasSym=/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/.test(pwd), long=pwd.length>=10;
+  const score=[hasUpper,hasNum,hasSym,long].filter(Boolean).length;
+  const levels=['','weak','weak','medium','strong']; bar.classList.add(levels[score]||'weak');
+  const labels=['','Slabă — adăugați cifre, simboluri, litere mari','Slabă — mai adăugați complexitate','Medie — mai adăugați un simbol sau lungime','Puternică ✓'];
+  txt.textContent=labels[score]||''; txt.style.color=score>=4?'var(--success)':score>=3?'var(--warning)':'var(--danger)';
+}
+
 async function schimbaParola() {
-  const noua = document.getElementById('s-parola-noua').value;
-  const conf = document.getElementById('s-parola-confirma').value;
-  if (noua.length<8) { showToast('Minim 8 caractere.','error'); return; }
-  if (noua!==conf) { showToast('Parolele nu coincid.','error'); return; }
-  const { error } = await sb.auth.updateUser({password:noua});
-  if (error) { showToast(`Eroare: ${error.message}`,'error'); return; }
-  showToast('Parolă actualizată!','success');
-  document.getElementById('s-parola-noua').value=''; document.getElementById('s-parola-confirma').value='';
+  const noua=gel('s-parola-noua').value, conf=gel('s-parola-confirma').value;
+  if(noua.length<10){showToast('Minim 10 caractere!','error');return;}
+  const hasUpper=/[A-Z]/.test(noua), hasNum=/[0-9]/.test(noua), hasSym=/[!@#$%^&*]/.test(noua);
+  if(!hasUpper||!hasNum||!hasSym){showToast('Parola trebuie să conțină literă mare, cifră și simbol special.','error');return;}
+  if(noua!==conf){showToast('Parolele nu coincid.','error');return;}
+  const{error}=await sb.auth.updateUser({password:noua});
+  if(error){showToast(`Eroare: ${error.message}`,'error');return;}
+  showToast('Parolă actualizată!','success'); gel('s-parola-noua').value=''; gel('s-parola-confirma').value='';
+  gel('pw-strength-bar').classList.add('hidden'); gel('pw-strength-text').textContent='';
 }
 
 async function loadLog() {
-  const div = document.getElementById('log-content');
-  div.innerHTML='<div class="loading"><div class="spinner"></div> Se încarcă...</div>';
-  const { data } = await sb.from('log_activitate').select('*,profiles(nume,prenume)').order('efectuat_la',{ascending:false}).limit(200);
-  if (!data||!data.length) { div.innerHTML='<div class="empty-state"><div class="empty-state-icon">📝</div><div class="empty-state-text">Nicio activitate</div></div>'; return; }
-  div.innerHTML = data.map(l=>`<div class="log-row"><div class="log-time">${formatDateTime(l.efectuat_la)}</div><div class="log-action"><span class="log-user">${l.profiles?`${l.profiles.prenume} ${l.profiles.nume}`:l.utilizator_email||'—'}</span> · ${l.actiune}</div></div>`).join('');
+  const div=gel('log-content'); div.innerHTML=`<div class="loading"><div class="spinner"></div> Se încarcă...</div>`;
+  const{data}=await sb.from('log_activitate').select('*,profiles(nume,prenume)').order('efectuat_la',{ascending:false}).limit(300);
+  if(!data?.length){div.innerHTML=emptyState('📝','Nicio activitate înregistrată');return;}
+  div.innerHTML=data.map(l=>`<div class="log-row"><div class="log-time">${formatDateTime(l.efectuat_la)}</div><div><strong style="color:var(--primary);">${l.profiles?`${l.profiles.prenume} ${l.profiles.nume}`:l.utilizator_email||'—'}</strong> · ${l.actiune}${l.detalii?.info?` — ${l.detalii.info}`:''}</div></div>`).join('');
 }
 
+// BACKUP
 async function exportBackup() {
   showToast('Se pregătește backup-ul...','');
   try {
     const tables=['pacienti','inregistrari','profiles','medici','alergii_catalog','pacient_alergii','setari_firma','specialitati'];
-    const backup={versiune:'1.0',data:new Date().toISOString(),tabele:{}};
-    for (const t of tables) { const { data } = await sb.from(t).select('*'); backup.tabele[t]=data||[]; }
+    const backup={versiune:'2.0',data:new Date().toISOString(),tabele:{}};
+    for(const t of tables){const{data}=await sb.from(t).select('*');backup.tabele[t]=data||[];}
     const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-    a.download=`kineto-backup-${new Date().toISOString().split('T')[0]}.json`; a.click();
-    showToast('Backup descărcat!','success');
-    await logActivity('backup_export','Export backup');
-  } catch(e) { showToast(`Eroare backup: ${e.message}`,'error'); }
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`kineto-backup-${todayStr()}.json`;a.click();
+    showToast('Backup descărcat!','success'); await logActivity('backup_export','Export backup');
+  }catch(e){showToast(`Eroare backup: ${e.message}`,'error');}
+}
+
+async function importBackup(input) {
+  const file=input.files[0]; if(!file)return; input.value='';
+  let backup;
+  try{const text=await file.text();backup=JSON.parse(text);}catch(e){showToast('Fișier invalid!','error');return;}
+  if(!backup.tabele?.pacienti){showToast('Nu este un backup valid!','error');return;}
+  const dataB=backup.data?new Date(backup.data).toLocaleDateString('ro-RO'):'necunoscută';
+  showConfirm(`Import backup din <strong>${dataB}</strong>?<br>Conține: <strong>${(backup.tabele.pacienti||[]).length} pacienți</strong> și <strong>${(backup.tabele.inregistrari||[]).length} înregistrări</strong>.<br>Datele existente NU vor fi șterse.`,
+    async()=>{closeModal('modal-confirm');await executeImport(backup);},'Importă',false);
+}
+
+async function executeImport(backup) {
+  const prog=gel('import-progress'),bar=gel('import-progress-bar'),stat=gel('import-status');
+  prog.style.display='block';
+  const setP=(p,m)=>{bar.style.width=p+'%';stat.textContent=m;};
+  try {
+    setP(5,'Specialități...');
+    for(const sp of backup.tabele.specialitati||[]) await sb.from('specialitati').upsert({denumire:sp.denumire},{onConflict:'denumire',ignoreDuplicates:true});
+    setP(15,'Medici...');
+    const mediciMap={};
+    for(const m of backup.tabele.medici||[]){
+      const{data:ex}=await sb.from('medici').select('id').eq('nume_complet_specialitate',m.nume_complet_specialitate).maybeSingle();
+      if(ex){mediciMap[m.id]=ex.id;}else{const{data:n}=await sb.from('medici').insert({nume_complet_specialitate:m.nume_complet_specialitate,activ:true}).select().single();if(n)mediciMap[m.id]=n.id;}
+    }
+    setP(30,'Pacienți...');
+    const pacMap={};let imp=0,fuz=0;
+    for(const p of backup.tabele.pacienti||[]){
+      let exId=null;
+      if(p.cnp){const{data:ex}=await sb.from('pacienti').select('id').eq('cnp',p.cnp).eq('activ',true).maybeSingle();if(ex)exId=ex.id;}
+      if(exId){pacMap[p.id]=exId;fuz++;}
+      else{const{data:n}=await sb.from('pacienti').insert({data_luare_evidenta:p.data_luare_evidenta,nume:p.nome,prenume:p.prenume,nome_anterior:p.nome_anterior,este_major:p.este_major,este_roman:p.este_roman,nationalitate:p.nationalitate,cnp:p.cnp,data_nasterii:p.data_nasterii,telefon:p.telefon,reprezentant_legal_nome:p.reprezentant_legal_nome,reprezentant_legal_prenume:p.reprezentant_legal_prenume,reprezentant_legal_calitate:p.reprezentant_legal_calitate,telefon_reprezentant:p.telefon_reprezentant,activ:p.activ!==false}).select().single();if(n){pacMap[p.id]=n.id;imp++;}}
+    }
+    setP(60,'Alergii...');
+    const alMap={};
+    for(const a of backup.tabele.alergii_catalog||[]){const{data:ex}=await sb.from('alergii_catalog').select('id').eq('denumire',a.denumire).maybeSingle();if(ex){alMap[a.id]=ex.id;}else{const{data:n}=await sb.from('alergii_catalog').insert({denumire:a.denumire}).select().single();if(n)alMap[a.id]=n.id;}}
+    setP(70,'Înregistrări...');
+    let inrImp=0;
+    for(const ir of backup.tabele.inregistrari||[]){
+      const pId=pacMap[ir.pacient_id]; if(!pId)continue;
+      const{data:ex}=await sb.from('inregistrari').select('id').eq('pacient_id',pId).eq('data_completarii',ir.data_completarii).eq('motiv_prezentare',ir.motiv_prezentare).maybeSingle();
+      if(!ex){await sb.from('inregistrari').insert({pacient_id:pId,data_completarii:ir.data_completarii,motiv_prezentare:ir.motiv_prezentare,diagnostic:ir.diagnostic,medic_diagnostic_id:ir.medic_diagnostic_id?mediciMap[ir.medic_diagnostic_id]:null,medic_trimitere_id:ir.medic_trimitere_id?mediciMap[ir.medic_trimitere_id]:null,istoric_medical:ir.istoric_medical,motiv_transfer_terapeut:ir.motiv_transfer_terapeut});inrImp++;}
+    }
+    setP(100,'Import finalizat!');
+    await logActivity('backup_import',`Import: ${imp} noi, ${fuz} fuzionați, ${inrImp} înregistrări`);
+    setTimeout(()=>{prog.style.display='none';showToast(`Import: ${imp} pacienți noi, ${fuz} fuzionați, ${inrImp} înregistrări.`,'success');loadDashboardStats();},1200);
+  }catch(e){prog.style.display='none';showToast(`Eroare import: ${e.message}`,'error');console.error(e);}
 }
 
 function resetDatabase() {
-  showConfirm(`<strong style="color:var(--danger)">⚠️ ATENȚIE!</strong><br>Vor fi șterse TOATE înregistrările pacienților. Log-ul este păstrat. Ireversibil!<br><br><input type="password" id="reset-pass" style="width:100%;margin-top:10px;padding:8px;border:1.5px solid var(--danger);border-radius:var(--radius);" placeholder="Parola administratorului">`,
-    async () => {
-      const { error } = await sb.auth.signInWithPassword({email:currentProfile.email,password:document.getElementById('reset-pass').value});
-      if (error) { showToast('Parolă incorectă!','error'); return; }
+  gel('modal-confirm-extra').innerHTML=`<input type="password" id="reset-pass" style="width:100%;margin-top:10px;padding:8px;border:1.5px solid var(--danger);border-radius:var(--radius);font-family:var(--font-sans);" placeholder="Parola administratorului">`;
+  showConfirm(`<strong style="color:var(--danger)">⚠️ ATENȚIE!</strong><br>Vor fi șterse TOATE înregistrările. Log-ul este păstrat. Ireversibil!`,
+    async()=>{
+      const{error}=await sb.auth.signInWithPassword({email:currentUser.email,password:gel('reset-pass').value});
+      if(error){showToast('Parolă incorectă!','error');return;}
       await sb.from('inregistrari').delete().neq('id',0);
       await sb.from('pacient_alergii').delete().neq('pacient_id',0);
       await sb.from('pacienti').delete().neq('id',0);
-      await logActivity('reset_db','RESETARE COMPLETĂ BAZA DE DATE');
-      closeModal('modal-confirm'); showToast('Baza de date resetată.','success'); loadDashboardStats();
+      await logActivity('reset_db','RESETARE COMPLETA BAZA DE DATE');
+      closeModal('modal-confirm');showToast('Baza de date resetată.','success');loadDashboardStats();
     },'RESETEAZĂ',true);
 }
 
-function openReport(type) {
-  currentReportType=type;
-  const titles={activitate:'Raport Lunar de Activitate',registru:'Registrul Unic Pacienți',terapeut:'Raport Terapeut',nastere:'Raport Data Nașterii'};
-  document.getElementById('modal-raport-title').textContent=titles[type]||'Raport';
-  const year=new Date().getFullYear();
-  let body='';
-  if (type==='activitate') {
-    body=`<div class="form-grid"><div class="form-group"><label>Luna</label><select id="r-luna">${['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'].map((l,i)=>`<option value="${i+1}" ${i===new Date().getMonth()?'selected':''}>${l}</option>`).join('')}</select></div><div class="form-group"><label>Anul</label><input type="number" id="r-an" value="${year}"></div><div class="form-group col-span-2"><label>Terapeut</label><select id="r-terapeut"><option value="toti">Toți terapeuții</option>${terapeutiCache.map(t=>`<option value="${t.id}">${t.prenume} ${t.nume}</option>`).join('')}</select></div></div>`;
-  } else if (type==='nastere') {
-    body=`<div class="form-group"><label>Luna</label><select id="r-luna-nastere"><option value="0">Toate lunile</option>${['Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie'].map((l,i)=>`<option value="${i+1}">${l}</option>`).join('')}</select></div>`;
-  } else {
-    body=`<div class="form-grid"><div class="form-group"><label>De la</label><input type="date" id="r-data-start"></div><div class="form-group"><label>Până la</label><input type="date" id="r-data-end"></div></div>`;
-  }
-  document.getElementById('modal-raport-body').innerHTML=body;
-  document.getElementById('modal-raport').classList.remove('hidden');
+// ============================================================
+// UTILITIES
+// ============================================================
+async function logActivity(actiune,detalii='') {
+  try{await sb.from('log_activitate').insert({utilizator_id:currentUser?.id,utilizator_email:currentUser?.email,actiune,detalii:detalii?{info:detalii}:null});}catch(e){console.warn('Log:',e.message);}
 }
-
-async function genereazaRaport() {
-  try {
-    const { jsPDF }=window.jspdf;
-    const { data: firma }=await sb.from('setari_firma').select('*').single();
-    const fn=firma;
-    let data=[],columns=[],title='';
-    if (currentReportType==='activitate') {
-      const luna=document.getElementById('r-luna').value, an=document.getElementById('r-an').value;
-      const tId=document.getElementById('r-terapeut').value;
-      const ds=`${an}-${String(luna).padStart(2,'0')}-01`;
-      const de=new Date(an,luna,0).toISOString().split('T')[0];
-      let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).gte('data_completarii',ds).lte('data_completarii',de).order('data_completarii');
-      if (tId!=='toti') q=q.eq('terapeut_id',tId);
-      const { data: rows }=await q;
-      data=(rows||[]).map(r=>({pid:r.pacient?.id||'—',pacient:r.pacient?`${r.pacient.prenume} ${r.pacient.nume}`:'—',data:formatDate(r.data_completarii),motiv:r.motiv_prezentare,diag:r.diagnostic||'—',terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
-      columns=[{header:'ID#',dataKey:'pid'},{header:'Pacient',dataKey:'pacient'},{header:'Data',dataKey:'data'},{header:'Motiv',dataKey:'motiv'},{header:'Diagnostic',dataKey:'diag'},{header:'Terapeut',dataKey:'terapeut'}];
-      title=`Raport Activitate ${['','Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'][luna]} ${an}`;
-    } else {
-      const { data: rows }=await sb.from('pacienti').select('*').eq('activ',true).order('id');
-      data=(rows||[]).map(r=>({id:r.id,n:r.nume,p:r.prenume,cnp:r.cnp||'—',dn:formatDate(r.data_nasterii),tel:r.telefon||'—',le:formatDate(r.data_luare_evidenta)}));
-      columns=[{header:'ID#',dataKey:'id'},{header:'Nume',dataKey:'n'},{header:'Prenume',dataKey:'p'},{header:'CNP',dataKey:'cnp'},{header:'Data Nașterii',dataKey:'dn'},{header:'Telefon',dataKey:'tel'},{header:'Evidență',dataKey:'le'}];
-      title='Registrul Unic Pacienți';
-    }
-    const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-    const pw=doc.internal.pageSize.getWidth();
-    doc.setFontSize(14);doc.setFont('helvetica','bold');doc.text(fn?.denumire||'Kineto ProActiv',14,16);
-    doc.setFontSize(9);doc.setFont('helvetica','normal');if(fn?.adresa)doc.text(fn.adresa,14,22);
-    doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text(title,pw/2,32,{align:'center'});
-    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.text(`Generat: ${formatDate(new Date().toISOString())} · Total: ${data.length}`,pw-14,14,{align:'right'});
-    doc.autoTable({startY:38,columns,body:data,styles:{fontSize:8,cellPadding:3},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14}});
-    const pc=doc.internal.getNumberOfPages();
-    for(let i=1;i<=pc;i++){doc.setPage(i);doc.setFontSize(7);doc.text(`Pagina ${i}/${pc}`,pw/2,doc.internal.pageSize.getHeight()-6,{align:'center'});}
-    doc.save(`${title.replace(/ /g,'_')}.pdf`);
-    closeModal('modal-raport'); showToast('PDF generat!','success');
-    await logActivity('export_raport',title);
-  } catch(e) { showToast(`Eroare PDF: ${e.message}`,'error'); console.error(e); }
+function showConfirm(text,cb,btnText='Confirmă',isDanger=true) {
+  gel('modal-confirm-text').innerHTML=text; gel('modal-confirm-btn').textContent=btnText;
+  gel('modal-confirm-btn').className=`btn ${isDanger?'btn-danger':'btn-primary'}`;
+  confirmCallback=cb; gel('modal-confirm-btn').onclick=cb; gel('modal-confirm').classList.remove('hidden');
 }
-
-async function exportIstoricPDF(pacientId) {
-  const { jsPDF }=window.jspdf;
-  const { data: p }=await sb.from('pacienti').select('*').eq('id',pacientId).single();
-  const { data: inreg }=await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).eq('pacient_id',pacientId).order('data_completarii');
-  const { data: firma }=await sb.from('setari_firma').select('*').single();
-  const doc=new jsPDF({unit:'mm',format:'a4'});
-  const pw=doc.internal.pageSize.getWidth();
-  doc.setFontSize(13);doc.setFont('helvetica','bold');doc.text(firma?.denumire||'Kineto ProActiv',14,16);
-  doc.setFontSize(11);doc.text('FIȘĂ PACIENT — ISTORIC MEDICAL',pw/2,28,{align:'center'});
-  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text(`ID# ${p.id}  ·  ${p.prenume} ${p.nume}  ·  CNP: ${p.cnp||'—'}  ·  Evidență: ${formatDate(p.data_luare_evidenta)}`,pw/2,34,{align:'center'});
-  const rows=(inreg||[]).map(ir=>[formatDate(ir.data_completarii),ir.motiv_prezentare,ir.diagnostic||'—',ir.medic_diagnostic?.nume_complet_specialitate||'—',ir.terapeut?`${ir.terapeut.prenume} ${ir.terapeut.nume}`:'—',(ir.istoric_medical||'').substring(0,60)]);
-  doc.autoTable({startY:40,head:[['Data','Motiv','Diagnostic','Medic','Terapeut','Istoric']],body:rows,styles:{fontSize:8,cellPadding:3},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14}});
-  doc.save(`Istoric_${p.nume}_${p.prenume}_ID${p.id}.pdf`);
-  showToast('Istoric exportat!','success');
-}
-
 function closeModal(id) {
-  document.getElementById(id).classList.add('hidden');
-  if (id==='modal-confirm') { confirmCallback=null; document.getElementById('modal-confirm-extra').innerHTML=''; }
+  gel(id).classList.add('hidden');
+  if(id==='modal-confirm'){confirmCallback=null;gel('modal-confirm-extra').innerHTML='';}
 }
-function showConfirm(text, cb, btnText='Confirmă', isDanger=true) {
-  document.getElementById('modal-confirm-text').innerHTML=text;
-  document.getElementById('modal-confirm-btn').textContent=btnText;
-  document.getElementById('modal-confirm-btn').className=`btn ${isDanger?'btn-danger':'btn-primary'}`;
-  confirmCallback=cb;
-  document.getElementById('modal-confirm-btn').onclick=cb;
-  document.getElementById('modal-confirm').classList.remove('hidden');
+function showToast(msg,type='') {
+  const wrap=gel('toast-wrap'); const toast=document.createElement('div'); toast.className=`toast ${type}`;
+  const icon={success:'✅',error:'❌',warning:'⚠️'}[type]||'ℹ️'; toast.innerHTML=`${icon} ${msg}`; wrap.appendChild(toast);
+  setTimeout(()=>{toast.style.opacity='0';toast.style.transition='.3s';setTimeout(()=>toast.remove(),300);},3800);
 }
+function formatDate(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric'});}catch{return d;}}
+function formatDateTime(d){if(!d)return'—';try{return new Date(d).toLocaleString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch{return d;}}
+function motivBadge(m){return{terapie:'badge-blue',evaluare:'badge-green',reevaluare:'badge-orange',profilaxie:'badge-gray',masaj:'badge-orange',consultanta:'badge-gray'}[m]||'badge-gray';}
+function roleLabel(r){return{admin:'Administrator',terapeut:'Terapeut',secretariat:'Secretariat'}[r]||r;}
+function todayStr(){return new Date().toISOString().split('T')[0];}
+function gel(id){return document.getElementById(id);}
+function setVal(id,val){const el=gel(id);if(el)el.value=val;}
+function setAttr(id,attr,val){const el=gel(id);if(el)el.setAttribute(attr,val);}
+function setDisabled(id,val,dis){const el=gel(id);if(el){el.value=val||'';el.disabled=dis;}}
+function escHTML(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escQ(s){return String(s).replace(/'/g,"\\'");}
+function emptyState(icon,txt){return `<div class="empty-state"><div class="empty-state-icon">${icon}</div><div class="empty-state-text">${txt}</div></div>`;}
 
-async function logActivity(actiune, detalii='') {
-  try { await sb.from('log_activitate').insert({utilizator_id:currentUser?.id,utilizator_email:currentUser?.email,actiune,detalii:detalii?{info:detalii}:null}); }
-  catch(e) { console.warn('Log:',e.message); }
-}
-function showToast(msg, type='') {
-  const wrap=document.getElementById('toast-wrap');
-  const toast=document.createElement('div'); toast.className=`toast ${type}`;
-  const icon={success:'✅',error:'❌',warning:'⚠️'}[type]||'ℹ️';
-  toast.innerHTML=`${icon} ${msg}`; wrap.appendChild(toast);
-  setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateX(10px)';toast.style.transition='.3s';setTimeout(()=>toast.remove(),300);},3800);
-}
-function formatDate(d) { if(!d)return'—'; try{return new Date(d).toLocaleDateString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric'});}catch{return d;} }
-function formatDateTime(d) { if(!d)return'—'; try{return new Date(d).toLocaleString('ro-RO',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}catch{return d;} }
+// SQL to add logo column if missing — run once
+// ALTER TABLE setari_firma ADD COLUMN IF NOT EXISTS logo_base64 TEXT;
 
-document.addEventListener('keypress', e => { if(e.key==='Enter'&&!document.getElementById('login-screen').classList.contains('hidden')) handleLogin(); });
-document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', e => { if(e.target===o) o.classList.add('hidden'); }));
+// EVENT LISTENERS
+document.addEventListener('keypress',e=>{if(e.key==='Enter'&&!gel('login-screen').classList.contains('hidden'))handleLogin();});
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.add('hidden');}));
+
 init();
 </script>
 </body>
