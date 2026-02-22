@@ -6,7 +6,6 @@
 <title>Kineto ProActiv — Registru Pacienți</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <style>
@@ -496,67 +495,15 @@ tbody tr:nth-child(even):hover{background:#F7F4F0;}
       </div>
     </div>
 
-    <!-- RAPOARTE MENIU -->
+    <!-- RAPOARTE -->
     <div class="view-section" id="view-rapoarte">
-      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Selectați tipul de raport dorit</p></div></div>
+      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Vizualizați și exportați rapoarte</p></div></div>
       <div class="report-grid">
         <div class="report-card" onclick="openReportFilter('activitate')"><div class="report-card-icon">📅</div><div class="report-card-title">Raport Lunar de Activitate</div><div class="report-card-desc">Toate înregistrările dintr-o lună</div></div>
         <div class="report-card" onclick="openReportFilter('registru')"><div class="report-card-icon">📚</div><div class="report-card-title">Registrul Unic Pacienți</div><div class="report-card-desc">Lista completă a pacienților</div></div>
         <div class="report-card" onclick="openReportFilter('terapeut')"><div class="report-card-icon">👨‍⚕️</div><div class="report-card-title">Raport Terapeut</div><div class="report-card-desc">Activitatea unui terapeut</div></div>
         <div class="report-card" onclick="openReportFilter('nastere')"><div class="report-card-icon">🎂</div><div class="report-card-title">Raport Data Nașterii</div><div class="report-card-desc">Pacienți organizați pe luni</div></div>
         <div class="report-card" onclick="openReportFilter('medici')"><div class="report-card-icon">🏥</div><div class="report-card-title">Raport Medici Recomandare</div><div class="report-card-desc">Pacienți per medic trimițător</div></div>
-      </div>
-    </div>
-
-    <!-- RAPORT FILTRE INLINE -->
-    <div class="view-section" id="view-raport-filter">
-      <div class="page-header">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <button class="btn btn-ghost btn-sm" onclick="showView('rapoarte')" style="padding:4px 10px;">← Înapoi</button>
-            <span style="color:var(--text-muted);font-size:12px;">Rapoarte › <span id="filter-breadcrumb">—</span></span>
-          </div>
-          <h1 class="page-title" id="filter-page-title">Filtre Raport</h1>
-          <p class="page-subtitle">Setați criteriile de filtrare și apăsați Vizualizează</p>
-        </div>
-      </div>
-      <div class="card" style="max-width:560px;">
-        <div id="filter-form-body"></div>
-        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;gap:10px;">
-          <button class="btn btn-outline" onclick="showView('rapoarte')">← Înapoi</button>
-          <button class="btn btn-primary btn-lg" onclick="loadAndShowReport()">📊 Vizualizează Raportul</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- RAPORT VIEWER INLINE -->
-    <div class="view-section" id="view-raport-viewer">
-      <div class="page-header" style="flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <button class="btn btn-ghost btn-sm" onclick="showView('raport-filter')" style="padding:4px 10px;">← Modifică filtre</button>
-            <span style="color:var(--text-muted);font-size:12px;">Rapoarte › <span id="rv-breadcrumb">—</span></span>
-          </div>
-          <h1 class="page-title" id="rv-page-title">Raport</h1>
-          <p class="page-subtitle" id="rv-page-subtitle">0 înregistrări</p>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-          <div id="rv-action-btns"></div>
-          <button class="btn btn-outline btn-sm" onclick="openPDFOptions()">📄 Export PDF</button>
-          <button class="btn btn-ghost btn-sm" onclick="printReportHTML()">🖨️ Printează</button>
-        </div>
-      </div>
-      <div style="background:var(--card);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);">
-        <div style="overflow-x:auto;max-height:calc(100vh - 240px);">
-          <table class="rv-table" id="rv-table">
-            <thead id="rv-thead"></thead>
-            <tbody id="rv-tbody"></tbody>
-          </table>
-        </div>
-        <div style="padding:10px 16px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between;">
-          <span id="rv-footer">Total: 0 înregistrări</span>
-          <span>↑↓ Click pe antet pentru sortare</span>
-        </div>
       </div>
     </div>
 
@@ -612,17 +559,7 @@ tbody tr:nth-child(even):hover{background:#F7F4F0;}
           <div class="card" style="border:1.5px solid var(--primary-light);">
             <div style="font-weight:600;margin-bottom:6px;">📥 Export Backup</div>
             <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Descărcați o arhivă JSON cu toate datele. Recomandare: săptămânal.</div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă pe Calculator</button>
-              <button class="btn btn-outline" onclick="exportToGoogleDrive()" id="btn-gdrive" style="display:flex;align-items:center;gap:8px;">
-                <svg width="16" height="16" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-                Salvează în Google Drive
-              </button>
-            </div>
-            <div id="gdrive-status" style="margin-top:10px;font-size:12px;color:var(--text-muted);"></div>
-            <div id="gdrive-reminder" style="display:none;margin-top:10px;padding:10px;background:var(--warning-light);border-radius:var(--radius);font-size:13px;color:var(--warning);">
-              ⚠️ Ultimul backup a fost acum <strong id="gdrive-days">—</strong> zile. Recomandăm backup săptămânal.
-            </div>
+            <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă Arhivă Backup</button>
           </div>
           <div class="card" style="border:1.5px solid var(--success-light);">
             <div style="font-weight:600;margin-bottom:6px;">📤 Import / Restaurare</div>
@@ -873,7 +810,7 @@ async function onLogin(user) {
   gel('login-screen').classList.add('hidden');
   gel('app').classList.remove('hidden');
   setupUI(); await loadCommonData(); showView('dashboard');
-  await loadDashboardStats(); await logActivity('login', 'Autentificare'); setTimeout(checkBackupReminder, 2000);
+  await loadDashboardStats(); await logActivity('login', 'Autentificare');
 }
 
 function setupUI() {
@@ -1458,69 +1395,52 @@ async function loadDashboardStats() {
 // ============================================================
 const REPORT_COLUMNS = {
   activitate: [
-    {key:'id',label:'ID#',sortable:true,bold:false,width:50},
-    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:90,isDate:true},
-    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:150},
-    {key:'cnp',label:'CNP',sortable:false,bold:false,width:120},
-    {key:'data_nasterii',label:'Naștere',sortable:true,bold:false,width:90,isDate:true},
-    {key:'telefon',label:'Telefon',sortable:false,bold:false,width:110},
-    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:100},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:110},
     {key:'diagnostic',label:'Diagnostic',sortable:true,bold:true,width:200,wrap:true},
-    {key:'medic_diagnostic',label:'Medic Diagnostic',sortable:true,bold:false,width:180,wrap:true},
-    {key:'medic_trimitere',label:'Medic Trimitere',sortable:true,bold:false,width:180,wrap:true},
-    {key:'alergii',label:'Alergii',sortable:false,bold:false,width:140,wrap:true},
-    {key:'istoric_medical',label:'Istoric Medical',sortable:false,bold:false,width:280,wrap:true},
+    {key:'medic_diagnostic',label:'Medic Diagnostic',sortable:true,bold:false,width:160},
+    {key:'medic_trimitere',label:'Medic Trimitere',sortable:true,bold:false,width:160},
     {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
   ],
   registru: [
-    {key:'id',label:'ID#',sortable:true,bold:false,width:50},
-    {key:'data_luare_evidenta',label:'Evidență',sortable:true,bold:false,width:90,isDate:true},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_luare_evidenta',label:'Evidență',sortable:true,bold:false,width:100,isDate:true},
     {key:'nume',label:'Nume',sortable:true,bold:true,width:130},
     {key:'prenume',label:'Prenume',sortable:true,bold:true,width:130},
-    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:100,isDate:true},
-    {key:'cnp',label:'CNP',sortable:false,bold:false,width:125},
-    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:115},
-    {key:'este_major',label:'Major/Minor',sortable:true,bold:false,width:95},
-    {key:'nationalitate',label:'Naționalitate',sortable:true,bold:false,width:105},
-    {key:'alergii',label:'Alergii',sortable:false,bold:false,width:140,wrap:true},
-    {key:'ultima_data',label:'Ultima Vizită',sortable:true,bold:false,width:100,isDate:true},
-    {key:'diagnostic',label:'Ultim Diagnostic',sortable:true,bold:true,width:200,wrap:true},
-    {key:'medic_trimitere',label:'Medic Trimitere',sortable:true,bold:false,width:180,wrap:true},
-    {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
-    {key:'istoric_medical',label:'Istoric Medical',sortable:false,bold:false,width:300,wrap:true},
-    {key:'nr_vizite',label:'Nr. Vizite',sortable:true,bold:false,width:75},
+    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:110,isDate:true},
+    {key:'cnp',label:'CNP',sortable:false,bold:false,width:130},
+    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:120},
+    {key:'este_major',label:'Major/Minor',sortable:true,bold:false,width:100},
+    {key:'nationalitate',label:'Naționalitate',sortable:true,bold:false,width:110},
+    {key:'ultima_data',label:'Ultima Vizită',sortable:true,bold:false,width:110,isDate:true},
+    {key:'nr_vizite',label:'Nr. Vizite',sortable:true,bold:false,width:80},
   ],
   terapeut: [
-    {key:'id',label:'ID#',sortable:true,bold:false,width:50},
-    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:90,isDate:true},
-    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:150},
-    {key:'cnp',label:'CNP',sortable:false,bold:false,width:120},
-    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:100},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'motiv',label:'Motiv',sortable:true,bold:false,width:110},
     {key:'diagnostic',label:'Diagnostic',sortable:true,bold:true,width:200,wrap:true},
-    {key:'medic_trimitere',label:'Medic Trimitere',sortable:true,bold:false,width:180,wrap:true},
-    {key:'alergii',label:'Alergii',sortable:false,bold:false,width:140,wrap:true},
-    {key:'istoric_medical',label:'Istoric Medical',sortable:false,bold:false,width:280,wrap:true},
     {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
   ],
   nastere: [
-    {key:'id',label:'ID#',sortable:true,bold:false,width:50},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:110,isDate:true},
     {key:'luna_nastere',label:'Luna',sortable:true,bold:false,width:90},
-    {key:'data_nasterii',label:'Data Nașterii',sortable:true,bold:true,width:100,isDate:true},
     {key:'nume',label:'Nume',sortable:true,bold:true,width:130},
     {key:'prenume',label:'Prenume',sortable:true,bold:true,width:130},
-    {key:'cnp',label:'CNP',sortable:false,bold:false,width:120},
-    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:115},
-    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:false,width:200,wrap:true},
+    {key:'telefon',label:'Telefon',sortable:false,bold:true,width:120},
+    {key:'diagnostic',label:'Diagnostic',sortable:true,bold:false,width:200},
   ],
   medici: [
-    {key:'medic_trimitere',label:'Medic Trimițător',sortable:true,bold:true,width:200,wrap:true},
-    {key:'id',label:'ID#',sortable:true,bold:false,width:50},
-    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:90,isDate:true},
-    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:150},
-    {key:'cnp',label:'CNP',sortable:false,bold:false,width:120},
-    {key:'motiv',label:'Motiv',sortable:false,bold:false,width:100},
+    {key:'medic_trimitere',label:'Medic Trimițător',sortable:true,bold:true,width:200},
+    {key:'id',label:'ID#',sortable:true,bold:false,width:60},
+    {key:'nume_complet',label:'Pacient',sortable:true,bold:true,width:160},
+    {key:'data_completarii',label:'Data',sortable:true,bold:false,width:100,isDate:true},
+    {key:'motiv',label:'Motiv',sortable:false,bold:false,width:110},
     {key:'diagnostic',label:'Diagnostic',sortable:true,bold:false,width:200,wrap:true},
-    {key:'terapeut',label:'Terapeut',sortable:true,bold:false,width:140},
   ],
 };
 
@@ -1528,6 +1448,7 @@ const REPORT_TITLES = {activitate:'Raport Lunar de Activitate',registru:'Registr
 
 function openReportFilter(type) {
   rvType = type; rvTitle = REPORT_TITLES[type]||'Raport';
+  gel('modal-raport-filter-title').textContent = rvTitle;
   const year = new Date().getFullYear();
   let html = '';
   if (type==='activitate') {
@@ -1539,31 +1460,27 @@ function openReportFilter(type) {
   } else {
     html=`<div class="form-grid"><div class="form-group"><label>De la data</label><input type="date" id="rf-data-start"></div><div class="form-group"><label>Până la data</label><input type="date" id="rf-data-end" value="${todayStr()}"></div></div>`;
   }
-  // Update inline filter page
-  gel('filter-breadcrumb').textContent = rvTitle;
-  gel('filter-page-title').textContent = rvTitle;
-  gel('filter-form-body').innerHTML = html;
-  showView('raport-filter');
+  gel('modal-raport-filter-body').innerHTML = html;
+  gel('modal-raport-filter').classList.remove('hidden');
 }
 
 async function loadAndShowReport() {
+  closeModal('modal-raport-filter');
   showToast('Se încarcă raportul...','');
   try {
     rvData = await fetchReportData(rvType);
     rvColumns = REPORT_COLUMNS[rvType] || [];
     rvSortCol = null; rvSortDir = 'asc';
-    // Update inline viewer page
-    gel('rv-breadcrumb').textContent = rvTitle;
-    gel('rv-page-title').textContent = rvTitle;
-    gel('rv-page-subtitle').textContent = `${rvData.length} înregistrări`;
+    gel('rv-title').textContent = rvTitle;
+    gel('rv-subtitle').textContent = `${rvData.length} înregistrări`;
     gel('rv-footer').textContent = `Total: ${rvData.length} înregistrări`;
     // Action buttons
     let actionBtns = '';
-    if (rvType==='activitate'||rvType==='terapeut') actionBtns += `<button class="btn btn-outline btn-sm" onclick="showView('pacienti')">+ Înregistrare Nouă</button>`;
-    actionBtns += `<button class="btn btn-outline btn-sm" onclick="showView('pacient-nou')">+ Pacient Nou</button>`;
+    if (rvType==='activitate'||rvType==='terapeut') actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacienti')">+ Înregistrare Nouă</button>`;
+    actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacient-nou')">+ Pacient Nou</button>`;
     gel('rv-action-btns').innerHTML = actionBtns;
     renderRVTable();
-    showView('raport-viewer');
+    gel('modal-report-viewer').classList.remove('hidden');
   } catch(e) { showToast(`Eroare încărcare: ${e.message}`,'error'); console.error(e); }
 }
 
@@ -1573,39 +1490,25 @@ async function fetchReportData(type) {
     const luna=lunaEl?.value, an=anEl?.value||new Date().getFullYear();
     const ds=`${an}-${String(luna).padStart(2,'0')}-01`;
     const de=new Date(an,luna,0).toISOString().split('T')[0];
-    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume,cnp,data_nasterii,telefon),medic_d:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).gte('data_completarii',ds).lte('data_completarii',de).order('data_completarii');
+    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),medic_d:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).gte('data_completarii',ds).lte('data_completarii',de).order('data_completarii');
     const tId=gel('rf-terapeut')?.value; if(tId) q=q.eq('terapeut_id',tId);
     const {data}=await q;
-    // Fetch alergii for all patients
-    const pacientIds=[...new Set((data||[]).map(r=>r.pacient?.id).filter(Boolean))];
-    let alergiiMap={};
-    if(pacientIds.length){
-      const{data:pa}=await sb.from('pacient_alergii').select('pacient_id,alergii_catalog(denumire)').in('pacient_id',pacientIds);
-      (pa||[]).forEach(r=>{if(!alergiiMap[r.pacient_id])alergiiMap[r.pacient_id]=[];if(r.alergii_catalog)alergiiMap[r.pacient_id].push(r.alergii_catalog.denumire);});
-    }
-    return (data||[]).map(r=>({id:r.pacient?.id,pacient_id:r.pacient?.id,inreg_id:r.id,nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,cnp:r.pacient?.cnp||'—',data_nasterii:r.pacient?.data_nasterii,telefon:r.pacient?.telefon||'—',data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic,medic_diagnostic:r.medic_d?.nome||'—',medic_trimitere:r.medic_t?.nome||'—',alergii:(alergiiMap[r.pacient?.id]||[]).join(', ')||'fără',istoric_medical:r.istoric_medical||'—',terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
+    return (data||[]).map(r=>({id:r.pacient?.id,pacient_id:r.pacient?.id,inreg_id:r.id,nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic,medic_diagnostic:r.medic_d?.nome,medic_trimitere:r.medic_t?.nome,terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
   }
   if (type==='registru') {
     const {data:pac}=await sb.from('pacienti').select('*').eq('activ',true).order('id');
-    const {data:inreg}=await sb.from('inregistrari').select(`pacient_id,data_completarii,diagnostic,istoric_medical,medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).order('data_completarii',{ascending:false});
-    const {data:pa}=await sb.from('pacient_alergii').select('pacient_id,alergii_catalog(denumire)');
-    const alergiiMap={};
-    (pa||[]).forEach(r=>{if(!alergiiMap[r.pacient_id])alergiiMap[r.pacient_id]=[];if(r.alergii_catalog)alergiiMap[r.pacient_id].push(r.alergii_catalog.denumire);});
+    const {data:inreg}=await sb.from('inregistrari').select('pacient_id,data_completarii,diagnostic').order('data_completarii',{ascending:false});
     return (pac||[]).map(p=>{
       const pi=(inreg||[]).filter(i=>i.pacient_id===p.id);
-      const last=pi[0];
-      return {id:p.id,data_luare_evidenta:p.data_luare_evidenta,nume:p.nume,prenume:p.prenume,data_nasterii:p.data_nasterii,cnp:p.cnp||'—',telefon:p.telefon||'—',este_major:p.este_major?'Major':'Minor',nationalitate:p.nationalitate||'Română',alergii:(alergiiMap[p.id]||[]).join(', ')||'fără',ultima_data:last?.data_completarii,nr_vizite:pi.length,diagnostic:last?.diagnostic||'—',medic_trimitere:last?.medic_t?.nome||'—',terapeut:last?.terapeut?`${last.terapeut.prenume} ${last.terapeut.nume}`:'—',istoric_medical:last?.istoric_medical||'—',luna_nastere:p.data_nasterii?['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'][new Date(p.data_nasterii).getMonth()]:'—'};
+      return {id:p.id,data_luare_evidenta:p.data_luare_evidenta,nume:p.nume,prenume:p.prenume,data_nasterii:p.data_nasterii,cnp:p.cnp,telefon:p.telefon,este_major:p.este_major?'Major':'Minor',nationalitate:p.nationalitate||'Română',ultima_data:pi[0]?.data_completarii,nr_vizite:pi.length,diagnostic:pi[0]?.diagnostic,luna_nastere:p.data_nasterii?['Ian','Feb','Mar','Apr','Mai','Iun','Iul','Aug','Sep','Oct','Nov','Dec'][new Date(p.data_nasterii).getMonth()]:'—'};
     });
-    if (type==='terapeut') {
-    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume,cnp),medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).order('data_completarii');
+  }
+  if (type==='terapeut') {
+    let q=sb.from('inregistrari').select(`*,pacient:pacienti(id,nume,prenume),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).order('data_completarii');
     const tId=gel('rf-terapeut')?.value; if(tId) q=q.eq('terapeut_id',tId);
-    const dsT=gel('rf-data-start')?.value; const deT=gel('rf-data-end')?.value;
-    if(dsT) q=q.gte('data_completarii',dsT); if(deT) q=q.lte('data_completarii',deT);
+    const ds=dsEl?.value; const de=deEl?.value; if(ds) q=q.gte('data_completarii',ds); if(de) q=q.lte('data_completarii',de);
     const {data}=await q;
-    const pIds=[...new Set((data||[]).map(r=>r.pacient?.id).filter(Boolean))];
-    let alMapT={};
-    if(pIds.length){const{data:pa}=await sb.from('pacient_alergii').select('pacient_id,alergii_catalog(denumire)').in('pacient_id',pIds);(pa||[]).forEach(r=>{if(!alMapT[r.pacient_id])alMapT[r.pacient_id]=[];if(r.alergii_catalog)alMapT[r.pacient_id].push(r.alergii_catalog.denumire);});}
-    return (data||[]).map(r=>({id:r.pacient?.id,inreg_id:r.id,pacient_id:r.pacient?.id,nome_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,cnp:r.pacient?.cnp||'—',data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic||'—',medic_trimitere:r.medic_t?.nome||'—',alergii:(alMapT[r.pacient?.id]||[]).join(', ')||'fără',istoric_medical:r.istoric_medical||'—',terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
+    return (data||[]).map(r=>({id:r.pacient?.id,inreg_id:r.id,pacient_id:r.pacient?.id,nume_complet:`${r.pacient?.prenume} ${r.pacient?.nume}`,data_completarii:r.data_completarii,motiv:r.motiv_prezentare,diagnostic:r.diagnostic,terapeut:r.terapeut?`${r.terapeut.prenume} ${r.terapeut.nume}`:'—'}));
   }
   if (type==='nastere') {
     const {data:pac}=await sb.from('pacienti').select('*').eq('activ',true).not('data_nasterii','is',null).order('data_nasterii');
@@ -1626,21 +1529,7 @@ async function fetchReportData(type) {
 function renderRVTable() {
   const isAdmin = currentProfile.rol==='admin';
   // THEAD
-  const thHTML = rvColumns.map((c,i)=>{
-    const sortClass = rvSortCol===i ? ' sort-'+rvSortDir : '';
-    const clickFn = c.sortable ? `sortRV(${i})` : '';
-    return `<th data-col="${i}" class="${sortClass}" style="${c.sortable?'cursor:pointer;':''}">${c.label}${c.sortable?'<span class=\'sort-indicator\'></span>':''}</th>`;
-  }).join('') + (isAdmin?'<th>Acțiuni</th>':'');
-  gel('rv-thead').innerHTML = '<tr>' + thHTML + '</tr>';
-  // Attach sort handlers
-  gel('rv-thead').querySelectorAll('th[data-col]').forEach(th=>{
-    const colIdx = parseInt(th.dataset.col);
-    const col = rvColumns[colIdx];
-    if(col && col.sortable) {
-      th.style.cursor='pointer';
-      th.addEventListener('click', ()=>sortRV(colIdx));
-    }
-  });
+  gel('rv-thead').innerHTML = '<tr>' + rvColumns.map((c,i)=>`<th class="${c.sortable?'':''}${rvSortCol===i?' sort-'+rvSortDir:''}" onclick="${c.sortable?`sortRV(${i})`:''}void(0)">${c.label}</th>`).join('') + (isAdmin?'<th style="min-width:80px;">Acțiuni</th>':'') + '</tr>';
   // TBODY
   const data = [...rvData];
   if (rvSortCol !== null) {
@@ -1684,7 +1573,6 @@ function stergeInregistrareRV(inregId, rowIdx) {
     await logActivity('stergere_inregistrare',`Înregistrare ID# ${inregId}`);
     rvData.splice(rowIdx,1); renderRVTable();
     closeModal('modal-confirm'); showToast('Înregistrare ștearsă.','success');
-    gel('rv-page-subtitle').textContent = `${rvData.length} înregistrări`;
   },'Șterge',true);
 }
 
@@ -1742,28 +1630,23 @@ function printReportHTML(variant) {
     .cover h1{font-size:28pt;margin:20px 0;color:#0A3D52;}
     .cover .firm-name{font-size:20pt;font-weight:bold;color:#0A3D52;}
     .cover .details{font-size:10pt;color:#666;margin:8px 0;}
-    table{width:100%;border-collapse:collapse;font-size:8pt;table-layout:auto;}
-    th{background:#0A3D52;color:#fff;padding:5px 7px;text-align:left;font-size:7pt;text-transform:uppercase;white-space:nowrap;}
-    td{padding:4px 7px;border-bottom:1px solid #DDD;vertical-align:top;word-break:break-word;}
+    table{width:100%;border-collapse:collapse;font-size:8pt;}
+    th{background:#0A3D52;color:#fff;padding:6px 8px;text-align:left;font-size:7pt;text-transform:uppercase;}
+    td{padding:5px 8px;border-bottom:1px solid #DDD;}
     tr:nth-child(even) td{background:#F5F0EB;}
-    thead{display:table-header-group;}
-    tr{page-break-inside:avoid;}
     .bold{font-weight:bold;}
-    @page{size:A4 landscape;margin:10mm;}
-    @media print{
-      .cover{page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}
-      table{page-break-inside:auto;}
-    }
+    .small{font-size:7.5pt;}
+    @page{size:A4 landscape;margin:12mm;}
+    @media print{.cover{page-break-after:always;}}
   </style></head><body>`;
   // Cover page
   html += `<div class="cover"><div class="firm-name">${escHTML(firma.name)}</div><h1>${escHTML(rvTitle)}</h1><div class="details">Data generării: ${formatDate(todayStr())}</div><div class="details">Total înregistrări: ${rvData.length}</div></div>`;
-  // Data table — all columns, wrapping rows allowed for full content
-  html += `<table><thead><tr>${cols.map(c=>`<th style="min-width:${c.width?Math.min(c.width,160)+'px':'80px'}">${escHTML(c.label)}</th>`).join('')}</tr></thead><tbody>`;
+  // Data table
+  html += `<table><thead><tr>${cols.map(c=>`<th>${escHTML(c.label)}</th>`).join('')}</tr></thead><tbody>`;
   rvData.forEach(row=>{
     html += '<tr>' + cols.map(c=>{
       let v=row[c.key]??'—'; if(c.isDate&&v!=='—') v=formatDate(v);
-      const isLong = c.wrap || (c.width && c.width > 200);
-      return `<td class="${c.bold?'bold':''}" style="font-size:${isLong?'7.5pt':'8pt'};white-space:${isLong?'normal':'nowrap'};vertical-align:top;">${escHTML(String(v))}</td>`;
+      return `<td class="${c.bold?'bold':''}${c.width&&c.width<120?' small':''}">${escHTML(String(v))}</td>`;
     }).join('') + '</tr>';
   });
   html += '</tbody></table></body></html>';
@@ -2026,76 +1909,6 @@ function setDisabled(id,val,dis){const el=gel(id);if(el){el.value=val||'';el.dis
 function escHTML(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escQ(s){return String(s).replace(/'/g,"\\'");}
 function emptyState(icon,txt){return `<div class="empty-state"><div class="empty-state-icon">${icon}</div><div class="empty-state-text">${txt}</div></div>`;}
-
-// ============================================================
-// GOOGLE DRIVE BACKUP
-// ============================================================
-const GDRIVE_CLIENT_ID = '187553069612-cjq441pbp22qte9jp3pgro7d1n69de9t.apps.googleusercontent.com'; // Setați din Google Cloud Console
-const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
-let gdriveToken = null;
-
-function checkBackupReminder() {
-  const last = localStorage.getItem('lastBackupDate');
-  if (!last) return;
-  const days = Math.floor((Date.now() - new Date(last).getTime()) / 86400000);
-  if (days >= 7) {
-    const reminder = gel('gdrive-reminder');
-    const daysEl = gel('gdrive-days');
-    if (reminder) { reminder.style.display = 'block'; if(daysEl) daysEl.textContent = days; }
-    // Show toast at login if overdue
-    if (days >= 7) showToast(`⚠️ Ultimul backup: acum ${days} zile. Mergeți la Setări → Backup.`, 'warning');
-  }
-}
-
-async function exportToGoogleDrive() {
-  const btn = gel('btn-gdrive'); const status = gel('gdrive-status');
-  if (!GDRIVE_CLIENT_ID) {
-    showToast('Google Drive nu este configurat. Folosiți descărcarea pe calculator.', 'warning');
-    if (status) status.innerHTML = '⚠️ <a href="https://console.cloud.google.com" target="_blank" style="color:var(--primary);">Configurați Google Cloud Console</a> și adăugați Client ID în cod.';
-    return;
-  }
-  try {
-    // Get OAuth token
-    if (!gdriveToken) {
-      gdriveToken = await new Promise((resolve, reject) => {
-        const client = google.accounts.oauth2.initTokenClient({
-          client_id: GDRIVE_CLIENT_ID, scope: GDRIVE_SCOPE,
-          callback: (resp) => { if (resp.error) reject(resp.error); else resolve(resp.access_token); }
-        });
-        client.requestAccessToken();
-      });
-    }
-    if (status) status.textContent = '⏳ Se pregătește backup-ul...';
-    // Prepare backup data
-    const tables = ['pacienti','inregistrari','profiles','medici','alergii_catalog','pacient_alergii','setari_firma','specialitati'];
-    const backup = {versiune:'2.0', data: new Date().toISOString(), tabele:{}};
-    for (const t of tables) { const {data} = await sb.from(t).select('*'); backup.tabele[t] = data||[]; }
-    const json = JSON.stringify(backup, null, 2);
-    const blob = new Blob([json], {type:'application/json'});
-    const fileName = `kineto-backup-${todayStr()}.json`;
-    // Upload to Google Drive
-    if (status) status.textContent = '⏳ Se încarcă în Google Drive...';
-    const metadata = {name: fileName, mimeType: 'application/json'};
-    const form = new FormData();
-    form.append('metadata', new Blob([JSON.stringify(metadata)], {type:'application/json'}));
-    form.append('file', blob);
-    const resp = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-      method:'POST', headers:{Authorization:`Bearer ${gdriveToken}`}, body: form
-    });
-    if (!resp.ok) throw new Error(`Drive API: ${resp.status}`);
-    const result = await resp.json();
-    localStorage.setItem('lastBackupDate', new Date().toISOString());
-    if (status) status.innerHTML = `✅ Salvat în Google Drive: <strong>${fileName}</strong>`;
-    gel('gdrive-reminder') && (gel('gdrive-reminder').style.display = 'none');
-    showToast('Backup salvat în Google Drive!', 'success');
-    await logActivity('backup_gdrive', `Backup Google Drive: ${fileName}`);
-  } catch(e) {
-    gdriveToken = null;
-    if (status) status.textContent = `❌ Eroare: ${e.message}`;
-    showToast(`Eroare Google Drive: ${e.message}`, 'error');
-    console.error('GDrive error:', e);
-  }
-}
 
 // SQL to add logo column if missing — run once
 // ALTER TABLE setari_firma ADD COLUMN IF NOT EXISTS logo_base64 TEXT;
