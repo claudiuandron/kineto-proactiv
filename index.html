@@ -6,6 +6,7 @@
 <title>Kineto ProActiv — Registru Pacienți</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 <style>
@@ -495,15 +496,67 @@ tbody tr:nth-child(even):hover{background:#F7F4F0;}
       </div>
     </div>
 
-    <!-- RAPOARTE -->
+    <!-- RAPOARTE MENIU -->
     <div class="view-section" id="view-rapoarte">
-      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Vizualizați și exportați rapoarte</p></div></div>
+      <div class="page-header"><div><h1 class="page-title">Rapoarte</h1><p class="page-subtitle">Selectați tipul de raport dorit</p></div></div>
       <div class="report-grid">
         <div class="report-card" onclick="openReportFilter('activitate')"><div class="report-card-icon">📅</div><div class="report-card-title">Raport Lunar de Activitate</div><div class="report-card-desc">Toate înregistrările dintr-o lună</div></div>
         <div class="report-card" onclick="openReportFilter('registru')"><div class="report-card-icon">📚</div><div class="report-card-title">Registrul Unic Pacienți</div><div class="report-card-desc">Lista completă a pacienților</div></div>
         <div class="report-card" onclick="openReportFilter('terapeut')"><div class="report-card-icon">👨‍⚕️</div><div class="report-card-title">Raport Terapeut</div><div class="report-card-desc">Activitatea unui terapeut</div></div>
         <div class="report-card" onclick="openReportFilter('nastere')"><div class="report-card-icon">🎂</div><div class="report-card-title">Raport Data Nașterii</div><div class="report-card-desc">Pacienți organizați pe luni</div></div>
         <div class="report-card" onclick="openReportFilter('medici')"><div class="report-card-icon">🏥</div><div class="report-card-title">Raport Medici Recomandare</div><div class="report-card-desc">Pacienți per medic trimițător</div></div>
+      </div>
+    </div>
+
+    <!-- RAPORT FILTRE INLINE -->
+    <div class="view-section" id="view-raport-filter">
+      <div class="page-header">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <button class="btn btn-ghost btn-sm" onclick="showView('rapoarte')" style="padding:4px 10px;">← Înapoi</button>
+            <span style="color:var(--text-muted);font-size:12px;">Rapoarte › <span id="filter-breadcrumb">—</span></span>
+          </div>
+          <h1 class="page-title" id="filter-page-title">Filtre Raport</h1>
+          <p class="page-subtitle">Setați criteriile de filtrare și apăsați Vizualizează</p>
+        </div>
+      </div>
+      <div class="card" style="max-width:560px;">
+        <div id="filter-form-body"></div>
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light);display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="showView('rapoarte')">← Înapoi</button>
+          <button class="btn btn-primary btn-lg" onclick="loadAndShowReport()">📊 Vizualizează Raportul</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RAPORT VIEWER INLINE -->
+    <div class="view-section" id="view-raport-viewer">
+      <div class="page-header" style="flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <button class="btn btn-ghost btn-sm" onclick="showView('raport-filter')" style="padding:4px 10px;">← Modifică filtre</button>
+            <span style="color:var(--text-muted);font-size:12px;">Rapoarte › <span id="rv-breadcrumb">—</span></span>
+          </div>
+          <h1 class="page-title" id="rv-page-title">Raport</h1>
+          <p class="page-subtitle" id="rv-page-subtitle">0 înregistrări</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <div id="rv-action-btns"></div>
+          <button class="btn btn-outline btn-sm" onclick="openPDFOptions()">📄 Export PDF</button>
+          <button class="btn btn-ghost btn-sm" onclick="printReportHTML()">🖨️ Printează</button>
+        </div>
+      </div>
+      <div style="background:var(--card);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);">
+        <div style="overflow-x:auto;max-height:calc(100vh - 240px);">
+          <table class="rv-table" id="rv-table">
+            <thead id="rv-thead"></thead>
+            <tbody id="rv-tbody"></tbody>
+          </table>
+        </div>
+        <div style="padding:10px 16px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between;">
+          <span id="rv-footer">Total: 0 înregistrări</span>
+          <span>↑↓ Click pe antet pentru sortare</span>
+        </div>
       </div>
     </div>
 
@@ -559,7 +612,17 @@ tbody tr:nth-child(even):hover{background:#F7F4F0;}
           <div class="card" style="border:1.5px solid var(--primary-light);">
             <div style="font-weight:600;margin-bottom:6px;">📥 Export Backup</div>
             <div style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Descărcați o arhivă JSON cu toate datele. Recomandare: săptămânal.</div>
-            <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă Arhivă Backup</button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="exportBackup()">⬇️ Descarcă pe Calculator</button>
+              <button class="btn btn-outline" onclick="exportToGoogleDrive()" id="btn-gdrive" style="display:flex;align-items:center;gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 27h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
+                Salvează în Google Drive
+              </button>
+            </div>
+            <div id="gdrive-status" style="margin-top:10px;font-size:12px;color:var(--text-muted);"></div>
+            <div id="gdrive-reminder" style="display:none;margin-top:10px;padding:10px;background:var(--warning-light);border-radius:var(--radius);font-size:13px;color:var(--warning);">
+              ⚠️ Ultimul backup a fost acum <strong id="gdrive-days">—</strong> zile. Recomandăm backup săptămânal.
+            </div>
           </div>
           <div class="card" style="border:1.5px solid var(--success-light);">
             <div style="font-weight:600;margin-bottom:6px;">📤 Import / Restaurare</div>
@@ -810,7 +873,7 @@ async function onLogin(user) {
   gel('login-screen').classList.add('hidden');
   gel('app').classList.remove('hidden');
   setupUI(); await loadCommonData(); showView('dashboard');
-  await loadDashboardStats(); await logActivity('login', 'Autentificare');
+  await loadDashboardStats(); await logActivity('login', 'Autentificare'); setTimeout(checkBackupReminder, 2000);
 }
 
 function setupUI() {
@@ -1448,7 +1511,6 @@ const REPORT_TITLES = {activitate:'Raport Lunar de Activitate',registru:'Registr
 
 function openReportFilter(type) {
   rvType = type; rvTitle = REPORT_TITLES[type]||'Raport';
-  gel('modal-raport-filter-title').textContent = rvTitle;
   const year = new Date().getFullYear();
   let html = '';
   if (type==='activitate') {
@@ -1460,27 +1522,31 @@ function openReportFilter(type) {
   } else {
     html=`<div class="form-grid"><div class="form-group"><label>De la data</label><input type="date" id="rf-data-start"></div><div class="form-group"><label>Până la data</label><input type="date" id="rf-data-end" value="${todayStr()}"></div></div>`;
   }
-  gel('modal-raport-filter-body').innerHTML = html;
-  gel('modal-raport-filter').classList.remove('hidden');
+  // Update inline filter page
+  gel('filter-breadcrumb').textContent = rvTitle;
+  gel('filter-page-title').textContent = rvTitle;
+  gel('filter-form-body').innerHTML = html;
+  showView('raport-filter');
 }
 
 async function loadAndShowReport() {
-  closeModal('modal-raport-filter');
   showToast('Se încarcă raportul...','');
   try {
     rvData = await fetchReportData(rvType);
     rvColumns = REPORT_COLUMNS[rvType] || [];
     rvSortCol = null; rvSortDir = 'asc';
-    gel('rv-title').textContent = rvTitle;
-    gel('rv-subtitle').textContent = `${rvData.length} înregistrări`;
+    // Update inline viewer page
+    gel('rv-breadcrumb').textContent = rvTitle;
+    gel('rv-page-title').textContent = rvTitle;
+    gel('rv-page-subtitle').textContent = `${rvData.length} înregistrări`;
     gel('rv-footer').textContent = `Total: ${rvData.length} înregistrări`;
     // Action buttons
     let actionBtns = '';
-    if (rvType==='activitate'||rvType==='terapeut') actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacienti')">+ Înregistrare Nouă</button>`;
-    actionBtns += `<button class="btn btn-outline btn-sm" onclick="closeModal('modal-report-viewer');showView('pacient-nou')">+ Pacient Nou</button>`;
+    if (rvType==='activitate'||rvType==='terapeut') actionBtns += `<button class="btn btn-outline btn-sm" onclick="showView('pacienti')">+ Înregistrare Nouă</button>`;
+    actionBtns += `<button class="btn btn-outline btn-sm" onclick="showView('pacient-nou')">+ Pacient Nou</button>`;
     gel('rv-action-btns').innerHTML = actionBtns;
     renderRVTable();
-    gel('modal-report-viewer').classList.remove('hidden');
+    showView('raport-viewer');
   } catch(e) { showToast(`Eroare încărcare: ${e.message}`,'error'); console.error(e); }
 }
 
@@ -1573,6 +1639,7 @@ function stergeInregistrareRV(inregId, rowIdx) {
     await logActivity('stergere_inregistrare',`Înregistrare ID# ${inregId}`);
     rvData.splice(rowIdx,1); renderRVTable();
     closeModal('modal-confirm'); showToast('Înregistrare ștearsă.','success');
+    gel('rv-page-subtitle').textContent = `${rvData.length} înregistrări`;
   },'Șterge',true);
 }
 
@@ -1909,6 +1976,76 @@ function setDisabled(id,val,dis){const el=gel(id);if(el){el.value=val||'';el.dis
 function escHTML(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escQ(s){return String(s).replace(/'/g,"\\'");}
 function emptyState(icon,txt){return `<div class="empty-state"><div class="empty-state-icon">${icon}</div><div class="empty-state-text">${txt}</div></div>`;}
+
+// ============================================================
+// GOOGLE DRIVE BACKUP
+// ============================================================
+const GDRIVE_CLIENT_ID = '187553069612-cjq441pbp22qte9jp3pgro7d1n69de9t.apps.googleusercontent.com'; // Setați din Google Cloud Console
+const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+let gdriveToken = null;
+
+function checkBackupReminder() {
+  const last = localStorage.getItem('lastBackupDate');
+  if (!last) return;
+  const days = Math.floor((Date.now() - new Date(last).getTime()) / 86400000);
+  if (days >= 7) {
+    const reminder = gel('gdrive-reminder');
+    const daysEl = gel('gdrive-days');
+    if (reminder) { reminder.style.display = 'block'; if(daysEl) daysEl.textContent = days; }
+    // Show toast at login if overdue
+    if (days >= 7) showToast(`⚠️ Ultimul backup: acum ${days} zile. Mergeți la Setări → Backup.`, 'warning');
+  }
+}
+
+async function exportToGoogleDrive() {
+  const btn = gel('btn-gdrive'); const status = gel('gdrive-status');
+  if (!GDRIVE_CLIENT_ID) {
+    showToast('Google Drive nu este configurat. Folosiți descărcarea pe calculator.', 'warning');
+    if (status) status.innerHTML = '⚠️ <a href="https://console.cloud.google.com" target="_blank" style="color:var(--primary);">Configurați Google Cloud Console</a> și adăugați Client ID în cod.';
+    return;
+  }
+  try {
+    // Get OAuth token
+    if (!gdriveToken) {
+      gdriveToken = await new Promise((resolve, reject) => {
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: GDRIVE_CLIENT_ID, scope: GDRIVE_SCOPE,
+          callback: (resp) => { if (resp.error) reject(resp.error); else resolve(resp.access_token); }
+        });
+        client.requestAccessToken();
+      });
+    }
+    if (status) status.textContent = '⏳ Se pregătește backup-ul...';
+    // Prepare backup data
+    const tables = ['pacienti','inregistrari','profiles','medici','alergii_catalog','pacient_alergii','setari_firma','specialitati'];
+    const backup = {versiune:'2.0', data: new Date().toISOString(), tabele:{}};
+    for (const t of tables) { const {data} = await sb.from(t).select('*'); backup.tabele[t] = data||[]; }
+    const json = JSON.stringify(backup, null, 2);
+    const blob = new Blob([json], {type:'application/json'});
+    const fileName = `kineto-backup-${todayStr()}.json`;
+    // Upload to Google Drive
+    if (status) status.textContent = '⏳ Se încarcă în Google Drive...';
+    const metadata = {name: fileName, mimeType: 'application/json'};
+    const form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], {type:'application/json'}));
+    form.append('file', blob);
+    const resp = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+      method:'POST', headers:{Authorization:`Bearer ${gdriveToken}`}, body: form
+    });
+    if (!resp.ok) throw new Error(`Drive API: ${resp.status}`);
+    const result = await resp.json();
+    localStorage.setItem('lastBackupDate', new Date().toISOString());
+    if (status) status.innerHTML = `✅ Salvat în Google Drive: <strong>${fileName}</strong>`;
+    gel('gdrive-reminder') && (gel('gdrive-reminder').style.display = 'none');
+    showToast('Backup salvat în Google Drive!', 'success');
+    await logActivity('backup_gdrive', `Backup Google Drive: ${fileName}`);
+  } catch(e) {
+    gdriveToken = null;
+    if (status) status.textContent = `❌ Eroare: ${e.message}`;
+    showToast(`Eroare Google Drive: ${e.message}`, 'error');
+    console.error('GDrive error:', e);
+  }
+}
 
 // SQL to add logo column if missing — run once
 // ALTER TABLE setari_firma ADD COLUMN IF NOT EXISTS logo_base64 TEXT;
