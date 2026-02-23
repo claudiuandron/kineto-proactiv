@@ -542,8 +542,7 @@ tbody tr:nth-child(even):hover{background:#F7F4F0;}
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
           <div id="rv-action-btns"></div>
-          <button class="btn btn-outline btn-sm" onclick="openPDFOptions()">📄 Export PDF</button>
-          <button class="btn btn-ghost btn-sm" onclick="printReportHTML()">🖨️ Printează</button>
+          <button class="btn btn-primary btn-sm" onclick="printReportHTML()">🖨️ Printează / Export PDF</button>
         </div>
       </div>
       <div style="background:var(--card);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);">
@@ -1692,106 +1691,371 @@ function stergeInregistrareRV(inregId, rowIdx) {
 // ============================================================
 // PDF EXPORT
 // ============================================================
+
+// ============================================================
+// REPORT PDF & PRINT — Format 2 rânduri per înregistrare
+// ============================================================
+
 function openPDFOptions() {
-  const cols = REPORT_COLUMNS[rvType]||[];
-  selectedPDFFields = new Set(cols.map(c=>c.key));
-  gel('pdf-fields-grid').innerHTML = cols.map(c=>`<label class="pdf-field-cb"><input type="checkbox" value="${c.key}" ${selectedPDFFields.has(c.key)?'checked':''} onchange="togglePDFField('${c.key}',this.checked)"> ${c.label}</label>`).join('');
-  gel('modal-pdf-options').classList.remove('hidden');
+  // Direct print with new format — no field selection needed
+  printReportHTML();
 }
 function togglePDFField(key,checked) { if(checked) selectedPDFFields.add(key); else selectedPDFFields.delete(key); }
 function selectAllPDFFields(sel) { gel('pdf-fields-grid').querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.checked=sel; togglePDFField(cb.value,sel);}); }
 
 async function executeExportPDF() {
-  const format = gel('pdf-format').value;
   closeModal('modal-pdf-options');
-  if (format==='variantA'||format==='variantC') { printReportHTML(format); return; }
-  // Standard table PDF
-  const { jsPDF } = window.jspdf;
+  await printReportHTML();
+}
+
+// Layout pe 2 rânduri per tip de raport
+const PRINT_LAYOUT = {
+  registru: {
+    headers: ['ID#','Data\nEvidență','Nume','Prenume','CNP','Telefon','Medic Trimitere','Diagnostic','Terapeut'],
+    row1:    ['id','data_luare_evidenta','nume','prenume','cnp','telefon','medic_trimitere','diagnostic','terapeut'],
+    headers2:['','Ultima\nVizită','Major/Minor','Naționalitate','Data\nNașterii','Alergii','—','Istoric Medical','Nr.\nVizite'],
+    row2:    ['_id','ultima_data','este_major','nationalitate','data_nasterii','alergii','_blank','istoric_medical','nr_vizite'],
+    dates1:  ['data_luare_evidenta'],
+    dates2:  ['ultima_data','data_nasterii'],
+    bold1:   ['id','data_luare_evidenta','nume','prenume'],
+    mergeId: true
+  },
+  activitate: {
+    headers: ['ID#','Data','Nume','Prenume','Motiv','Diagnostic','Medic Trimitere','Terapeut'],
+    row1:    ['id','data_completarii','nume_complet_p1','prenume_p1','motiv','diagnostic','medic_trimitere','terapeut'],
+    headers2:['','—','CNP','Data Nașterii','Telefon','Alergii','Medic Diagnostic','Istoric Medical'],
+    row2:    ['_id','_blank','cnp','data_nasterii','telefon','alergii','medic_diagnostic','istoric_medical'],
+    dates1:  ['data_completarii'],
+    dates2:  ['data_nasterii'],
+    bold1:   ['id','data_completarii'],
+    mergeId: true
+  },
+  terapeut: {
+    headers: ['ID#','Data','Pacient','Motiv','Diagnostic','Medic Trimitere','Terapeut'],
+    row1:    ['id','data_completarii','nome_complet','motiv','diagnostic','medic_trimitere','terapeut'],
+    headers2:['','—','CNP','Telefon','Alergii','—','Istoric Medical'],
+    row2:    ['_id','_blank','cnp','_blank2','alergii','_blank3','istoric_medical'],
+    dates1:  ['data_completarii'],
+    dates2:  [],
+    bold1:   ['id','data_completarii','nome_complet'],
+    mergeId: true
+  },
+  nastere: {
+    headers: ['ID#','Luna','Data Nașterii','Nume','Prenume','CNP','Telefon','Diagnostic'],
+    row1:    ['id','luna_nastere','data_nasterii','nume','prenume','cnp','telefon','diagnostic'],
+    headers2: null, row2: null,
+    dates1:  ['data_nasterii'],
+    dates2:  [],
+    bold1:   ['id','data_nasterii','nume','prenume'],
+    mergeId: false
+  },
+  medici: {
+    headers: ['Medic Trimițător','ID#','Data','Pacient','Motiv','Diagnostic','Terapeut'],
+    row1:    ['medic_trimitere','id','data_completarii','nome_complet','motiv','diagnostic','terapeut'],
+    headers2:['—','—','—','CNP','—','—','—'],
+    row2:    ['_blank','_id','_blank2','cnp','_blank3','_blank4','_blank5'],
+    dates1:  ['data_completarii'],
+    dates2:  [],
+    bold1:   ['medic_trimitere','id'],
+    mergeId: false
+  }
+};
+
+async function printReportHTML() {
+  const layout = PRINT_LAYOUT[rvType];
+  if (!layout) { showToast('Tip raport necunoscut','error'); return; }
+
+  // Fetch firma data
   const { data: firma } = await sb.from('setari_firma').select('*').maybeSingle();
-  const cols = (REPORT_COLUMNS[rvType]||[]).filter(c=>selectedPDFFields.has(c.key));
-  const doc = new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
-  const pw = doc.internal.pageSize.getWidth();
-  // Cover / header
-  doc.setFontSize(13); doc.setFont('helvetica','bold');
-  doc.text(firma?.denumire||'Kineto ProActiv', 14, 14);
-  doc.setFontSize(9); doc.setFont('helvetica','normal');
-  if(firma?.adresa) doc.text(firma.adresa, 14, 20);
-  doc.setFontSize(12); doc.setFont('helvetica','bold');
-  doc.text(rvTitle, pw/2, 30, {align:'center'});
-  doc.setFontSize(8); doc.setFont('helvetica','normal');
-  doc.text(`Generat: ${formatDate(todayStr())} · Total: ${rvData.length}`, pw-14, 14, {align:'right'});
-  const rows = rvData.map(row=>cols.map(c=>{
-    let v=row[c.key]??'—'; if(c.isDate&&v!=='—') v=formatDate(v);
-    return pdfSafe(String(v));
-  }));
-  doc.autoTable({startY:36,head:[cols.map(c=>c.label)],body:rows,styles:{fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14},columnStyles:Object.fromEntries(cols.map((c,i)=>[i,{cellWidth:c.width?Math.min(c.width/4,60):'auto'}]))});
-  const pc=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pc;i++){doc.setPage(i);doc.setFontSize(7);doc.text(`Pagina ${i}/${pc}`,pw/2,doc.internal.pageSize.getHeight()-5,{align:'center'});}
-  const fname = `${rvTitle.replace(/\s+/g,'_')}_${todayStr()}.pdf`;
-  doc.save(fname);
-  showToast('PDF generat!','success');
-  await logActivity('export_pdf',`${rvTitle} (${rvData.length} înreg.)`);
-}
+  const numeFirma = firma?.denumire || gel('sidebar-firma-name')?.textContent || 'Kineto ProActiv';
+  const cui = firma?.cui ? `CUI: ${firma.cui}` : '';
+  const adresa = firma?.adresa_punct_lucru || firma?.adresa || '';
+  const logo64 = firma?.logo_base64 || '';
 
-function printReportHTML(variant) {
-  const cols = (REPORT_COLUMNS[rvType]||[]).filter(c=>selectedPDFFields.has(c.key));
-  const firma = { name: gel('sidebar-firma-name').textContent };
-  let html = `<!DOCTYPE html><html lang="ro"><head><meta charset="UTF-8"><title>${rvTitle}</title><style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial,sans-serif;font-size:9pt;color:#111;}
-    .cover{page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px;}
-    .cover h1{font-size:28pt;margin:20px 0;color:#0A3D52;}
-    .cover .firm-name{font-size:20pt;font-weight:bold;color:#0A3D52;}
-    .cover .details{font-size:10pt;color:#666;margin:8px 0;}
-    table{width:100%;border-collapse:collapse;font-size:8pt;table-layout:auto;}
-    th{background:#0A3D52;color:#fff;padding:5px 7px;text-align:left;font-size:7pt;text-transform:uppercase;white-space:nowrap;}
-    td{padding:4px 7px;border-bottom:1px solid #DDD;vertical-align:top;word-break:break-word;}
-    tr:nth-child(even) td{background:#F5F0EB;}
-    thead{display:table-header-group;}
-    tr{page-break-inside:avoid;}
-    .bold{font-weight:bold;}
-    @page{size:A4 landscape;margin:10mm;}
-    @media print{
-      .cover{page-break-after:always;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;}
-      table{page-break-inside:auto;}
+  // Helper: get cell value
+  function getVal(row, key, dates) {
+    if (!key || key.startsWith('_')) return '—';
+    // Special: split full name for activitate (nome_complet = "Prenume Nume")
+    const fullName = row.nome_complet || row.nome_complet || '';
+    if (key === 'nome_complet_p1' || key === 'nome_complet_p1') {
+      const parts = fullName.trim().split(' ');
+      return parts[parts.length-1] || '—';
     }
-  </style></head><body>`;
-  // Cover page
-  html += `<div class="cover"><div class="firm-name">${escHTML(firma.name)}</div><h1>${escHTML(rvTitle)}</h1><div class="details">Data generării: ${formatDate(todayStr())}</div><div class="details">Total înregistrări: ${rvData.length}</div></div>`;
-  // Data table — all columns, wrapping rows allowed for full content
-  html += `<table><thead><tr>${cols.map(c=>`<th style="min-width:${c.width?Math.min(c.width,160)+'px':'80px'}">${escHTML(c.label)}</th>`).join('')}</tr></thead><tbody>`;
-  rvData.forEach(row=>{
-    html += '<tr>' + cols.map(c=>{
-      let v=row[c.key]??'—'; if(c.isDate&&v!=='—') v=formatDate(v);
-      const isLong = c.wrap || (c.width && c.width > 200);
-      return `<td class="${c.bold?'bold':''}" style="font-size:${isLong?'7.5pt':'8pt'};white-space:${isLong?'normal':'nowrap'};vertical-align:top;">${escHTML(String(v))}</td>`;
-    }).join('') + '</tr>';
+    if (key === 'prenume_p1') {
+      const parts = fullName.trim().split(' ');
+      parts.pop();
+      return parts.join(' ') || '—';
+    }
+    // Try key, then normalized variants (nome/nome typos coexist in codebase)
+    let v = row[key];
+    if (v === undefined) v = row[key.replace('nome','nome')];      // u->o
+    if (v === undefined) v = row[key.replace('nome','nome')];      // o->u
+    if (v === undefined) v = row[key.replace('nome_complet','nome_complet')];
+    if (v === undefined) v = row[key.replace('nome_complet','nome_complet')];
+    if (v === undefined || v === null || v === '') v = '—';
+    if (v !== '—' && dates && dates.includes(key)) v = formatDate(String(v));
+    return String(v);
+  }
+
+  // Build rows HTML
+  const colCount = layout.headers.length;
+  const hasRow2 = layout.row2 !== null;
+
+  // Colors alternating per patient group
+  const C1 = ['#FFFFFF','#EEF4F8'];   // row1 odd/even
+  const C2 = ['#F7F7F7','#E5EDF3'];   // row2 odd/even
+  const BORDER_THICK = '2.5px solid #0A3D52';
+  const BORDER_THIN  = '1px solid #B8CDD5';
+  const BORDER_CELL  = '1px solid #CCCCCC';
+
+  let tbody = '';
+  rvData.forEach((row, idx) => {
+    const ci = idx % 2;
+    const bg1 = C1[ci], bg2 = C2[ci];
+    const borderTop = `border-top:${BORDER_THICK};`;
+
+    if (!hasRow2) {
+      // Single row format (nastere)
+      tbody += `<tr style="background:${bg1};${borderTop}">`;
+      layout.row1.forEach((key, ki) => {
+        const v = getVal(row, key, layout.dates1);
+        const isBold = layout.bold1.includes(key);
+        const isId = key === 'id';
+        tbody += `<td style="border:${BORDER_CELL};padding:5px 7px;vertical-align:middle;
+          font-weight:${isBold?'bold':'normal'};
+          font-size:${isId?'13pt':'9pt'};
+          color:${isId?'#0A3D52':'#111'};
+          ">${escHTML(v)}</td>`;
+      });
+      tbody += '</tr>';
+    } else {
+      // Row 1
+      tbody += `<tr style="background:${bg1};${borderTop}">`;
+      layout.row1.forEach((key, ki) => {
+        const v = getVal(row, key, layout.dates1);
+        const isBold = layout.bold1.includes(key);
+        const isId = key === 'id';
+        const rs = (layout.mergeId && ki === 0) ? ' rowspan="2"' : '';
+        // Long text fields get more width
+        const isLong = ['diagnostic','istoric_medical','medic_trimitere','medic_diagnostic'].includes(key);
+        tbody += `<td${rs} style="border:${BORDER_CELL};${rs?' border-right:'+BORDER_CELL+';':''} padding:5px 7px;vertical-align:${rs?'middle':'top'};
+          font-weight:${isBold?'bold':'normal'};
+          font-size:${isId?'13pt':'9pt'};
+          color:${isId?'#0A3D52':'#111'};
+          word-break:break-word;
+          ${isLong?'white-space:normal;':'white-space:normal;'}
+          ${rs?'text-align:center;background:'+bg1+';':''}
+          ">${escHTML(v)}</td>`;
+      });
+      tbody += '</tr>';
+
+      // Row 2
+      tbody += `<tr style="background:${bg2};">`;
+      layout.row2.forEach((key, ki) => {
+        if (layout.mergeId && ki === 0) return; // skip — merged above
+        const v = getVal(row, key, layout.dates2);
+        const isLong = ['istoric_medical','diagnostic'].includes(key);
+        tbody += `<td style="border:${BORDER_CELL};border-top:${BORDER_THIN}; padding:4px 7px;vertical-align:top;
+          font-size:8.5pt;color:#333;
+          font-style:${key.startsWith('_blank')||key==='_id'?'italic':'normal'};
+          word-break:break-word;white-space:normal;
+          ">${v === '—' && key.startsWith('_blank') ? '' : escHTML(v)}</td>`;
+      });
+      tbody += '</tr>';
+    }
   });
-  html += '</tbody></table></body></html>';
-  const w = window.open('','_blank'); w.document.write(html); w.document.close();
-  setTimeout(()=>{ w.focus(); w.print(); }, 800);
+
+  // Column widths for each report
+  const colWidths = {
+    registru:  ['55px','90px','110px','110px','120px','100px','160px','180px','130px'],
+    activitate:['55px','90px','120px','120px','90px','180px','170px','140px'],
+    terapeut:  ['55px','90px','180px','100px','200px','170px','140px'],
+    nastere:   ['55px','75px','90px','120px','120px','120px','100px','200px'],
+    medici:    ['170px','55px','90px','160px','100px','180px','140px'],
+  };
+  const widths = colWidths[rvType] || [];
+
+  const html = `<!DOCTYPE html><html lang="ro"><head><meta charset="UTF-8">
+<title>${escHTML(rvTitle)}</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Cambria',Georgia,serif;font-size:9pt;color:#111;background:#fff;}
+  
+  /* ANTET */
+  .report-header{padding:10px 14px 8px;border-bottom:3px solid #0A3D52;display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+  .header-left{flex:1;}
+  .header-firma{font-size:14pt;font-weight:bold;color:#0A3D52;font-family:'Cambria',Georgia,serif;}
+  .header-sub{font-size:8.5pt;color:#555;margin-top:2px;}
+  .header-logo{max-height:60px;max-width:100px;object-fit:contain;}
+  .header-right{text-align:right;min-width:200px;}
+  .report-title{font-size:16pt;font-weight:bold;color:#0A3D52;font-family:'Cambria',Georgia,serif;text-align:center;margin:6px 0 2px;}
+  .report-meta{font-size:8pt;color:#555;text-align:center;margin-bottom:8px;}
+  .meta-grid{display:flex;justify-content:center;gap:30px;font-size:8.5pt;color:#444;margin-bottom:12px;padding:0 14px;}
+  .meta-item{display:flex;flex-direction:column;align-items:center;}
+  .meta-label{font-size:7pt;color:#888;text-transform:uppercase;letter-spacing:0.5px;}
+  .meta-value{font-weight:bold;color:#0A3D52;}
+
+  /* TABEL */
+  table{width:100%;border-collapse:collapse;font-family:'Cambria',Georgia,serif;}
+  thead th{background:#0A3D52;color:#fff;padding:6px 8px;font-size:8pt;text-align:left;
+           font-family:'Cambria',Georgia,serif;border:1px solid #0A3D52;vertical-align:bottom;
+           white-space:pre-line;}
+  thead th.th2{background:#1B5E75;font-size:7.5pt;font-style:italic;}
+  tbody td{font-size:9pt;}
+
+  /* PRINT */
+  @page{size:A4 landscape;margin:8mm 10mm;}
+  @media print{
+    .report-header{padding:0 0 6px;margin-bottom:8px;}
+    thead{display:table-header-group;}
+    tbody tr{page-break-inside:avoid;}
+    table{page-break-inside:auto;}
+    .no-print{display:none;}
+  }
+  .print-btn{position:fixed;top:10px;right:10px;padding:10px 20px;background:#0A3D52;color:#fff;
+             border:none;border-radius:6px;cursor:pointer;font-size:11pt;z-index:999;}
+</style>
+</head><body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ Printează / Salvează PDF</button>
+
+<div class="report-header">
+  <div class="header-left">
+    <div class="header-firma">${escHTML(numeFirma)}</div>
+    <div class="header-sub">${escHTML(cui)}${cui&&adresa?' · ':''}${escHTML(adresa)}</div>
+  </div>
+  ${logo64 ? `<img class="header-logo" src="${logo64}" alt="Logo">` : ''}
+</div>
+
+<div class="report-title">${escHTML(rvTitle)}</div>
+<div class="meta-grid">
+  <div class="meta-item"><span class="meta-label">Generat la</span><span class="meta-value">${formatDate(todayStr())}</span></div>
+  <div class="meta-item"><span class="meta-label">Total înregistrări</span><span class="meta-value">${rvData.length}</span></div>
+  ${rvType==='registru'?`<div class="meta-item"><span class="meta-label">Începând cu</span><span class="meta-value">ID# 1</span></div>`:''}
+</div>
+
+<table>
+  <thead>
+    <tr>
+      ${layout.headers.map((h,i)=>`<th style="width:${widths[i]||'auto'}">${escHTML(h)}</th>`).join('')}
+    </tr>
+    ${layout.headers2 ? `<tr>${layout.headers2.map((h,i)=>h&&h!=='—'&&!h.startsWith('—')?`<th class="th2" style="width:${widths[i]||'auto'}">${escHTML(h)}</th>`:`<th class="th2" style="width:${widths[i]||'auto'}"></th>`).join('')}</tr>` : ''}
+  </thead>
+  <tbody>
+    ${tbody}
+  </tbody>
+</table>
+
+<div style="text-align:center;font-size:7.5pt;color:#888;margin-top:10px;font-style:italic;" class="no-print">
+  ${escHTML(numeFirma)} · ${escHTML(rvTitle)} · Generat: ${formatDate(todayStr())}
+</div>
+
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(() => { w.focus(); }, 500);
+  await logActivity('export_print', `${rvTitle} (${rvData.length} înreg.)`);
 }
 
-function printReportHTML_default() { printReportHTML('table'); }
+function printReportHTML_default() { printReportHTML(); }
 
 async function exportIstoricPDF(pacientId) {
-  const { jsPDF } = window.jspdf;
   const { data: p } = await sb.from('pacienti').select('*').eq('id',pacientId).single();
-  const { data: inreg } = await sb.from('inregistrari').select(`*,medic_diagnostic:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`).eq('pacient_id',pacientId).order('data_completarii');
+  const { data: inreg } = await sb.from('inregistrari').select(`*,
+    medic_d:medici!inregistrari_medic_diagnostic_id_fkey(nome:nume_complet_specialitate),
+    medic_t:medici!inregistrari_medic_trimitere_id_fkey(nome:nume_complet_specialitate),
+    terapeut:profiles!inregistrari_terapeut_id_fkey(id,nume,prenume)`)
+    .eq('pacient_id',pacientId).order('data_completarii');
   const { data: firma } = await sb.from('setari_firma').select('*').maybeSingle();
-  const doc = new jsPDF({unit:'mm',format:'a4'}); const pw=doc.internal.pageSize.getWidth();
-  doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.text(pdfSafe(firma?.denumire||'Kineto ProActiv'),14,14);
-  doc.setFontSize(10); doc.text('FISA PACIENT — ISTORIC MEDICAL',pw/2,24,{align:'center'});
-  doc.setFontSize(8); doc.setFont('helvetica','normal');
-  doc.text(`ID# ${p.id}  ·  ${pdfSafe(p.prenume)} ${pdfSafe(p.nume)}  ·  CNP: ${p.cnp||'—'}  ·  Evidenta: ${formatDate(p.data_luare_evidenta)}`,pw/2,30,{align:'center'});
-  const rows=(inreg||[]).map(ir=>[formatDate(ir.data_completarii),pdfSafe(ir.motiv_prezentare||''),pdfSafe(ir.diagnostic||'—'),pdfSafe(ir.medic_diagnostic?.nome||'—'),pdfSafe(ir.terapeut?`${ir.terapeut.prenume} ${ir.terapeut.nume}`:'—'),pdfSafe((ir.istoric_medical||'').substring(0,80))]);
-  doc.autoTable({startY:36,head:[['Data','Motiv','Diagnostic','Medic','Terapeut','Istoric']],body:rows,styles:{fontSize:8,cellPadding:3,overflow:'linebreak'},headStyles:{fillColor:[10,61,82],textColor:255,fontStyle:'bold'},alternateRowStyles:{fillColor:[242,237,230]},margin:{left:14,right:14}});
-  doc.save(`Istoric_${pdfSafe(p.nume)}_${pdfSafe(p.prenume)}_ID${p.id}.pdf`);
-  showToast('Istoric exportat!','success');
+  const numeFirma = firma?.denumire || 'Kineto ProActiv';
+  const { data: alergii_pa } = await sb.from('pacient_alergii').select('alergii_catalog(denumire)').eq('pacient_id',pacientId);
+  const alergii = (alergii_pa||[]).map(a=>a.alergii_catalog?.denumire).filter(Boolean).join(', ') || 'fără';
+
+  const C1 = ['#FFFFFF','#EEF4F8'];
+  const C2 = ['#F7F7F7','#E5EDF3'];
+
+  let rows = '';
+  (inreg||[]).forEach((ir, idx) => {
+    const ci = idx % 2;
+    const bg1 = C1[ci], bg2 = C2[ci];
+    const terapeutNume = ir.terapeut ? `${ir.terapeut.prenume} ${ir.terapeut.nume}` : '—';
+    rows += `
+    <tr style="background:${bg1};border-top:2.5px solid #0A3D52;">
+      <td rowspan="2" style="border:1px solid #ccc;padding:5px 7px;vertical-align:middle;text-align:center;font-size:13pt;font-weight:bold;color:#0A3D52;">${formatDate(ir.data_completarii)}</td>
+      <td style="border:1px solid #ccc;padding:5px 7px;font-weight:bold;font-size:9pt;">${escHTML(ir.motiv_prezentare||'—')}</td>
+      <td style="border:1px solid #ccc;padding:5px 7px;font-weight:bold;font-size:9pt;word-break:break-word;">${escHTML(ir.diagnostic||'—')}</td>
+      <td style="border:1px solid #ccc;padding:5px 7px;font-size:9pt;">${escHTML(ir.medic_d?.nome||'—')}</td>
+      <td style="border:1px solid #ccc;padding:5px 7px;font-size:9pt;">${escHTML(terapeutNume)}</td>
+    </tr>
+    <tr style="background:${bg2};">
+      <td colspan="4" style="border:1px solid #ccc;border-top:1px solid #B8CDD5;padding:4px 7px;font-size:8.5pt;color:#333;word-break:break-word;">${escHTML(ir.istoric_medical||'—')}</td>
+    </tr>`;
+  });
+
+  const html = `<!DOCTYPE html><html lang="ro"><head><meta charset="UTF-8">
+<title>Istoric ${p.prenume} ${p.nume}</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Cambria',Georgia,serif;font-size:9pt;color:#111;}
+  .header{border-bottom:3px solid #0A3D52;padding-bottom:8px;margin-bottom:10px;}
+  .firma{font-size:13pt;font-weight:bold;color:#0A3D52;}
+  .title{font-size:15pt;font-weight:bold;color:#0A3D52;text-align:center;margin:8px 0 4px;}
+  .pacient-card{background:#EEF4F8;border:1.5px solid #0A3D52;border-radius:4px;padding:10px 14px;margin-bottom:12px;font-size:9pt;}
+  .pc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+  .pc-label{font-size:7.5pt;color:#666;text-transform:uppercase;}
+  .pc-val{font-weight:bold;color:#0A3D52;}
+  table{width:100%;border-collapse:collapse;}
+  thead th{background:#0A3D52;color:#fff;padding:6px 8px;font-size:8pt;text-align:left;}
+  .print-btn{position:fixed;top:10px;right:10px;padding:10px 20px;background:#0A3D52;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:11pt;z-index:999;}
+  @page{size:A4 portrait;margin:10mm;}
+  @media print{.print-btn{display:none;}thead{display:table-header-group;}tbody tr{page-break-inside:avoid;}}
+</style></head><body>
+<button class="print-btn" onclick="window.print()">🖨️ Printează / PDF</button>
+<div class="header">
+  <div class="firma">${escHTML(numeFirma)}</div>
+</div>
+<div class="title">Fișa Pacient — Istoric Medical</div>
+<div class="pacient-card">
+  <div class="pc-grid">
+    <div><div class="pc-label">ID#</div><div class="pc-val">#${p.id}</div></div>
+    <div><div class="pc-label">Nume Prenume</div><div class="pc-val">${escHTML(p.prenume)} ${escHTML(p.nume)}</div></div>
+    <div><div class="pc-label">CNP</div><div class="pc-val">${p.cnp||'—'}</div></div>
+    <div><div class="pc-label">Data Nașterii</div><div class="pc-val">${formatDate(p.data_nasterii)}</div></div>
+    <div><div class="pc-label">Telefon</div><div class="pc-val">${p.telefon||'—'}</div></div>
+    <div><div class="pc-label">Status</div><div class="pc-val">${p.este_major?'Major':'Minor'}</div></div>
+    <div><div class="pc-label">Alergii</div><div class="pc-val">${escHTML(alergii)}</div></div>
+    <div><div class="pc-label">Luat în evidență</div><div class="pc-val">${formatDate(p.data_luare_evidenta)}</div></div>
+  </div>
+</div>
+<table>
+  <thead><tr>
+    <th style="width:90px">Data</th>
+    <th style="width:100px">Motiv</th>
+    <th style="width:200px">Diagnostic</th>
+    <th style="width:170px">Medic Diagnostic</th>
+    <th style="width:130px">Terapeut</th>
+  </tr></thead>
+  <tbody>${rows}</tbody>
+</table>
+<div style="text-align:center;font-size:7.5pt;color:#888;margin-top:10px;font-style:italic;">
+  ${escHTML(numeFirma)} · Generat: ${formatDate(todayStr())} · Total vizite: ${(inreg||[]).length}
+</div>
+</body></html>`;
+
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+  setTimeout(()=>{ w.focus(); }, 500);
+  showToast('Istoric generat — apăsați Ctrl+P pentru a salva PDF!','success');
+  await logActivity('export_istoric', `Fișă pacient ID# ${pacientId}`);
 }
 
-// PDF safe chars (Romanian diacritics best-effort)
+// Romanian diacritics safe for jsPDF (kept for compatibility)
 function pdfSafe(s){if(!s)return'';return s.replace(/ș/g,'s').replace(/Ș/g,'S').replace(/ț/g,'t').replace(/Ț/g,'T').replace(/ă/g,'a').replace(/Ă/g,'A').replace(/â/g,'a').replace(/Â/g,'A').replace(/î/g,'i').replace(/Î/g,'I');}
+
+
 
 // ============================================================
 // USERS
@@ -2031,8 +2295,7 @@ function emptyState(icon,txt){return `<div class="empty-state"><div class="empty
 // ============================================================
 // GOOGLE DRIVE BACKUP
 // ============================================================
-const GDRIVE_CLIENT_ID = '187553069612-cjq441pbp22qte9jp3pgro7d1n69de9t.apps.googleusercontent.com'; // Setați din Google Cloud Console
-const GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+const GDRIVE_CLIENT_ID = '187553069612-cjq441pbp22qte9jp3pgro7d1n69de9t.apps.googleusercontent.com'; // Setați din Google Cloud Consoleconst GDRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
 let gdriveToken = null;
 
 function checkBackupReminder() {
